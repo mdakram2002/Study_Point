@@ -4,6 +4,7 @@ const { instance } = require("../config/razorpay");
 const Course = require("../models/Course");
 const User = require("../models/User");
 const mainSender = require("../utils/mailSender");
+require(".dotenv").config();
 const { courseEnrollEmail } = require("../email/template/courseEnrollEmail");
 
 exports.capturePayment = async (req, res) => {
@@ -64,7 +65,7 @@ exports.capturePayment = async (req, res) => {
 
 exports.verifySignature = async (req, res) => {
     try {
-        const webhookSecret = "123456";
+        const webhookSecret = process.env.WHEB_SECRET;
         const signature = req.headers["x-razorpay-signature"];
         const shasum = crypto.createHmac("sha256", webhookSecret);
         shasum.update(JSON.stringify(req.body));
