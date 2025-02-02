@@ -16,7 +16,15 @@
 
 - ResetPasswordToken: The Reset Password Token Controller is responsible for verifying and processing the password reset request. It fetches the data from the request body, validates it, and retrieves the user details from the database using the provided token. The token's expiration time is checked, after which the new password is hashed and updated in the database. Finally, a response is sent to confirm the password change.
 
-- Category: Category Controller, data is fetched from the request body, validated, and stored in the database as a new entry. Once completed, a response is sent to the instructor confirming the successful creation of the category.
+- Category:
+
+  - Category Controller, data is fetched from the request body, validated, and stored in the database as a new entry. Once completed, a response is sent to the instructor confirming the successful creation of the category.
+
+  - Create Category: Data is fetched from the request body, validated, and stored in the database as a new entry. Once completed, a response is sent confirming the successful creation of the category.
+
+  - Show All Categories: Retrieves all categories from the database, including their names and descriptions, and returns them in the response.
+
+  - Category Page Details: Fetches details of a specific category, including its associated courses, other available categories, and the top-selling courses based on enrollments.
 
 - Payment integration
 
