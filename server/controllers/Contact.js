@@ -1,4 +1,3 @@
-/** @format */
 
 const mailSender = require("../utils/mailSender");
 const Contact = require("../models/Contact");

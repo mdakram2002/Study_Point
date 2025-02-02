@@ -89,7 +89,7 @@ exports.signUp = async (req, res) => {
             otp,
         } = req.body;
 
-        // dooing Validation
+        // Perform Validation
         if (!firstName || !lastName || !email || !password || !confirmPassword || !otp) {
             return res.status(403).json({
                 success: false,

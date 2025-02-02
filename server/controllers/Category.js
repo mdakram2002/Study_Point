@@ -1,6 +1,6 @@
 
 const Category = require("../models/category");
-const RatingAndReview = require("../models/RatingAndReview");
+;
 
 exports.createCategory = async (req, res) => {
     try {
