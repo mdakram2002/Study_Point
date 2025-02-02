@@ -52,45 +52,48 @@
 
 # Middleware:
 
-    - The backend also includes a middleware that is implemented as a pre-save hook. This middleware is triggered after an OTP is submitted, ensuring that the OTP is processed and sent via email before being saved in the database.
+- The backend also includes a middleware that is implemented as a pre-save hook. This middleware is triggered after an OTP is submitted, ensuring that the OTP is processed and sent via email before being saved in the database.
 
 # Models:
 
-    - The backend architecture follows a structured schema model, which includes User, Profile, Course, CourseProgress, Section, Subsection, Category, RatingAndReview, and OTP. Each schema serves as a blueprint defining the structure and organization of the data within the database.
+- The backend architecture follows a structured schema model, which includes User, Profile, Course, CourseProgress, Section, Subsection, Category, RatingAndReview, and OTP. Each schema serves as a blueprint defining the structure and organization of the data within the database.
 
 # Utils:
 
-    - mailSender: The mailSender utility is used for OTP verification via the Nodemailer package.
+- mailSender: The mailSender utility is used for OTP verification via the Nodemailer package.
 
-    - Validation: Additionally, email addresses, usernames, and names are validated to ensure accuracy. If any of these fields contain invalid data, the system returns a response prompting the user to provide the correct details.
+- Validation: Additionally, email addresses, usernames, and names are validated to ensure accuracy. If any of these fields contain invalid data, the system returns a response prompting the user to provide the correct details.
 
-    - imageUploader: Cloudinary integration is also implemented to manage the uploading of images, including thumbnails, videos, and lecture content, ensuring optimized performance and storage.
+- imageUploader: Cloudinary integration is also implemented to manage the uploading of images, including thumbnails, videos, and lecture content, ensuring optimized performance and storage.
 
 # Email\Templates
 
 - CourseEnrollEmail:
-    - Functionality: This function generates an HTML email template to confirm course enrollment. It takes name (student’s name) and courseName as parameters and returns a structured email message.
 
-    - Structure: The email includes a StudyPoint logo, a confirmation message, and a personalized greeting for the student. It also highlights the enrolled course and provides a call-to-action button linking to the user's dashboard.
+  - Functionality: This function generates an HTML email template to confirm course enrollment. It takes name (student’s name) and courseName as parameters and returns a structured email message.
 
-    - Styling: The email is styled for a clean and professional appearance, using CSS to format the text, layout, and call-to-action button. The design ensures responsiveness and a good user experience.
+  - Structure: The email includes a StudyPoint logo, a confirmation message, and a personalized greeting for the student. It also highlights the enrolled course and provides a call-to-action button linking to the user's dashboard.
 
-    - Support Information: The email contains a support section with a contact email for any queries, ensuring students can seek assistance if needed.
+  - Styling: The email is styled for a clean and professional appearance, using CSS to format the text, layout, and call-to-action button. The design ensures responsiveness and a good user experience.
+
+  - Support Information: The email contains a support section with a contact email for any queries, ensuring students can seek assistance if needed.
 
 - EmailVerification:
-    - Functionality: This function generates an HTML email template for OTP verification. It takes an otp parameter and returns a formatted email to help users verify their accounts during registration or authentication.
 
-    - Structure: The email includes the StudyPoint logo, a personalized greeting, and a confirmation message. It highlights the OTP prominently and provides instructions on its usage and validity period (5 minutes).
+  - Functionality: This function generates an HTML email template for OTP verification. It takes an otp parameter and returns a formatted email to help users verify their accounts during registration or authentication.
 
-    - Styling: The email is designed with a clean and professional layout, using CSS for readability and responsiveness. The OTP is displayed in bold to ensure visibility.
+  - Structure: The email includes the StudyPoint logo, a personalized greeting, and a confirmation message. It highlights the OTP prominently and provides instructions on its usage and validity period (5 minutes).
 
-    - Security & Support: It advises users to ignore the message if they did not request an OTP. A support section with a contact email is included for assistance, ensuring users can reach out for help if needed.
+  - Styling: The email is designed with a clean and professional layout, using CSS for readability and responsiveness. The OTP is displayed in bold to ensure visibility.
+
+  - Security & Support: It advises users to ignore the message if they did not request an OTP. A support section with a contact email is included for assistance, ensuring users can reach out for help if needed.
 
 - PasswordUpdate:
-    - Functionality: This function generates an HTML email template to notify users that their password has been successfully updated. It takes email and name as parameters and returns a formatted email.
 
-    - Structure: The email includes the StudyPoint logo, a confirmation message, and a personalized greeting. It displays the user's email associated with the password change and provides a security warning in case the update was unauthorized.
+  - Functionality: This function generates an HTML email template to notify users that their password has been successfully updated. It takes email and name as parameters and returns a formatted email.
 
-    - Styling: Designed with a clean and professional layout, using CSS for readability and responsiveness. The highlighted email field ensures clarity for the user.
+  - Structure: The email includes the StudyPoint logo, a confirmation message, and a personalized greeting. It displays the user's email associated with the password change and provides a security warning in case the update was unauthorized.
 
-    - Security & Support: It warns users to contact support immediately if they did not initiate the password update. A support section with a contact email is included for assistance, ensuring users can secure their accounts if needed.
+  - Styling: Designed with a clean and professional layout, using CSS for readability and responsiveness. The highlighted email field ensures clarity for the user.
+
+  - Security & Support: It warns users to contact support immediately if they did not initiate the password update. A support section with a contact email is included for assistance, ensuring users can secure their accounts if needed.
