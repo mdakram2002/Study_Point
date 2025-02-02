@@ -58,13 +58,16 @@
 
     - Get All Ratings and Reviews: Fetch all rating and review entries from the database, sort them in descending order of rating, and populate user and course details. Return the retrieved reviews along with a success response.
 
+- ContactUs:
+  - Contact Us: Retrieve the user's first name, last name, email, contact number, message, and userId (if registered) from the request body and validate them. Store the query in the database for tracking. Send a confirmation email to the user acknowledging the receipt of their query and notify the StudyPoint admin about the new inquiry. Return a response indicating that the query has been submitted successfully.
+
 # Middleware:
 
 - The backend also includes a middleware that is implemented as a pre-save hook. This middleware is triggered after an OTP is submitted, ensuring that the OTP is processed and sent via email before being saved in the database.
 
 # Models:
 
-- The backend architecture follows a structured schema model, which includes User, Profile, Course, CourseProgress, Section, Subsection, Category, RatingAndReview, and OTP. Each schema serves as a blueprint defining the structure and organization of the data within the database.
+- The backend architecture follows a structured schema model, which includes User, Profile, Course, CourseProgress, Section, Subsection, Category, RatingAndReview, ContactUs and OTP. Each schema serves as a blueprint defining the structure and organization of the data within the database.
 
 # Utils:
 
