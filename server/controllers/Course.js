@@ -91,7 +91,8 @@ exports.createCourse = async (req, res) => {
 // getAllCourse
 exports.showAllCourses = async (req, res) => {
     try {
-        const allCourse = await Course.find({},
+        const allCourse = await Course.find(
+            {},
             {
                 courseName: true,
                 price: true,
@@ -100,19 +101,60 @@ exports.showAllCourses = async (req, res) => {
                 studendEnrolled: true,
             }
         )
-        .populate("instructor")
-        .exec();
+            .populate("instructor")
+            .exec();
+            
         return res.status(200).json({
             success: true,
             message: "Data for all courses fetchd successfully.",
         });
-
     } catch (err) {
         console.error(err);
         return res.status(500).json({
             success: false,
             message: "Failed to create course",
             error: err.message,
+        });
+    }
+};
+
+exports.getCoursesDetails = async (req, res) => {
+    try {
+        const { courseId } = req.body;
+
+        const courseDetails = await Course.findById({ _id: courseId })
+            .populate({
+                path: "instructor",
+                populate: {
+                    path: "additionalDetails",
+                },
+            })
+            .populate("category")
+            .populate("ratingAndReview")
+            .populate({
+                path: "courseContent",
+                populate: {
+                    path: "subSection",
+                },
+            })
+            .exec();
+        if (!courseDetails) {
+            return res.status(404).json({
+                success: false,
+                message: `Could not find course with ${courseId}`,
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Course Details Fetched Successfully",
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({
+            success: false,
+            message: err.message,
+            message: "Something went wrong, Please try again",
         });
     }
 };
