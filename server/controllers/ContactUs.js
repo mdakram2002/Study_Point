@@ -1,9 +1,9 @@
 
 const mailSender = require("../utils/mailSender");
-const Contact = require("../models/Contact");
+const Contact = require("../models/ContactUs")
 const User = require("../models/User");
 
-exports.contactUs = async (req, res) => {
+exports.contact = async (req, res) => {
     try {
         // Fetch user details from request body
         const { firstName, lastName, email, contactNumber, message, userId } =

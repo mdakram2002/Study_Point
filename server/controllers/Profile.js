@@ -48,8 +48,8 @@ exports.updateProfile = async (req, res) => {
     } catch (err) {
         return res.status(500).json({
             success: false,
-            message: err.message,
-            message: "Something went wrong, Please try again later",
+            error: err.message,
+            message: "Something went wrong while deleting profile, Please try again",
         });
     }
 };
@@ -68,9 +68,9 @@ exports.deleteAccount = async (req, res) => {
             });
         }
         // Found the account id from additionalDetails and then delete it.
-        await Profile.findById({_id: userDetails.additionalDetails});
+        await Profile.findByIdAndDelete(userDetails.additionalDetails); // ✅ Properly deletes the profile
+        await User.findByIdAndDelete(id);
         // TODO: HW unenrolled user form all enrolled course
-        await User.findByIdAndDelete({_id: id});
 
         // TODO: how can we shedule(task sheduling) a account for deletion.
         return res.status(200).json({
@@ -90,7 +90,7 @@ exports.deleteAccount = async (req, res) => {
 
 // Get All Details of User
 exports.getAllDetails = async (req, res) => {
-    try{
+    try {
         // get user id and validate the data
         const id = req.user.id;
         const userDetails = await User.findById(id).populate("additionalDetails").exec();

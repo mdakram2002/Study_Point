@@ -10,4 +10,4 @@ const checkValidateData = (email, password) => {
 
     return null;
 }
-export default checkValidateData;
+module.exports = checkValidateData;

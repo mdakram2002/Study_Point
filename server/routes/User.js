@@ -2,10 +2,10 @@
 const express = require("express");
 const router = express.Router();
 const {
-    login,
-    signup,
-    sendotp,
-    changepassword,
+    logIn,
+    signUp,
+    sendOTP,
+    changePassword,
 } = require("../controllers/Auth");
 
 const {
@@ -26,16 +26,16 @@ const {
     getCoursesDetails,
 } = require("../controllers/Course");
 
-router.post("/login", login);
-router.post("/signup", signup);
-router.get("/sendotp", sendotp);
-router.post("/changepassword", auth, changepassword);
+router.post("/login", logIn);
+router.post("/signup", signUp);
+router.post("/sendOTP", sendOTP);
+router.post("/changePassword", auth, changePassword);
 
 router.post("/resetPassword", resetPassword);
 router.post("/resetPasswordToken", resetPasswordToken);
 
 router.post("/createCategory", createCategory);
-router.get("/showAllCategries", showAllCategories);
+router.get("/showAllCategories", showAllCategories);
 router.get("/categoryPageDetails", categoryPageDetails);
 
 router.post("/createCourse", createCourse);

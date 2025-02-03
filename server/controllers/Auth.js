@@ -228,7 +228,7 @@ exports.logIn = async (req, res) => {
 };
 
 // changepassword
-exports.changepassword = async (req, res) => {
+exports.changePassword = async (req, res) => {
     try {
         // get data from request body
         const { email, password, confirmPassword } = req.body;
