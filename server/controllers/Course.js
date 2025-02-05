@@ -103,7 +103,7 @@ exports.showAllCourses = async (req, res) => {
         )
             .populate("instructor")
             .exec();
-            
+
         return res.status(200).json({
             success: true,
             message: "Data for all courses fetchd successfully.",
@@ -157,4 +157,44 @@ exports.getCoursesDetails = async (req, res) => {
             message: "Something went wrong, Please try again",
         });
     }
+};
+
+exports.getFullCourseDetails = async (req, res) => {
+    try {
+
+    } catch (err) {
+
+
+    };
+};
+exports.editCourse = async (req, res) => {
+
+    try {
+
+    } catch (err) {
+
+    };
+};
+exports.getInstructorCourses = async (req, res) => {
+
+    try {
+
+    } catch (err) {
+
+    };
+};
+exports.deleteCourse = async (req, res) => {
+    try {
+
+    } catch (err) {
+
+    };
+};
+
+exports.updateCourseProgress = async (req, res) => {
+    try {
+
+    } catch (err) {
+
+    };
 };

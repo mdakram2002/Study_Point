@@ -1,16 +1,17 @@
 const nodemailer = require("nodemailer");
+require("dotenv").config();
 
 const mailSender = async (email, title, body) => {
     try {
-        let transporter = nodemailer.createTransport({
+        const transporter = nodemailer.createTransport({
             host: process.env.MAIL_HOST,
             auth: {
                 user: process.env.MAIL_USER,
-                password: process.env.MAIL_PASSWORD,
+                pass: process.env.MAIL_PASS,
             },
         });
 
-        let info = await transporter.sendMail({
+        const info = await transporter.sendMail({
             from: "StudyPoint - By Akram",
             to: `${email}`,
             subject: `${title}`,

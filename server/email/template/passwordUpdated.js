@@ -45,7 +45,7 @@ exports.passwordUpdated = (email, name) => {
       </head>
       <body>
           <div class="container">
-              <a href="https://studyPoint-edtech-project.vercel.app">
+              <a href="https://studypoint-edu.netlify.app">
                   <img class="logo" src="https://i.ibb.co/7Xyj3PC/logo.png" alt="StudyPoint Logo" title="StudyPoint Logo">
               </a>
               <div class="message">Password Update Confirmation</div>

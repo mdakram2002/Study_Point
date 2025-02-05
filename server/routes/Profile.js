@@ -14,10 +14,9 @@ const { contact } = require("../controllers/ContactUs.js");
 
 // Define routes
 router.post("/contact", contact);
-router.post("/updateProfile", updateProfile);
-router.post("/deleteAccount", deleteAccount);
-router.post("/getAllDetails", getAllDetails);
+router.put("/updateProfile", updateProfile);
+router.delete("/deleteAccount", deleteAccount);
+router.get("/getAllDetails", getAllDetails);
 
 // Export router
 module.exports = router;
-

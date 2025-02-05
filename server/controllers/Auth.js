@@ -1,11 +1,11 @@
 const User = require("../models/User");
 const OTP = require("../models/OTP");
 const otpGenerator = require("otp-generator");
-// const checkValidateData = require("../utils/validation");
 const mailSender = require("../utils/mailSender");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-// const nodemailer = require("nodemailer");
+const { passwordUpdate } = require("../email/template/passwordUpdated");
+const Profile = require("../models/Profile");
 require("dotenv").config();
 
 exports.sendOTP = async (req, res) => {
@@ -14,35 +14,36 @@ exports.sendOTP = async (req, res) => {
 
         //  Check if user already exists
         const checkExistingUser = await User.findOne({ email });
+
         if (checkExistingUser) {
             return res.status(409).json({
                 // 409: Conflict
                 success: false,
-                message: "User already registered",
+                message: "User is already registered",
             });
         }
 
         // Generate Unique OTP
         var otp = otpGenerator.generate(6, {
-            upperCaseAlphabets: false,
-            lowerCaseAlphabets: false,
-            specialChars: false,
+            upperCaseAlphabets: true,
+            lowerCaseAlphabets: true,
+            specialChars: true,
         });
         console.log("Generated OTP:", otp);
         let result = await OTP.findOne({ otp: otp });
         while (result) {
-            otp = otpGenerator(6, {
-                upperCaseAlphabets: false,
-                lowerCaseAlphabets: false,
-                specialChars: false,
+            otp = otpGenerator.generate(6, {
+                upperCaseAlphabets: true,
+                lowerCaseAlphabets: true,
+                specialChars: true,
             });
-            result = await OTP.findOne({ otp: otp });
+            // result = await OTP.findOne({ otp: otp });
         }
 
         //  Save OTP to Database with Expiry Time
         const otpPayload = { email, otp };
         const otpBody = await OTP.create(otpPayload);
-        console.log(otpBody);
+        console.log("OTP Body", otpBody);
 
         //  Secure Response
         res.status(200).json({
@@ -95,7 +96,7 @@ exports.signUp = async (req, res) => {
         if (existingUser) {
             return res.status(400).json({
                 success: false,
-                message: "User already registered.",
+                message: "User already registered. Please sign in to continue to learning.",
             });
         }
 
@@ -106,20 +107,24 @@ exports.signUp = async (req, res) => {
         console.log(recentOtp);
 
         // validate the OTP
-        if (recentOtp.length == 0) {
+        if (recentOtp.length === 0) {
             return res.status(400).json({
                 success: false,
-                message: "OTP is not valid",
+                message: "OTP is not found",
             });
-        } else if (otp !== recentOtp) {
+        } else if (otp !== recentOtp[0].otp) {
             return res.status(400).json({
                 success: false,
-                message: "Invalid OTP",
+                message: "Invalid OTP, Please check your OTP",
             });
         }
 
         // Hash the password & Create entry in the database
         const hashedPassword = await bcrypt.hash(password, 10);
+
+        let approved = "";
+        approved === "Instructor" ? (approved = false) : (approved = true);
+
         const profileDetails = await Profile.create({
             gender: null,
             dateOfBirth: null,
@@ -133,6 +138,7 @@ exports.signUp = async (req, res) => {
             password: hashedPassword,
             contactNumber,
             accountType,
+            // approved: approved,
             additionalDetails: profileDetails._id,
             image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
         });
