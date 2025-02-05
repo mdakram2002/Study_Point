@@ -1,75 +1,60 @@
 const User = require("../models/User");
 const OTP = require("../models/OTP");
 const otpGenerator = require("otp-generator");
-const checkValidateData = require("../utils/validation");
+// const checkValidateData = require("../utils/validation");
 const mailSender = require("../utils/mailSender");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 exports.sendOTP = async (req, res) => {
     try {
         const { email } = req.body;
 
-        // Validate email
-        const emailError = checkValidateData(email, "");
-        if (emailError) {
-            return res.status(400).json({
-                success: false,
-                message: emailError,
-            });
-        }
-
-        // Check if user already exists
-        const checkUserPresent = await User.findOne({ email });
-        if (checkUserPresent) {
-            return res.status(401).json({
+        //  Check if user already exists
+        const checkExistingUser = await User.findOne({ email });
+        if (checkExistingUser) {
+            return res.status(409).json({
+                // 409: Conflict
                 success: false,
                 message: "User already registered",
             });
         }
 
-        // Generate OTP
-        let otp = otpGenerator.generate(6, {
-            upperCaseAlphabet: false,
-            lowerCaseAlphabet: false,
+        // Generate Unique OTP
+        var otp = otpGenerator.generate(6, {
+            upperCaseAlphabets: false,
+            lowerCaseAlphabets: false,
             specialChars: false,
         });
-
-        console.log("OTP generated:", otp);
-
-        // Ensure OTP is unique
-        let result = await OTP.findOne({ otp });
+        console.log("Generated OTP:", otp);
+        let result = await OTP.findOne({ otp: otp });
         while (result) {
-            otp = otpGenerator.generate(6, {
-                upperCaseAlphabet: false,
-                lowerCaseAlphabet: false,
+            otp = otpGenerator(6, {
+                upperCaseAlphabets: false,
+                lowerCaseAlphabets: false,
                 specialChars: false,
             });
-            result = await OTP.findOne({ otp });
+            result = await OTP.findOne({ otp: otp });
         }
 
-        // Save OTP to DB
-        await OTP.create({ email, otp });
+        //  Save OTP to Database with Expiry Time
+        const otpPayload = { email, otp };
+        const otpBody = await OTP.create(otpPayload);
+        console.log(otpBody);
 
-        // Send OTP Email
-        await mailSender(
-            email,
-            "Your OTP for Verification",
-            `<h3>Your OTP for verification is: <strong>${otp}</strong></h3><p>It is valid for 10 minutes.</p>`
-        );
-
+        //  Secure Response
         res.status(200).json({
             success: true,
             message: "OTP Sent Successfully",
+            otp,
         });
-
     } catch (err) {
-        console.error(err);
+        console.error("Unexpected Error:", err);
         return res.status(500).json({
             success: false,
-            message: "OTP generation failed",
+            message: "An unexpected error occurred. Please try again.",
         });
     }
 };
@@ -105,7 +90,6 @@ exports.signUp = async (req, res) => {
             });
         }
 
-
         // check user already exists or not
         const existingUser = await User.findOne({ email });
         if (existingUser) {
@@ -116,7 +100,9 @@ exports.signUp = async (req, res) => {
         }
 
         // find most recent OTP stored for the user
-        const recentOtp = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
+        const recentOtp = await OTP.find({ email })
+            .sort({ createdAt: -1 })
+            .limit(1);
         console.log(recentOtp);
 
         // validate the OTP
@@ -124,13 +110,13 @@ exports.signUp = async (req, res) => {
             return res.status(400).json({
                 success: false,
                 message: "OTP is not valid",
-            })
+            });
         } else if (otp !== recentOtp) {
             return res.status(400).json({
                 success: false,
                 message: "Invalid OTP",
             });
-        };
+        }
 
         // Hash the password & Create entry in the database
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -157,27 +143,24 @@ exports.signUp = async (req, res) => {
             message: "User is registered successfully",
             user,
         });
-
     } catch (err) {
         console.error(err);
         return res.status(500).json({
             success: false,
             message: "User cannot be registered. Please try again",
         });
-    };
-
-}
+    }
+};
 
 // Login Handler
 exports.logIn = async (req, res) => {
     try {
-
         const { email, password } = req.body; // get data from request body
         // validate the data
         if (!email || !password) {
             return res.status(403).json({
                 success: false,
-                message: "All fields are required, please try again"
+                message: "All fields are required, please try again",
             });
         }
         // user check exist or not registered
@@ -194,7 +177,7 @@ exports.logIn = async (req, res) => {
                 email: user.email,
                 id: user._id,
                 role: user.accountType,
-            }
+            };
             const token = jwt.sign(payload, process.env.JWT_SECRET, {
                 expiresIn: "2h",
             });
@@ -205,7 +188,7 @@ exports.logIn = async (req, res) => {
             const options = {
                 expiresIn: new Date(Date.now() + 3 * 34 * 60 * 1000),
                 httpOnly: true,
-            }
+            };
             res.cookie("token", token, options).status(200).json({
                 success: true,
                 token: token,
@@ -224,7 +207,7 @@ exports.logIn = async (req, res) => {
             success: false,
             message: "Login Failure. Please try again",
         });
-    };
+    }
 };
 
 // changepassword
@@ -276,7 +259,6 @@ exports.changePassword = async (req, res) => {
             success: true,
             message: "Password changed successfully",
         });
-
     } catch (err) {
         console.error(err);
         return res.status(500).json({
