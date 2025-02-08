@@ -68,7 +68,7 @@ exports.updateSubSection = async (req, res) => {
         }
 
         // Check if a new video file is provided and update it
-        if (req.files && req.files.videoFile) {
+        if (req.files && req.files.videoFile !== undefined) {
             const video = req.files.videoFile;
             const uploadDetails = await uploadImageToCloudinary(
                 video,
@@ -124,12 +124,12 @@ exports.deleteSubSection = async (req, res) => {
         }
 
         // Remove subsection from the section's subSections array
-        await Section.findByIdAndUpdate(sectionId, {
+        await Section.findByIdAndUpdate({ _id: sectionId }, {
             $pull: { subSections: subSectionId },
         });
 
         // Delete the subsection
-        const deletedSubSection = await SubSection.findByIdAndDelete(subSectionId);
+        const deletedSubSection = await SubSection.findByIdAndDelete({ _id: subSectionId });
 
         if (!deletedSubSection) {
             return res.status(404).json({

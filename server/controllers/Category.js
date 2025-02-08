@@ -1,6 +1,5 @@
 
 const Category = require("../models/category");
-;
 
 exports.createCategory = async (req, res) => {
     try {
@@ -60,7 +59,13 @@ exports.categoryPageDetails = async (req, res) => {
 
         // Find selected category with courses
         const selectedCategory = await Category.findById(categoryId)
-            .populate("courses")
+            .populate({
+                path: "courses",
+                match: {
+                    status: "published"
+                },
+                populate: "ratingAndReview",
+            })
             .exec();
 
         if (!selectedCategory) {
@@ -70,10 +75,17 @@ exports.categoryPageDetails = async (req, res) => {
             });
         }
 
+        // when no courses found there
+        if (selectedCategory.course.length === 0) {
+            console.log("No courses found for selected category " + categoryId);
+            return res.status(404).json({
+                success: false,
+                message: "No courses found for selected category " + categoryId,
+            });
+        }
         // Get courses for different categories
-        const differentCategories = await Category.find({
-            _id: { $ne: categoryId },
-        })
+        const differentCategories = await Category.find(
+            {_id: { $ne: categoryId },})
             .populate("courses")
             .exec();
 

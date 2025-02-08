@@ -4,35 +4,51 @@ require("dotenv").config();
 
 exports.auth = async (req, res, next) => {
     try {
-        // extract token from request body , cookie and Bearer
+        // Extract token from request body, cookie, or Authorization header
         const token =
             req.cookies.token ||
             req.body.token ||
-            req.header("Authorisation").replace("Bearer", "");
-        // if token is missing, then return response
+            (req.header("Authorization") &&
+                req.header("Authorization").replace("Bearer ", ""));
+
+        // If token is missing, return response
         if (!token) {
             return res.status(401).json({
                 success: false,
-                message: "Token missing",
+                message: "Token is missing",
             });
         }
 
-        // varify the tok en
+        // Verify the token
         try {
-            const decode = await jwt.verify(token, process.env.JWT_SECERT);
+            const decode = jwt.verify(token, process.env.JWT_SECRET);
             console.log(decode);
-            req.user = decode;
-        } catch (e) {
+
+            // Check if the user exists in the database
+            const user = await User.findById(decode.id);
+            if (!user) {
+                return res.status(401).json({
+                    success: false,
+                    message: "User not found",
+                });
+            }
+
+            // Attach the user to the request object
+            req.user = user;
+        } catch (err) {
             return res.status(401).json({
                 success: false,
-                message: "token is invalid",
+                message: "Token is invalid",
             });
         }
+
+        // Proceed to the next middleware or route handler
         next();
     } catch (err) {
-        return res.status(401).json({
+        console.error("Error in auth middleware:", err);
+        return res.status(500).json({
             success: false,
-            message: "Somthing went wrong while verifying the token",
+            message: "Something went wrong while verifying the token",
         });
     }
 };

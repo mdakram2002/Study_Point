@@ -23,7 +23,9 @@ exports.createRatingAndReview = async (req, res) => {
             });
         }
 
-        const courseDetails = await Course.findById(courseId);
+        const courseDetails = await Course.findById({_id: courseId,
+            studentsEnrolled:{$elemMatch: {$eq:userId}}
+        });
         if (!courseDetails || !courseDetails.studentsEnrolled.includes(userId)) {
             return res.status(404).json({
                 success: false,

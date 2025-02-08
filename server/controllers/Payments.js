@@ -43,6 +43,7 @@ exports.capturePayment = async (req, res) => {
             notes: { courseId: course_id, userId }
         };
 
+       try{
         const paymentResponse = await instance.orders.create(options);
         return res.status(200).json({
             success: true,
@@ -53,6 +54,12 @@ exports.capturePayment = async (req, res) => {
             currency: paymentResponse.currency,
             amount: paymentResponse.amount
         });
+       } catch(err){
+        return res.statu(500).json({
+            success: false,
+            message: "Could not initiate oder.",
+        })
+       }
     } catch (err) {
         console.error("Error in capturePayment:", err);
         return res.status(500).json({
