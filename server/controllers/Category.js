@@ -14,7 +14,7 @@ exports.createCategory = async (req, res) => {
 
         // Create entry in DB
         const categoryDetails = await Category.create({ name, description });
-        console.log(categoryDetails);
+        console.log("CATEGORY DETAILS: ", categoryDetails);
 
         return res.status(201).json({
             success: true,

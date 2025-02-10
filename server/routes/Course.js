@@ -60,7 +60,8 @@ router.post("/updateSubSection", auth, isInstructor, updateSubSection);
 router.post("/deleteSubSection", auth, isInstructor, deleteSubSection);
 
 // Category routes (Only by Admin)
-router.post("/createCategory", auth, createCategory);
+const { isAdmin } = require("../middlewares/auth");
+router.post("/createCategory", auth, isAdmin, createCategory);
 router.get("/showAllCategories", showAllCategories);
 router.post("/getCategoryPageDetails", categoryPageDetails);
 

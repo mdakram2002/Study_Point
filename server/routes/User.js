@@ -23,10 +23,10 @@ const {
 router.post("/login", logIn);
 router.post("/signUp", signUp);
 router.post("/sendOTP", sendOTP);
-router.put("/changePassword", auth, changePassword);
+router.put("/change-password", auth, changePassword);
 
-router.post("/resetPassword", resetPassword);
-router.post("/resetPasswordToken", resetPasswordToken);
+router.post("/reset-password",auth, resetPassword);
+router.post("/resetPasswordToken",auth, resetPasswordToken);
 
 router.post("/createCourse", createCourse);
 router.get("/showAllCourses", showAllCourses);

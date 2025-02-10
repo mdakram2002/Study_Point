@@ -23,6 +23,7 @@ exports.auth = async (req, res, next) => {
         try {
             const decode = jwt.verify(token, process.env.JWT_SECRET);
             console.log(decode);
+            req.user = decode;
 
             // Check if the user exists in the database
             const user = await User.findById(decode.id);
@@ -65,7 +66,7 @@ exports.isStudent = async (req, res, next) => {
     } catch (err) {
         return res.status(500).json({
             success: false,
-            message: "User role cannt be determined,please try again",
+            message: "User accountType cannt be determined,please try again",
         });
     }
 };
@@ -82,13 +83,14 @@ exports.isInstructor = async (req, res, next) => {
     } catch (err) {
         return res.status(500).json({
             success: false,
-            message: "User role cannt be determined,please try again",
+            message: "User accountType cannt be determined,please try again",
         });
     }
 };
 
 exports.isAdmin = async (req, res, next) => {
     try {
+        console.log("Account Type:", req.user.accountType);
         if (req.user.accountType !== "Admin") {
             return res.status(401).json({
                 success: false,
@@ -99,7 +101,7 @@ exports.isAdmin = async (req, res, next) => {
     } catch (err) {
         return res.status(500).json({
             success: false,
-            message: "User role cannt be determined,please try again",
+            message: "User accountType cannt be determined,please try again",
         });
     }
 };

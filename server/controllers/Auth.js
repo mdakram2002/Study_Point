@@ -1,10 +1,12 @@
+/** @format */
+
 const User = require("../models/User");
 const OTP = require("../models/OTP");
 const otpGenerator = require("otp-generator");
 const mailSender = require("../utils/mailSender");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { passwordUpdate } = require("../email/template/passwordUpdated");
+const { passwordUpdated } = require("../email/template/passwordUpdated");
 const Profile = require("../models/Profile");
 require("dotenv").config();
 
@@ -76,7 +78,14 @@ exports.signUp = async (req, res) => {
         } = req.body;
 
         // Perform Validation
-        if (!firstName || !lastName || !email || !password || !confirmPassword || !otp) {
+        if (
+            !firstName ||
+            !lastName ||
+            !email ||
+            !password ||
+            !confirmPassword ||
+            !otp
+        ) {
             return res.status(403).json({
                 success: false,
                 message: "Please enter all required fields.",
@@ -96,7 +105,8 @@ exports.signUp = async (req, res) => {
         if (existingUser) {
             return res.status(400).json({
                 success: false,
-                message: "User already registered. Please sign in to continue to learning.",
+                message:
+                    "User already registered. Please sign in to continue to learning.",
             });
         }
 
@@ -182,7 +192,7 @@ exports.logIn = async (req, res) => {
             const payload = {
                 email: user.email,
                 id: user._id,
-                role: user.accountType,
+                accountType: user.accountType,
             };
             const token = jwt.sign(payload, process.env.JWT_SECRET, {
                 expiresIn: "2h",
@@ -219,48 +229,53 @@ exports.logIn = async (req, res) => {
 // changepassword
 exports.changePassword = async (req, res) => {
     try {
-        // get data from request body
-        const { email, password, confirmPassword } = req.body;
+        // Get user details from database
+        const userDetails = await User.findById(req.user.id);
+        const { oldPassword, newPassword } = req.body;
 
-        // validation
-        if (!email || !password || !confirmPassword) {
-            return res.status(400).json({
+        // Compare old password
+        const isPasswordMatch = await bcrypt.compare(
+            oldPassword,
+            userDetails.password
+        );
+        if (!isPasswordMatch) {
+            return res.status(401).json({
                 success: false,
-                message: "All fields are required",
-            });
-        }
-
-        if (password !== confirmPassword) {
-            return res.status(400).json({
-                success: false,
-                message: "Passwords do not match",
-            });
-        }
-
-        // Check if user exists
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(404).json({
-                success: false,
-                message: "User not found",
+                message: "The old password does not match",
             });
         }
 
         // Hash the new password
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-        // Update password in db
-        user.password = hashedPassword;
-        await user.save();
-
-        // Send mail - password changed
-        await mailSender(
-            email,
-            "Password Changed",
-            `<h3>Your password has been successfully changed.</h3>`
+        // Update the user's password
+        const updatedUserDetails = await User.findByIdAndUpdate(
+            req.user.id,
+            { password: hashedPassword },
+            { new: true }
         );
 
-        // Return response
+        // Send email notification
+        try {
+            const emailResponse = await mailSender(
+                updatedUserDetails.email,
+                "Password for your account has been updated",
+                passwordUpdated(
+                    updatedUserDetails.email,
+                    `Password updated successfully for ${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`
+                )
+            );
+            console.log("Email sent successfully:", emailResponse.response);
+        } catch (error) {
+            console.error("Error occurred while sending email:", error);
+            return res.status(500).json({
+                success: false,
+                message: "Error occurred while sending email",
+                error: error.message,
+            });
+        }
+
+        // Return success response
         return res.status(200).json({
             success: true,
             message: "Password changed successfully",
