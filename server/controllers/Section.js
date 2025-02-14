@@ -22,10 +22,12 @@ exports.createSection = async (req, res) => {
             courseId,
             { $push: { courseContent: newSection._id } },
             { new: true }
-        ).populate("courseContent").exec();
+        )
+            .populate("courseContent").exec();
 
         // Populate the section with subSections (if subSections exist in schema)
-        const populatedSection = await Section.findById(newSection._id).populate("subSections");
+        const populatedSection = await Section.findById(newSection._id)
+        // .populate("subSections");
 
         return res.status(201).json({
             success: true,
@@ -118,17 +120,19 @@ exports.deleteSection = async (req, res) => {
                 message: "Section not found.",
             });
         }
-        //delete sub section and find the updated course and return
-        await SubSection.deleteMany({ _id: { $in: section.subSection } });
 
+        // Delete associated sub-sections
+        if (deletedSection.subSection && deletedSection.subSection.length > 0) {
+            await SubSection.deleteMany({ _id: { $in: deletedSection.subSection } });
+        }
         await Section.findByIdAndDelete(sectionId);
+        
         const course = await Course.findById(courseId).populate({
             path: "courseContent",
             populate: {
                 path: "subSection"
             }
-        })
-            .exec();
+        }).exec();
 
         return res.status(200).json({
             success: true,

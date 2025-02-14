@@ -1,9 +1,6 @@
-/** @format */
-
 const Profile = require("../models/Profile");
 const CourseProgrss = require("../models/CourseProgress");
 const Course = require("../models/Course");
-
 const User = require("../models/User");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 const { convertSecondsToDuration } = require("../utils/SecToDuration");
@@ -43,6 +40,7 @@ exports.updateProfile = async (req, res) => {
 
         const profileId = userDetails.additionalDetails;
         const profileDetails = await Profile.findById(profileId);
+        console.log("I AM HERE", userDetails);
 
         if (!profileDetails) {
             return res.status(404).json({
@@ -76,43 +74,57 @@ exports.updateProfile = async (req, res) => {
 // Delete a Account
 exports.deleteAccount = async (req, res) => {
     try {
-        // get user id and validate the data
+        if (!req.user || !req.user.id) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid request, user ID missing",
+            });
+        }
         const id = req.user.id;
-        const userDetails = await User.findById({ _id: id });
+
+
+        // Validate MongoDB ObjectId
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            console.log("INVALID MONGODB ID:", id);
+            return res.status(400).json({
+                success: false,
+                message: "Invalid user ID format",
+            });
+        }
+
+        // Find the user
+        const userDetails = await User.findById(id);
         if (!userDetails) {
+            console.log("User not found in database");
             return res.status(404).json({
                 success: false,
-                message: err.message,
                 message: "User not found",
             });
         }
-        // Found the account id from additionalDetails and then delete it.
-        await Profile.findByIdAndDelete({
-            _id: new mongoose.Types.ObjectId(userDetails.additionalDetails),
-        });
-        for (const courseId of userDetails.courses) {
-            await Course.findByIdAndUpdate(
-                courseId,
-                { $pull: { studentsEnrolled: id } },
-                { new: true }
-            );
-        }
-        await User.findByIdAndDelete({ _id: id });
-        await CourseProgress.deleteMany({ userId: id });
 
+        // Delete Profile
+        if (userDetails.additionalDetails) {
+            console.log("Deleting user profile:", userDetails.additionalDetails);
+            await Profile.findByIdAndDelete(userDetails.additionalDetails);
+        }
+
+        // Delete the user
+        await User.findByIdAndDelete(id);
         return res.status(200).json({
             success: true,
-            message: err.message,
             message: "User Deleted Successfully",
         });
+
     } catch (err) {
+        console.error("Error deleting user:", err);
         return res.status(500).json({
             success: false,
-            message: err.message,
             message: "Something went wrong while deleting profile, Please try again",
+            error: err.message,
         });
     }
 };
+
 
 // Get All Details of User
 exports.getAllDetails = async (req, res) => {
@@ -144,7 +156,7 @@ exports.updateDisplayPicture = async (req, res) => {
     try {
         console.log("Request received:", req.files);
         const displayPicture = req.files?.displayPicture;
-        const userId = req.user?.id || req.body.id; // Added fallback for testing
+        const userId = req.user?.id || req.body.id;
 
         if (!displayPicture) {
             return res.status(400).json({

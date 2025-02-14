@@ -6,7 +6,7 @@ const userRoute = require("./routes/User");
 const courseRoute = require("./routes/Course");
 const paymentRoute = require("./routes/Payments");
 const profileRoute = require("./routes/Profile");
-const contactRoute = require("./routes/Profile");
+const contactRoute = require("./routes/ContactUs");
 
 const database = require("./config/database");
 const cookieParser = require("cookie-parser");
@@ -30,8 +30,8 @@ app.use(cors(corsOptions));
 
 app.use(
     fileUpload({
-        userTempFile: true,
-        tempFileDir: "/tmp",
+        useTempFiles: true,
+        tempFileDir: '/tmp/',
     })
 );
 

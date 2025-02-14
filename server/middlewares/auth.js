@@ -22,8 +22,14 @@ exports.auth = async (req, res, next) => {
         // Verify the token
         try {
             const decode = jwt.verify(token, process.env.JWT_SECRET);
-            console.log(decode);
-            req.user = decode;
+            console.log("Decode Token Data:", decode);
+            // req.user = decode;
+            if (!decode.id) {
+                return res.status(401).json({
+                    success: false,
+                    message: "Invalid token: user ID missing",
+                });
+            }
 
             // Check if the user exists in the database
             const user = await User.findById(decode.id);

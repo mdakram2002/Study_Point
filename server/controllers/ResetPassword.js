@@ -17,7 +17,7 @@ exports.resetPasswordToken = async (req, res) => {
         }
 
         const token = crypto.randomBytes(20).toString("hex"); // generate token and update user by adding token and expiration time
-        const updateDetails = await User.findOneAndDelete(
+        const updateDetails = await User.findOneAndUpdate(
             { email: email },
             {
                 token: token,
@@ -27,11 +27,12 @@ exports.resetPasswordToken = async (req, res) => {
         );
         console.log("DETAILS:", updateDetails);
 
+        // create reset password link for client side and send mail with reset link
         const url = `http://localhost:3000/reset-password/${token}`; // create url and send mail conating with url
         await mailSender(
             email,
             "Password Updated Link",
-            `Password Reset Link:${url}`
+            `Click the following link to reset your password: ${url}`
         );
 
         return res.json({

@@ -53,7 +53,11 @@ const courseSchema = new mongoose.Schema({
     ],
     status:{
         type: String,
-        enum: ["Draft", "Published"],
+        enum: ["Draft","Pending", "Published"],
+    },
+    instructions: {
+        type: [String],
+        required: true,
     }
 });
 module.exports = mongoose.model("Course", courseSchema);

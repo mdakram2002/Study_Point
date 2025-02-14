@@ -27,23 +27,24 @@ exports.sendOTP = async (req, res) => {
 
         // Generate Unique OTP
         var otp = otpGenerator.generate(6, {
-            upperCaseAlphabets: true,
-            lowerCaseAlphabets: true,
-            specialChars: true,
+            upperCaseAlphabets: false,
+            lowerCaseAlphabets: false,
+            specialChars: false,
         });
         console.log("Generated OTP:", otp);
         let result = await OTP.findOne({ otp: otp });
         while (result) {
             otp = otpGenerator.generate(6, {
-                upperCaseAlphabets: true,
-                lowerCaseAlphabets: true,
-                specialChars: true,
+                upperCaseAlphabets: false,
+                lowerCaseAlphabets: false,
+                specialChars: false,
             });
-            // result = await OTP.findOne({ otp: otp });
+            result = await OTP.findOne({ otp: otp });
         }
 
         //  Save OTP to Database with Expiry Time
-        const otpPayload = { email, otp };
+        const otpExpiry = Date.now() + 5 * 60 * 1000;
+        const otpPayload = { email, otp, expiresAt: otpExpiry };
         const otpBody = await OTP.create(otpPayload);
         console.log("OTP Body", otpBody);
 
@@ -64,7 +65,6 @@ exports.sendOTP = async (req, res) => {
 
 // Sign Up Handler
 exports.signUp = async (req, res) => {
-    //fetch the data from the request body.
     try {
         const {
             firstName,
@@ -78,21 +78,14 @@ exports.signUp = async (req, res) => {
         } = req.body;
 
         // Perform Validation
-        if (
-            !firstName ||
-            !lastName ||
-            !email ||
-            !password ||
-            !confirmPassword ||
-            !otp
-        ) {
+        if (!firstName || !lastName || !email || !password || !confirmPassword || !otp) {
             return res.status(403).json({
                 success: false,
                 message: "Please enter all required fields.",
             });
         }
 
-        // matching the password
+        // Password Matching
         if (password !== confirmPassword) {
             return res.status(400).json({
                 success: false,
@@ -100,29 +93,26 @@ exports.signUp = async (req, res) => {
             });
         }
 
-        // check user already exists or not
+        // Check if user already exists
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({
                 success: false,
-                message:
-                    "User already registered. Please sign in to continue to learning.",
+                message: "User already registered. Please sign in to continue to learning.",
             });
         }
 
-        // find most recent OTP stored for the user
-        const recentOtp = await OTP.find({ email })
-            .sort({ createdAt: -1 })
-            .limit(1);
-        console.log(recentOtp);
+        // Find most recent OTP stored for the user
+        const recentOtp = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
+        console.log("Recent OTP from DB", recentOtp);
 
-        // validate the OTP
+        // Validate the OTP
         if (recentOtp.length === 0) {
             return res.status(400).json({
                 success: false,
                 message: "OTP is not found",
             });
-        } else if (otp !== recentOtp[0].otp) {
+        } else if (String(otp).trim() !== String(recentOtp[0].otp).trim()) {
             return res.status(400).json({
                 success: false,
                 message: "Invalid OTP, Please check your OTP",
@@ -148,7 +138,6 @@ exports.signUp = async (req, res) => {
             password: hashedPassword,
             contactNumber,
             accountType,
-            // approved: approved,
             additionalDetails: profileDetails._id,
             image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
         });
@@ -202,7 +191,7 @@ exports.logIn = async (req, res) => {
 
             // create cookeis and send response
             const options = {
-                expiresIn: new Date(Date.now() + 3 * 34 * 60 * 1000),
+                expiresIn: new Date(Date.now() + 5 * 60 * 60 * 1000),
                 httpOnly: true,
             };
             res.cookie("token", token, options).status(200).json({

@@ -8,6 +8,7 @@ exports.createSubSection = async (req, res) => {
         // fetch the data from the request body and extract the vedio url and validate the data.
         const { sectionId, title, timeDuration, description } = req.body;
         const video = req.files.videoFile;
+
         if ((!sectionId || !title || !timeDuration || !description, !video)) {
             return res.status(400).json({
                 success: false,
@@ -15,14 +16,16 @@ exports.createSubSection = async (req, res) => {
                     "All fields are required, please field the required fields data.",
             });
         }
+        console.log("VIDEO: " + video);
         // upload the video on cloudinary server and create subsection
         const uploadDetails = await uploadImageToCloudinary(
             video,
             process.env.FOLDER_NAME
         );
+        console.log("VIDEO UPLOADED ON CLOUDINARY: " + uploadDetails);
         const subSectionDetails = await SubSection.create({
             title: title,
-            timeDuration: timeDuration,
+            timeDuration: `${uploadDetails.duration}`,
             description: description,
             videoUrl: uploadDetails.secure_url,
         });
@@ -31,11 +34,12 @@ exports.createSubSection = async (req, res) => {
             { _id: sectionId },
             {
                 $push: {
-                    SubSection: subSectionDetails._id,
+                    subSection: subSectionDetails._id,
                 },
             },
             { new: true }
-        ).populate("subSections");
+        ).populate("subSection");
+
         console.log("Updated subSections: " + updatedSection);
 
         // TODO: we want stor the data of section in subsection using populate and also when we console.log(updatedDetails) then no any id is shown, (log update section here, after adding populate query)
