@@ -1,5 +1,3 @@
-<!-- @format -->
-
 ## StudyPoint Backend Part
 
 - The backend development of StudyPoint follows a structured flow, beginning with the installation of all necessary NPM packages, including bcrypt, cookie-parser, dotenv, express, jsonwebtoken, mongoose, nodemailer, nodemon, and otp-generator. Once the required packages are installed,

@@ -1,0 +1,57 @@
+/** @format */
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* styles.css */
+
+.codeblock2 {
+  position: absolute;
+  width: 372.95px;
+  height: 257.05px;
+  left: calc(50% - 372.95px / 2 - 76.53px);
+  top: calc(50% - 257.05px / 2 - 47.47px);
+  border-radius: 100%;
+  background: linear-gradient(
+    118.19deg,
+    #1fa2ff -3.62%,
+    #12d8fa 50.44%,
+    #a6ffcb 104.51%
+  );
+  opacity: 0.2;
+  filter: blur(34px);
+  transform: matrix(1, 0, -0.03, 1, 0, 0);
+}
+.code-border {
+  border: 2px solid;
+  border-image-slice: 1;
+  border-width: 2px;
+  border-image-source: linear-gradient(to right bottom, #ffffff38, #ffffff00);
+  background: linear-gradient(
+    111.93deg,
+    rgba(14, 26, 45, 0.24) -1.4%,
+    rgba(17, 30, 50, 0.38) 104.96%
+  );
+}
+
+.fog-shadow {
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(
+    circle,
+    rgba(59, 130, 246, 0.4),
+    rgba(37, 99, 235, 0.2)
+  );
+  border-radius: 50%;
+  filter: drop-shadow(4px 8px 8px rgba(59, 130, 246, 0.6));
+}
+
+.homepage_bg {
+  background: url("./Assets/Image/bghome1.jpg");
+}
