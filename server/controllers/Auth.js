@@ -277,3 +277,27 @@ exports.changePassword = async (req, res) => {
         });
     }
 };
+
+exports.logOut = async (req, res) => {
+    try {
+        // Clear the authentication token from cookies
+        res.clearCookie("token", {
+            httpOnly: true,
+            secure: true,
+            sameSite: "None",
+        });
+        console.log("Logged out successfully");
+
+        return res.status(200).json({
+            success: true,
+            message: "Logged out successfully",
+        });
+
+    } catch (err) {
+        console.error("Logout Error:", err);
+        return res.status(500).json({
+            success: false,
+            message: "Logout failed. Please try again.",
+        });
+    }
+};

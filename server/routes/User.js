@@ -5,6 +5,7 @@ const {
     logIn,
     signUp,
     sendOTP,
+    logOut,
     changePassword,
 } = require("../controllers/Auth");
 
@@ -24,6 +25,7 @@ router.post("/login", logIn);
 router.post("/signUp", signUp);
 router.post("/sendOTP", sendOTP);
 router.put("/change-password", auth, changePassword);
+router.delete("/logOut", logOut);
 
 router.post("/reset-password",auth, resetPassword);
 router.post("/resetPasswordToken",auth, resetPasswordToken);

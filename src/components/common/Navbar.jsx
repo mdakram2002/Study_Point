@@ -1,6 +1,6 @@
 /** @format */
 
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Link, matchPath } from "react-router-dom";
 import { NavbarLinks } from "../../data/Navbar_Link";
 import LOGO from "../../Assets/logo/SP_LOGO.png";
@@ -10,24 +10,7 @@ import { ProfileDropdown } from "../core/Auth/ProfileDropdown";
 import { useSelector } from "react-redux";
 import { categories } from "../../services/apis";
 import { apiConnector } from "../../services/apiConnector";
-import { IoIosArrowDropdown } from "react-icons/io";
-// import { LoginForm } from "../../pages/Signup";
-// import { SignupForm } from "../../pages/Login";
-
-// const subLinks = [
-//   {
-//     title: "AIML",
-//     link: "/catalog/aiml",
-//   },
-//   {
-//     title: "AIDS",
-//     link: "/catalog/aids",
-//   },
-//   {
-//     title: "AI",
-//     link: "/catalog/ai",
-//   },
-// ];
+import { FaAngleDown } from "react-icons/fa6";
 
 export const Navbar = () => {
   const location = useLocation();
@@ -37,20 +20,30 @@ export const Navbar = () => {
   const { user } = useSelector((state) => state.profile);
   const { totalItems } = useSelector((state) => state.cart);
   const [subLinks, setSubLinks] = useState([]);
+  const [loading, setLoading] = useState([]);
 
   const fetchSubLinks = async () => {
     try {
-      const results = await apiConnector("GET", categories.CATEGORIS_API);
+      setLoading(true); // Set loading to true before fetching data
+      const results = await apiConnector("GET", categories.CATEGORIES_API);
       console.log(
-        "Printing the results of Categories list from Namvbar: ",
+        "Printing the results of Categories list from Navbar: ",
         results
       );
-      setSubLinks(results.data.data);
+
+      if (results.data.success) {
+        setSubLinks(results.data.categories);
+      } else {
+        console.log("Could not fetch categories");
+      }
     } catch (err) {
       console.log(err);
       console.log("Could not fetch the category list");
+    } finally {
+      setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchSubLinks();
   }, []);
@@ -83,28 +76,34 @@ export const Navbar = () => {
             {NavbarLinks.map((link, index) => (
               <li key={index}>
                 {link.title === "Catalog" ? (
-                  <div className="relative text-richblack-25 flex items-center gap-1 group">
+                  <div className="relative text-richblack-25 flex items-center gap-2 group">
                     <p>{link.title}</p>
-                    <IoIosArrowDropdown />
+                    <FaAngleDown />
 
                     <div
-                      className="inivisible absolute left-[50%] top-[50%] translate-y-[27%]  translate-x-[-56%] flex flex-col rounded-md
+                      className="invisible absolute left-[50%] top-[50%] translate-y-[6%] z-[100]  translate-x-[-55%] flex flex-col rounded-md
                     bg-richblack-25 p-4 text-richblue-800 opacity-0 transition-all duration-200
-                    group-hover:visible group-hover:opacity-100 lg:w-[250px] md:w-[80px] lg:h-[100px] md:h-[50px] "
+                    group-hover:visible group-hover:opacity-100 lg:w-[280px] md:w-[150px]"
                     >
-                      <div className="absolute left-[50%] top-0 lg:h-20 md:h-10 lg:w-20 md:w-10 translate-x-[10%] rotate-45 rounded bg-richblack-25">
-                      </div>
-
-                      {
-                        subLinks? (
-                          subLinks.map((subLinks, index) =>(
-                            <Link to={`${subLinks.link}`} key={index}>
-                              <p>{subLinks.title}</p>
-                            </Link>
-                          ))
-                        ) : (<div></div>)
-                      }
-
+                      <div className="absolute left-[50%] top-0 -z-10 lg:h-20 md:h-10 lg:w-20 md:w-10 translate-x-[10%] rotate-45 select-none rounded bg-richblack-25"></div>
+                      {loading ? (
+                        <p className="text-start">Loading...</p>
+                      ) : subLinks && subLinks.length > 0 ? (
+                        subLinks.map((category, index) => (
+                          <Link
+                            to={`/catalog/${category.name
+                              .split(" ")
+                              .join("-")
+                              .toLowerCase()}`}
+                            className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50"
+                            key={index}
+                          >
+                            <p>{category.name}</p>
+                          </Link>
+                        ))
+                      ) : (
+                        <p className="text-start">No Courses Found</p>
+                      )}
                     </div>
                   </div>
                 ) : (
