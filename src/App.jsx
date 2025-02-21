@@ -9,7 +9,10 @@ import { OpenRoute } from "./components/core/Auth/OpenRoute";
 import { Signup } from "./pages/Signup";
 import { Login } from "./pages/Login";
 import { ForgotPassword } from "./pages/ForgotPassword";
-import { UpdatePassword } from "./pages/updatePassword";
+import { VerifyEmail } from "./pages/VerifyEmail";
+import { UpdatePassword } from "./pages/UpdatePassword";
+import MyProfile from "./components/core/Dashboard/MyProfile";
+
 function App() {
   return (
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
@@ -50,6 +53,16 @@ function App() {
             </OpenRoute>
           }
         />
+        <Route
+          path="verify-email"
+          element={
+            <OpenRoute>
+              <VerifyEmail />
+            </OpenRoute>
+          }
+        />
+        <Route path="dashboard/my-profile" element={<MyProfile />} />
+
       </Routes>
     </div>
   );

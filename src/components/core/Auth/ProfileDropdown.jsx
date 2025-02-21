@@ -10,7 +10,6 @@ import { Link, useNavigate } from "react-router-dom";
 import useOnClickOutside from "../../../hooks/useOneClickOutSide";
 import { logOut } from "../../../services/operations/authAPI";
 
-
 export function ProfileDropdown() {
   const { user } = useSelector((state) => state.profile);
   const dispatch = useDispatch();
