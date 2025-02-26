@@ -55,11 +55,7 @@ export function SignupForm() {
       accountType,
     };
 
-    // Setting signup data to state
-    // To be used after otp verification
     dispatch(setSignupData(signupData));
-
-    // Send OTP to user for verification
     dispatch(sendOTP(formData.email, navigate));
 
     // Reset
@@ -83,6 +79,11 @@ export function SignupForm() {
     {
       id: 2,
       tabName: "Instructor",
+      type: ACCOUNT_TYPE.INSTRUCTOR,
+    },
+    {
+      id: 3,
+      tabName: "Admin",
       type: ACCOUNT_TYPE.INSTRUCTOR,
     },
   ];

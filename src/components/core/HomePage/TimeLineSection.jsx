@@ -31,7 +31,7 @@ const timeLine = [
 export const TimeLineSection = () => {
   return (
     <div>
-      <div className="flex lg:flex-row gap-16 items-center flex-colmb-20 ">
+      <div className="flex lg:flex-row gap-16 items-center flex-col mb-20 ">
         <div className="lg:w-[45%] flex flex-col lg:gap-3 gap-14">
           {timeLine.map((element, index) => (
             <div className="flex flex-col lg:gap-3" key={index}>
@@ -66,14 +66,15 @@ export const TimeLineSection = () => {
             alt="TLI"
             className="shadow-white shadow-[20px_20px_0px_0px] object-cover h-[400px] lg:h-fit"
           />
-          <div className="absolute bg-caribbeangreen-700 flex flex-col text-white uppercase p-5 lg:left-16 translate-y-[50%] lg:bottom-0 lg:right-6 lg:flex-row first-letter lg:gap-0 ">
-            <div className="flex flex-row gap-5 items-center lg:border-r border-caribbeangreen-200">
+          <div className="absolute bg-caribbeangreen-700 flex flex-col text-white uppercase p-5 lg:left-16 lg:translate-y-[50%] lg:translate-x-[0] translate-y-[-200%] translate-x-[0] lg:bottom-0 lg:right-6 lg:flex-row first-letter lg:gap-0 ">
+
+            <div className="flex flex-col lg:flex-row gap-4 lg:border-r lg:items-center border-caribbeangreen-200 ">
               <p className="text-3xl font-bold ">10</p>
               <p className=" text-caribbeangreen-200 text-sm pr-5">
                 Years of Experience
               </p>
             </div>
-            <div className="flex gap-5 items-center p-5">
+            <div className="flex flex-col lg:flex-row gap-4 lg:gap-5 items-start lg:items-center p-2 lg:p-5">
               <p className="text-3xl font-bold ">250</p>
               <p className=" text-caribbeangreen-200 text-sm">
                 Type of Courses

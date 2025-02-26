@@ -170,7 +170,7 @@ export function resetPassword(password, confirmPassword, token) {
       toast.success("Your Password has been reset successfully");
     } catch (error) {
       console.log("RESET PASSWORD TOKEN Error", error);
-      toast.error("Unable to reset password");
+      toast.error("Unable to reset password, Please try again!");
     }
     dispatch(setLoading(false));
   };

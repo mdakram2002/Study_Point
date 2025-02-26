@@ -62,7 +62,7 @@ export const catalogData = {
 };
 // CONTACT-US API
 export const contactusEndpoint = {
-  CONTACT_US_API: BASE_URL + "/contactUs/contact",
+  CONTACT_US_API: BASE_URL + "/contact/contactUs",
 };
 
 // PROFILE PAGE API

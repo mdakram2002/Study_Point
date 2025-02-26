@@ -1,17 +1,19 @@
-/** @format */
 
 import "./App.css";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import { Navbar } from "./components/common/Navbar";
 import { OpenRoute } from "./components/core/Auth/OpenRoute";
+
+import { Navbar } from "./components/common/Navbar";
+import Home from "./pages/Home";
+import { About } from "./pages/About";
+import MyProfile from "./components/core/Dashboard/MyProfile";
+
 import { Signup } from "./pages/Signup";
 import { Login } from "./pages/Login";
 import { ForgotPassword } from "./pages/ForgotPassword";
-import { VerifyEmail } from "./pages/VerifyEmail";
 import { UpdatePassword } from "./pages/UpdatePassword";
-import MyProfile from "./components/core/Dashboard/MyProfile";
+import { VerifyEmail } from "./pages/VerifyEmail";
 
 function App() {
   return (
@@ -46,7 +48,7 @@ function App() {
           }
         />
         <Route
-          path="update-password/:id"
+          path="reset-password/:id"
           element={
             <OpenRoute>
               <UpdatePassword />
@@ -61,8 +63,15 @@ function App() {
             </OpenRoute>
           }
         />
+        <Route
+          path="about"
+          element={
+            <OpenRoute>
+              <About />
+            </OpenRoute>
+          }
+        />
         <Route path="dashboard/my-profile" element={<MyProfile />} />
-
       </Routes>
     </div>
   );
