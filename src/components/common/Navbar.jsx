@@ -25,17 +25,10 @@ export const Navbar = () => {
   const [subLinks, setSubLinks] = useState([]);
   const [loading, setLoading] = useState([]);
 
-  console.log("TOKEN: ", token);
-  console.log("USER: ", user);
-
   const fetchSubLinks = async () => {
     try {
       setLoading(true); // Set loading to true before fetching data
       const results = await apiConnector("GET", categories.CATEGORIES_API);
-      console.log(
-        "Printing the results of Categories list from Navbar: ",
-        results
-      );
 
       if (results.data.success) {
         setSubLinks(results.data.categories);
@@ -74,7 +67,7 @@ export const Navbar = () => {
               loading="lazy"
               className="h-[40px] w-[40px] object-contain rounded-full"
             />
-            <h1 className="text-white text-[20px] pl-0 font-bold">
+            <h1 className="text-white text-[20px] pl-0 mt-0.5 font-bold">
               StudyPoint
             </h1>
           </div>
@@ -161,7 +154,7 @@ export const Navbar = () => {
               </button>
             </Link>
           )}
-          {token !== null && <ProfileDropdown/>}
+          {token !== null && <ProfileDropdown />}
         </div>
         <button className="mr-4 md:hidden">
           <AiOutlineMenu fontSize={24} fill="#AFB2BF" />

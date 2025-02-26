@@ -17,8 +17,11 @@ export function ProfileDropdown() {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
-  useOnClickOutside(ref, () => setOpen(false));
+  console.log("Dropdown State:", open);
 
+
+  useOnClickOutside(ref, () => setOpen(false));
+  console.log("User in ProfileDropdown:", user);
   if (!user) return null;
 
   return (

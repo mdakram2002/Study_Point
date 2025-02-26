@@ -1,3 +1,5 @@
+/** @format */
+
 import React from "react";
 import { HighlightText } from "./HighlightText";
 import { CTAButton } from "./CTAButton";
@@ -8,9 +10,9 @@ import PlanYourLession from "../../../Assets/Image/Plan_your_lessons (1).svg";
 
 export const LearningLanguageSection = () => {
   return (
-    <div className="mt-24">
-      <div className="flex flex-col gap-5 items-center w-11/12 max-w-maxContent">
-        <div className="text-4xl items-center text-richblack-700 font-semibold">
+    <div className="flex flex-col items-center">
+      <div>
+        <div className="text-4xl items-center text-center text-richblack-700 font-semibold my-10">
           Your swiss knife for
           <HighlightText text={"learning any language"} />
         </div>
@@ -19,29 +21,28 @@ export const LearningLanguageSection = () => {
           realistic voice-over, progress tracking, custom schedule and more.
         </div>
 
-        <div className="flex flex-row items-center justify-center ml-20">
+        <div className="flex flex-col lg:flex-row items-center justify-center">
           <img
             src={KnowYourProgress}
             alt="KnowYourProgressImg"
-            className="object-contain -mr-32"
+            className="object-contain lg:-mr-32 lg:mt-0 mt-10"
           />
           <img
             src={CompairWithOthers}
             alt="CompairWithOthers"
-            className="object-contain"
+            className="object-contain lg:-mb-10 lg:-mt-0"
           />
           <img
             src={PlanYourLession}
             alt="PlanYourLession"
-            className="object-contain -ml-36"
+            className="object-contain  lg:-ml-36 lg:-mt-5"
           />
         </div>
-
-        <div className="mb-20">
-          <CTAButton active={true} linkto={"/signup"}>
-            <div>Learn More</div>
-          </CTAButton>
-        </div>
+      </div>
+      <div className="flex mb-10 lg:mt-14 lg:mb-12 w-fit items-center">
+        <CTAButton active={true} linkto={"/signup"}>
+          <div>Learn More</div>
+        </CTAButton>
       </div>
     </div>
   );

@@ -27,8 +27,8 @@ router.post("/sendOTP", sendOTP);
 router.put("/change-password", auth, changePassword);
 router.delete("/logOut", logOut);
 
-router.post("/reset-password",auth, resetPassword);
-router.post("/resetPasswordToken",auth, resetPasswordToken);
+router.post("/reset-password", resetPassword);
+router.post("/resetPasswordToken", resetPasswordToken);
 
 router.post("/createCourse", createCourse);
 router.get("/showAllCourses", showAllCourses);

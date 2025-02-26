@@ -127,9 +127,9 @@ const Home = () => {
 
       {/* Section 2-- Explore Full Catalog*/}
       <div className="bg-white  text-richblue-100">
-        <div className="homepage_bg h-[320px]">
-          <div className=" mx-auto flex w-11/12 max-w-maxContent lg:flex-col flex-row items-center justify-between gap-8 ">
-            <div className="h-[175px]"></div>
+        <div className="homepage_bg lg:h-[320px] h-[200px]">
+          <div className=" mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 ">
+            <div className="lg:h-[175px] h-10"></div>
             <div className="flex flex-row gap-7 text-white">
               <CTAButton active={true} linkto={"/signup"}>
                 <div className="flex items-center gap-3">
@@ -149,7 +149,7 @@ const Home = () => {
         <div className="mx-auto w-11/12 max-w-maxContent flex flex-col items-center justify-between gap-7 mt-10 mb-16">
           {/* big box */}
 
-          <div className="flex flex-row gap-20 mb-5 lg:mt-20 lg:flex-row lg:gap-0">
+          <div className="flex flex-col gap-20 mb-5 lg:mt-20 lg:flex-row lg:gap-0">
             <div className="text-4xl font-semibold lg:w-[45%] text-richblack-700">
               Get the skills you need for a
               <HighlightText text={"Job that is in demand."} />
