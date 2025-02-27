@@ -14,6 +14,7 @@ import { Login } from "./pages/Login";
 import { ForgotPassword } from "./pages/ForgotPassword";
 import { UpdatePassword } from "./pages/UpdatePassword";
 import { VerifyEmail } from "./pages/VerifyEmail";
+import { Contact } from "./pages/Contact";
 
 function App() {
   return (
@@ -71,6 +72,8 @@ function App() {
             </OpenRoute>
           }
         />
+        <Route path="/contact" element={<Contact />} />
+
         <Route path="dashboard/my-profile" element={<MyProfile />} />
       </Routes>
     </div>

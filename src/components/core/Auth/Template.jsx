@@ -33,7 +33,7 @@ export function Template({
             </p>
             {formType === "signup" ? <SignupForm /> : <LoginForm />}
           </div>
-          <div className="relative mx-auto w-11/12 max-w-[450px] md:mx-0">
+          <div className="relative mx-auto w-11/12 max-w-[450px] md:mx-0 mt-3">
             <img
               src={frameImg}
               alt="Pattern"

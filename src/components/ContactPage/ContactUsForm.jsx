@@ -53,7 +53,7 @@ export const ContactUsForm = () => {
       onSubmit={handleSubmit(submitContactForm)}
     >
       <div className="flex flex-col gap-5">
-        <div className="flex flex-col lg:flex-row gap-2 lg:w-[45%]">
+        <div className=" flex flex-col lg:flex-row gap-5 lg:w-[60%]">
           {/* firstName  */}
           <div className="flex flex-col">
             <label className="text-[15px] mb-2 text-richblack-5" htmlFor="firstName">
