@@ -3,11 +3,13 @@ import "./App.css";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { OpenRoute } from "./components/core/Auth/OpenRoute";
+import { PrivateRoute } from "./components/core/Auth/PrivateRoute";
 
 import { Navbar } from "./components/common/Navbar";
 import Home from "./pages/Home";
 import { About } from "./pages/About";
 import MyProfile from "./components/core/Dashboard/MyProfile";
+import { Dashboard } from "./pages/Dashboard";
 
 import { Signup } from "./pages/Signup";
 import { Login } from "./pages/Login";
@@ -15,6 +17,8 @@ import { ForgotPassword } from "./pages/ForgotPassword";
 import { UpdatePassword } from "./pages/UpdatePassword";
 import { VerifyEmail } from "./pages/VerifyEmail";
 import { Contact } from "./pages/Contact";
+import { Error } from "./pages/Error";
+import Settings from "./components/core/Dashboard/Settings/Index";
 
 function App() {
   return (
@@ -74,7 +78,19 @@ function App() {
         />
         <Route path="/contact" element={<Contact />} />
 
-        <Route path="dashboard/my-profile" element={<MyProfile />} />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        >
+          <Route path="/dashboard/my-profile" element={<MyProfile />} />
+          <Route path="/dashboard/settings" element={<Settings />} />
+        </Route>
+
+        <Route path="*" element={<Error />} />
       </Routes>
     </div>
   );

@@ -3,9 +3,8 @@
 import { RiEditBoxLine } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import { IconButtonModal } from "../../common/IconButtonModal";
 import { formattedDate } from "../../../utils/dateFormatter";
-import IconButton from "../../common/IconButton";
 
 export default function MyProfile() {
   const { user } = useSelector((state) => state.profile);
@@ -30,26 +29,27 @@ export default function MyProfile() {
             <p className="text-sm text-richblack-300">{user?.email}</p>
           </div>
         </div>
-        <IconButton
+        <IconButtonModal
           text="Edit"
           onclick={() => {
             navigate("/dashboard/settings");
           }}
         >
           <RiEditBoxLine />
-        </IconButton>
+        </IconButtonModal>
       </div>
+      {/* About Section */}
       <div className="my-10 flex flex-col gap-y-10 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-8 px-12">
         <div className="flex w-full items-center justify-between">
           <p className="text-lg font-semibold text-richblack-5">About</p>
-          <IconButton
+          <IconButtonModal
             text="Edit"
             onclick={() => {
               navigate("/dashboard/settings");
             }}
           >
             <RiEditBoxLine />
-          </IconButton>
+          </IconButtonModal>
         </div>
         <p
           className={`${
@@ -61,19 +61,20 @@ export default function MyProfile() {
           {user?.additionalDetails?.about ?? "Write Something About Yourself"}
         </p>
       </div>
+      {/* Personal Details */}
       <div className="my-10 flex flex-col lg:gap-y-10 md:gap-x-4 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-8 px-12">
         <div className="flex w-full items-center justify-between">
           <p className="text-lg font-semibold text-richblack-5">
             Personal Details
           </p>
-          <IconButton
+          <IconButtonModal
             text="Edit"
             onclick={() => {
               navigate("/dashboard/settings");
             }}
           >
             <RiEditBoxLine />
-          </IconButton>
+          </IconButtonModal>
         </div>
         <div className="flex max-w-[500px] justify-between">
           <div className="flex flex-col gap-y-5">

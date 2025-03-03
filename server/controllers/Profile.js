@@ -13,7 +13,8 @@ const fileUpload = require("express-fileupload");
 exports.updateProfile = async (req, res) => {
     try {
         const {
-            name,
+            firstName,
+            lastName,
             profession = "",
             about = "",
             contactNumber,
@@ -23,7 +24,7 @@ exports.updateProfile = async (req, res) => {
 
         const id = req.user?.id || req.body.id;
 
-        if (!name || !contactNumber || !gender || !id) {
+        if (!firstName || !lastName || !contactNumber || !gender || !id) {
             return res.status(400).json({
                 success: false,
                 message: "All fields are required for update profile",
@@ -48,7 +49,8 @@ exports.updateProfile = async (req, res) => {
                 message: "Profile not found",
             });
         }
-        profileDetails.name = name;
+        profileDetails.firstName = firstName;
+        profileDetails.lastName = lastName;
         profileDetails.profession = profession;
         profileDetails.about = about;
         profileDetails.dateOfBirth = dateOfBirth;

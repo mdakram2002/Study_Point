@@ -1,4 +1,3 @@
-/** @format */
 
 // This will prevent authenticated users from accessing this route
 import { useSelector } from "react-redux";
