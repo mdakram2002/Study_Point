@@ -1,4 +1,3 @@
-/** @format */
 
 import { RiEditBoxLine } from "react-icons/ri";
 import { useSelector } from "react-redux";

@@ -73,7 +73,7 @@ exports.updateSubSection = async (req, res) => {
 
         // Check if a new video file is provided and update it
         if (req.files && req.files.videoFile !== undefined) {
-            const video = req.files.videoFile;
+            const video = req.files?.videoFile || req.files?.file;
             const uploadDetails = await uploadImageToCloudinary(
                 video,
                 process.env.FOLDER_NAME
@@ -141,9 +141,11 @@ exports.deleteSubSection = async (req, res) => {
                 message: "SubSection not found.",
             });
         }
+        const updatedSubSection = await Section.findById(sectionId).populate("subSection");
 
         return res.status(200).json({
             success: true,
+            data: updatedSubSection,
             message: "SubSection deleted successfully.",
         });
     } catch (err) {

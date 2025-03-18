@@ -1,4 +1,3 @@
-/** @format */
 
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -59,7 +58,7 @@ export const Sidebar = () => {
             }
             className="text-sm font-medium text-richblack-300 px-8 py-2"
           >
-            <div className="flex lg:flex-row flex-col gap-x-2 ">
+            <div className="flex lg:flex-row gap-x-2 ">
               <VscSignOut className="text-lg" />
               <span>LogOut</span>
             </div>

@@ -47,7 +47,7 @@ exports.createCourse = async (req, res) => {
                 success: false, message: "All fields are mandatory."
             });
         }
-        // console.log("THUBMNAIL IMAGE:", req.files.thumbnailImage);
+        console.log("THUBMNAIL IMAGE:", req.files.thumbnailImage);
         console.log("Files Received:", req.files);
 
         console.log("INSTRUCTIONS:", instructions);
