@@ -1,4 +1,5 @@
 const SubSection = require("../models/SubSection");
+const mongoose = require("mongoose");
 const Section = require("../models/Section");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 
@@ -6,10 +7,11 @@ const { uploadImageToCloudinary } = require("../utils/imageUploader");
 exports.createSubSection = async (req, res) => {
     try {
         // fetch the data from the request body and extract the vedio url and validate the data.
-        const { sectionId, title, timeDuration, description } = req.body;
+        const { sectionId, title, description } = req.body;
+        console.log("REQUEST BODY", req.body);
         const video = req.files.videoFile;
 
-        if ((!sectionId || !title || !timeDuration || !description, !video)) {
+        if ((!sectionId || !title || !description || !video)) {
             return res.status(400).json({
                 success: false,
                 message:
@@ -17,21 +19,30 @@ exports.createSubSection = async (req, res) => {
             });
         }
         console.log("VIDEO: " + video);
+
+        if (!mongoose.Types.ObjectId.isValid(sectionId)) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid Section ID format.",
+            });
+        }
         // upload the video on cloudinary server and create subsection
         const uploadDetails = await uploadImageToCloudinary(
             video,
             process.env.FOLDER_NAME
         );
         console.log("VIDEO UPLOADED ON CLOUDINARY: " + uploadDetails);
+
+
         const subSectionDetails = await SubSection.create({
             title: title,
             timeDuration: `${uploadDetails.duration}`,
-            description: description,
+            description,
             videoUrl: uploadDetails.secure_url,
         });
         // update the section with this subsection objectId and sent return response to user.
         const updatedSection = await Section.findByIdAndUpdate(
-            { _id: sectionId },
+            sectionId,
             {
                 $push: {
                     subSection: subSectionDetails._id,
@@ -46,7 +57,8 @@ exports.createSubSection = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: "SubSection created and section updated successfully",
-            updatedSection,
+            subSectionId: subSectionDetails._id,
+            data: updatedSection,
         });
     } catch (err) {
         console.error("Error updating SubSection: ", err);
@@ -61,7 +73,7 @@ exports.createSubSection = async (req, res) => {
 // Update SubSection
 exports.updateSubSection = async (req, res) => {
     try {
-        const { subSectionId, title, timeDuration, description } = req.body;
+        const { subSectionId, title, description } = req.body;
         let videoUrl;
 
         if (!subSectionId) {
@@ -86,7 +98,7 @@ exports.updateSubSection = async (req, res) => {
             subSectionId,
             {
                 title,
-                timeDuration,
+                // timeDuration,
                 description,
                 ...(videoUrl && { videoUrl }), // Update video only if provided
             },

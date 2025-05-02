@@ -1,4 +1,3 @@
-/** @format */
 
 import React, { useState } from "react";
 import { FaLongArrowAltLeft } from "react-icons/fa";

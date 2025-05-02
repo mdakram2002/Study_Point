@@ -3,7 +3,6 @@ import { toast } from "react-hot-toast";
 import { apiConnector } from "../apiConnector";
 import { courseEndpoints } from "../apis";
 
-
 const {
   GET_ALL_COURSE_API,
   COURSE_DETAILS_API,
@@ -110,25 +109,66 @@ export const addCourseDetails = async (data, token) => {
 // edit the course details
 export const editCourseDetails = async (data, token) => {
   let result = null;
+  // console.log("Before, Sending data to backend:", data);
   const toastId = toast.loading("Loading...");
   try {
-    const response = await apiConnector("POST", EDIT_COURSE_API, data, {
+    const response = await apiConnector("PUT", EDIT_COURSE_API, data, {
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${token}`,
     });
+
     console.log("EDIT COURSE API RESPONSE: ", response);
     if (!response?.data?.success) {
       throw new Error("Could Not Update Course Details");
     }
     toast.success("Course Details Updated Successfully");
     result = response?.data?.data;
+    // console.log("Response from courseDetails: ", result)
+
   } catch (error) {
     console.log("EDIT COURSE API ERROR: ", error);
     toast.error(error.message);
   }
+
+  // console.log("After, Sending data to backend:", data);
   toast.dismiss(toastId);
   return result;
 };
+
+// export const editCourseDetails = async (data, token) => {
+//   let result = null;
+
+//   if (data instanceof FormData) {
+//     console.log("Sending FormData to backend:");
+//     for (let pair of data.entries()) {
+//       console.log(`${pair[0]}:`, pair[1]);
+//     }
+//   } else {
+//     console.log("Sending data to backend:", data);
+//   }
+
+//   const toastId = toast.loading("Loading...");
+//   try {
+//     const response = await apiConnector("PUT", EDIT_COURSE_API, data, {
+//       Authorization: `Bearer ${token}`, // DO NOT set Content-Type manually
+//     });
+
+//     console.log("EDIT COURSE API RESPONSE: ", response);
+
+//     if (!response?.data?.success) {
+//       throw new Error("Could Not Update Course Details");
+//     }
+//     toast.success("Course Details Updated Successfully");
+//     result = response?.data?.data;
+//   } catch (error) {
+//     console.log("EDIT COURSE API ERROR: ", error);
+//     toast.error(error.message);
+//   }
+//   toast.dismiss(toastId);
+//   return result;
+// };
+
+
 
 // create a section
 export const createSection = async (data, token) => {
@@ -282,6 +322,7 @@ export const fetchInstructorCourses = async (token) => {
   } catch (error) {
     console.log("INSTRUCTOR COURSES API ERROR: ", error);
     toast.error(error.message);
+    return null;
   }
   toast.dismiss(toastId);
   return result;

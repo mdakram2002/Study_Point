@@ -17,6 +17,8 @@ import { MyCourses } from "./components/core/Dashboard/MyCourses";
 import EditCourse from "./components/core/Dashboard/EditCourse";
 
 import Home from "./pages/Home";
+import Catalog from "./pages/Catalog";
+import { CourseDetails } from "./pages/CourseDetails";
 import { About } from "./pages/About";
 import { Signup } from "./pages/Signup";
 import { Login } from "./pages/Login";
@@ -36,7 +38,8 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-
+        <Route path="catalog/:catalogName" element={<Catalog />} />
+        <Route path="course/:courseId" element={<CourseDetails />} />
         <Route
           path="signup"
           element={

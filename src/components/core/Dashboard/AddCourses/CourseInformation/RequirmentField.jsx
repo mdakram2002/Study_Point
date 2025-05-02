@@ -1,5 +1,4 @@
-/**
- * @format
+/*
  * @Important @Code / @SaveThisCodeForFuture
  */
 import React, { useEffect, useState } from "react";

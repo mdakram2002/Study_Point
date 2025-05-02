@@ -1,4 +1,3 @@
-/** @format */
 
 export const ACCOUNT_TYPE = {
   STUDENT: "Student",

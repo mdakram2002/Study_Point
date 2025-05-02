@@ -14,6 +14,10 @@ export default function EditCourse() {
   const { token } = useSelector((state) => state.auth);
 
   useEffect(() => {
+    if (!courseId) {
+      console.error("❌ Course ID is missing from URL params.");
+      return;
+    }
     const populateCourseDetails = async () => {
       setLoading(true);
       const result = await getFullDetailsOfCourse(courseId, token);
@@ -28,7 +32,7 @@ export default function EditCourse() {
   }, []);
 
   if (loading) {
-    return <div className="spinner"></div>;
+    return <div className="spinner flex items-center justify-center"></div>;
   }
 
   return (

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { COURSE_STATUS } from "../../../../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
+import  "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { ConfirmationModal } from "../../../common/ConfirmationModal";
 import {
   deleteCourse,
@@ -24,7 +25,7 @@ export const CourseTable = ({ courses, setCourses }) => {
     await deleteCourse({ courseId: courseId }, token);
     const result = await fetchInstructorCourses(token);
     if (result) {
-      setCourses(result.data.data);
+      setCourses(result);
     }
     setConfirmationModal(null);
     setLoading(false);
@@ -33,8 +34,8 @@ export const CourseTable = ({ courses, setCourses }) => {
   return (
     <div>
       <Table>
-        <Thead>
-          <Tr className="flex">
+        <Thead className="flex w-11/12 lg:flex-col bg-richblack-900 items-center text-center lg:h-10 justify-center mt-5 rounded-sm">
+          <Tr className="flex space-x-20">
             <Th>Courses</Th>
             <Th>Duration</Th>
             <Th>Price</Th>
@@ -54,16 +55,16 @@ export const CourseTable = ({ courses, setCourses }) => {
                 key={course._id}
                 className="flex gap-x-10 border-richblack-800"
               >
-                <Td className="flex gap-x-4">
+                <Td className="flex space-y-4">
                   <img
                     src={course?.thumbnail}
                     alt="CourseImg"
-                    className="h-[150px] w-[180px] rounded-md object-cover"
+                    className="h-[160px] w-[250px] rounded-md object-cover"
                   />
-                  <div className="flex flex-col">
-                    <p>{course.courseName}</p>
-                    <p>{course.courseDescription}</p>
-                    <p>Created: </p>
+                  <div className="flex flex-col space-x-4">
+                    <p className="ml-4 font-semibold text-xl">{course.courseName}</p>
+                    <p className="text-richblack-100 ">{course.courseDescription}</p>
+                    <p>Created:{course?.instructor?.firstName} {course?.instructor?.lastName}</p>
                     {course.status === COURSE_STATUS.DRAFT ? (
                       <p className="text-pure-reds-200">DRAFTED</p>
                     ) : (
@@ -71,9 +72,9 @@ export const CourseTable = ({ courses, setCourses }) => {
                     )}
                   </div>
                 </Td>
-                <Td>2hr 40min</Td>
-                <Td>${course.price}</Td>
-                <Td>
+                <Td className="mt-4">2hr 40min</Td>
+                <Td className="mt-4">${course.price}</Td>
+                <Td className="mt-4">
                   <button
                     disabled={loading}
                     onClick={() =>
@@ -95,12 +96,12 @@ export const CourseTable = ({ courses, setCourses }) => {
                         btnText2: "Cancel",
                         btn1Handler: () =>
                           !loading
-                            ? () => handleCourseDelete(course._id)
-                            : () => {},
+                            ? handleCourseDelete(course._id)
+                            : {},
                         btn2Handler: () =>
                           !loading
-                            ? () => setConfirmationModal(null)
-                            : () => {},
+                            ? setConfirmationModal(null)
+                            :{},
                       })
                     }
                   >

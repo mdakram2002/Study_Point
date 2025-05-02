@@ -1,8 +1,7 @@
 
 const express = require("express");
 const router = express.Router();
-
-const { auth, isStudent, isInstructor } = require("../middlewares/auth");
+const { auth, isStudent, isInstructor, isAdmin } = require("../middlewares/auth");
 
 const {
   createCategory,
@@ -60,10 +59,10 @@ router.post("/updateSubSection", auth, isInstructor, updateSubSection);
 router.delete("/deleteSubSection", auth, isInstructor, deleteSubSection);
 
 // Category routes (Only by Admin)
-const { isAdmin } = require("../middlewares/auth");
-router.post("/createCategory", auth, isAdmin, createCategory)
+router.post("/createCategory", auth, isAdmin, createCategory);
+// Public routes
 router.get("/showAllCategories", showAllCategories);
-router.post("/getCategoryPageDetails", categoryPageDetails);
+router.post("/categoryPageDetails", categoryPageDetails);
 
 // Course routes
 router.post('/createCourse', auth, isInstructor, createCourse);

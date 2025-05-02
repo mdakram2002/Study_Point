@@ -26,22 +26,23 @@ export const CoursePublishedForm = () => {
 
   const goToCourse = () => {
     dispatch(resetCourseState());
-    navigate("/dashboard/my-course");
+    navigate("/dashboard/my-courses");
   };
 
   const handleCoursePublish = async () => {
     if (
       (course?.status === COURSE_STATUS.PUBLISHED &&
         getValues("public") === true) ||
-      (course.status === COURSE_STATUS.DRAFT && getValues("public" === false))
+      (course.status === COURSE_STATUS.DRAFT && getValues("public") === false)
     ) {
       // no updation in form so no need to make api call
       goToCourse();
       return;
     }
     const formData = new FormData();
-    formData.append("courseId", course._Id);
+    formData.append("courseId", course._id);
 
+    console.log("CourseID from Course Published form:", course._id);
     const courseStatus = getValues("public")
       ? COURSE_STATUS.PUBLISHED
       : COURSE_STATUS.DRAFT;
@@ -57,7 +58,8 @@ export const CoursePublishedForm = () => {
     setLoading(false);
   };
 
-  const onSubmit = () => {
+  const onSubmit = (data) => {
+    // console.log("Printing the DATA from CoursePublishedForm:", data)
     handleCoursePublish();
   };
   const goBack = () => {
@@ -65,8 +67,8 @@ export const CoursePublishedForm = () => {
   };
 
   return (
-    <div className="rounded-md border-[1px] text-white bg-richblack-800 p-6 border-richblue-700">
-      <p>Publish Course</p>
+    <div className="rounded-md border-[1px] text-white bg-richblack-800 p-4 border-richblue-700 mt-8">
+      <p className="text-richblack-5">Publish Course</p>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="rounded-md border-richblack-700 bg-richblack-800 p-6 space-y-4 mt-1"
@@ -88,7 +90,7 @@ export const CoursePublishedForm = () => {
             disabled={loading}
             type="button"
             onClick={goBack}
-            className="flex items-center rounded-md bg-richblack-300 p-4 "
+            className="flex items-center rounded-md bg-richblack-300 p-3 "
           >
             Back
           </button>

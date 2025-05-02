@@ -52,10 +52,10 @@ exports.auth = async (req, res, next) => {
         // Proceed to the next middleware or route handler
         next();
     } catch (err) {
-        console.error("Error in auth middleware:", err);
+        console.error("Authentication error:", err);
         return res.status(500).json({
             success: false,
-            message: "Something went wrong while verifying the token",
+            message: "Authentication failed.",
         });
     }
 };

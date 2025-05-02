@@ -217,7 +217,14 @@ exports.getEnrolledCourses = async (req, res) => {
             })
             .exec();
 
+        if (!userDetails) {
+            return res.status(404).json({
+                success: false,
+                message: `Could not find user with ID: ${userId}`,
+            });
+        }
         userDetails = userDetails.toObject();
+
         var subSectionLength = 0;
 
         for (var i = 0; i < userDetails.courses.length; i++) {
@@ -255,13 +262,6 @@ exports.getEnrolledCourses = async (req, res) => {
                     ) / multiplier;
             }
         }
-        if (!userDetails) {
-            return res.status(400).json({
-                success: false,
-                message: `Could not find user details with ID: ${userDetails}`,
-            });
-        }
-
         return res.status(200).json({
             success: true,
             data: userDetails.courses,

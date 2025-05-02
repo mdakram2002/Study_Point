@@ -54,10 +54,10 @@ const userSchema = new mongoose.Schema({
     resetPasswordExpires: {
         type: Date,
     },
-    courseProgrss: [
+    courseProgress: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "CourseProgrss",
+            ref: "CourseProgress",
         },
     ],
 });

@@ -1,4 +1,4 @@
-
+const mongoose = require("mongoose");
 const Course = require("../models/Course");
 const Category = require("../models/category");
 const User = require("../models/User");
@@ -217,7 +217,7 @@ exports.getFullCourseDetails = async (req, res) => {
                 },
             })
             .populate("category")
-            .populate("ratingAndReviews")
+            // .populate("ratingAndReviews")
             .populate({
                 path: "courseContent",
                 populate: {
@@ -248,7 +248,7 @@ exports.getFullCourseDetails = async (req, res) => {
             });
         });
 
-        const totalDuration = convertSecondsToDuration(totalDurationInSeconds);
+        const totalDuration = convertSecondToDuration(totalDurationInSeconds);
 
         return res.status(200).json({
             success: true,
@@ -330,7 +330,7 @@ exports.editCourse = async (req, res) => {
         console.error(error);
         res.status(500).json({
             success: false,
-            message: "Internal server error",
+            message: "Internal server error, From Course",
             error: error.message,
         });
     }

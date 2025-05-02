@@ -79,6 +79,9 @@ export const CourseInformation = () => {
         const formData = new FormData();
         formData.append("courseId", course._id);
 
+        console.log("CourseID from CourseInformation form:", course._id);
+        console.log("course object, CourseINformation:", course);
+
         if (currentValues.courseTitle !== course.courseName) {
           formData.append("courseName", data.courseTitle);
         }
@@ -88,7 +91,7 @@ export const CourseInformation = () => {
         if (currentValues.coursePrice !== course.price) {
           formData.append("price", data.coursePrice);
         }
-        if (currentValues.courseCategory !== course.category._id) {
+        if (currentValues.courseCategory !== (course.category?._id || course.category)) {
           formData.append("category", data.courseCategory);
         }
         if (currentValues.courseTags !== course.tag) {
@@ -120,8 +123,8 @@ export const CourseInformation = () => {
       } else {
         toast.error("NO CHANGE MADE TO THE FORM: ");
       }
-      // // console.log("API Response:", result);
-      // console.log("I AM IN FORMDATA: " + formData);
+      console.log("API Response:", result);
+      console.log("I AM IN FORMDATA: " + formData);
 
       return;
     }
@@ -141,10 +144,10 @@ export const CourseInformation = () => {
     formData.append("courseImage", data.thumbnailImage);
     formData.append("status", COURSE_STATUS.DRAFT);
 
-    // console.log("Final FormData Before API Call:");
-    // for (let [key, value] of formData.entries()) {
-    //   console.log(key, value);
-    // }
+    console.log("Final FormData Before API Call:");
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
     // Append the file
     if (data.courseImage) {
       formData.append("thumbnailImage", data.courseImage);

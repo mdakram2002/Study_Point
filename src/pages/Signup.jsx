@@ -1,4 +1,3 @@
-/** @format */
 
 import signupImg from "../Assets/Image/signup.webp";
 import { Template } from "../components/core/Auth/Template";

@@ -1,4 +1,3 @@
-/** @format */
 
 import React, { useState, useEffect } from "react";
 import { Link, matchPath, useLocation } from "react-router-dom";
@@ -79,7 +78,9 @@ export const Navbar = () => {
             {NavbarLinks.map((link, index) => (
               <li key={index}>
                 {link.title === "Catalog" ? (
-                  <div className="relative text-richblack-25 flex items-center gap-2 group">
+                  <div className={`relative flex items-center gap-2 group ${
+                    location.pathname.startsWith("/catalog") ? "text-yellow-25" : "text-richblack-25"
+                    } cursor-pointer`}>
                     <p>{link.title}</p>
                     <FaAngleDown />
 
@@ -98,7 +99,7 @@ export const Navbar = () => {
                               .split(" ")
                               .join("-")
                               .toLowerCase()}`}
-                            className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50"
+                            className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50 cursor-pointer"
                             key={index}
                           >
                             <p>{category.name}</p>

@@ -1,4 +1,3 @@
-/** @format */
 
 import { IoMdEyeOff, IoMdEye } from "react-icons/io";
 import { FaLongArrowAltLeft } from "react-icons/fa";

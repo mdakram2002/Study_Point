@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { fetchInstructorCourses } from "../../../services/operations/courseDetailsAPI";
 import { IconButtonModal } from "../../common/IconButtonModal";
 import { CourseTable } from "./InstructorCourses/CourseTable";
-import { setCourse } from "../../../slices/courseSlice";
 
 export const MyCourses = () => {
   const { token } = useSelector((state) => state.auth);
@@ -16,18 +15,23 @@ export const MyCourses = () => {
 
   useEffect(() => {
     const fetchCourses = async () => {
-      const result = await fetchInstructorCourses(token);
-      if (result) {
-        setCourse(result);
+      try {
+        const result = await fetchInstructorCourses(token);
+        if (result) {
+          console.log("Fetched courses MyCourses:", result);
+          setCourses(result);
+        }
+      } catch (error) {
+        console.error("Error fetching courses:", error);
       }
     };
     fetchCourses();
-  }, []);
+  }, [token, setCourses]);
 
   return (
-    <div className="text-white">
+    <div className="flex flex-col w-11/12 text-white">
       <div className="flex justify-between">
-        <h1>My Courses</h1>
+        <h1 className="text-2xl text-richblack-5 font-semibold">My Courses</h1>
         <IconButtonModal
           text="Add Courses"
           onclick={() => navigate("/dashboard/add-course")}
