@@ -132,9 +132,9 @@ export const Navbar = () => {
         <div className="hidden items-center gap-x-4 md:flex">
           {user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
             <Link to={"/dashboard/cart"} className="relative">
-              <FaCartArrowDown className="text-richblack-50 cursor-pointer" />
+              <FaCartArrowDown className="text-richblack-50 cursor-pointer text-[20px]"/>
               {totalItems > 0 && (
-                <span className="absolute -bottom-2 -right-2 gird h-5 w-5 place-items-start overflow-hidden bg-richblack-600 text-center text-sm font-bold text-yellow-100">
+                <span className="absolute -bottom-2 -right-2 -top-2 gird h-4 w-4 place-items-start overflow-hidden bg-richblack-800 rounded-full text-center text-[12px] font-bold text-yellow-100">
                   {totalItems}
                 </span>
               )}

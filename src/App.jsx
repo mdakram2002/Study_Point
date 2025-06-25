@@ -28,8 +28,10 @@ import { VerifyEmail } from "./pages/VerifyEmail";
 import { Contact } from "./pages/Contact";
 import { Error } from "./pages/Error";
 import { Dashboard } from "./pages/Dashboard";
+import { ViewCourses } from "./pages/ViewCourses";
 
 import { ACCOUNT_TYPE } from "./utils/constants";
+import { VideoDetails } from "./components/core/ViewCourse/VideoDetails";
 
 function App() {
   const { user } = useSelector((state) => state.profile);
@@ -122,6 +124,23 @@ function App() {
               />
             </>
           )}
+        </Route>
+
+        <Route element={
+          <PrivateRoute>
+            <ViewCourses/>
+          </PrivateRoute>
+        }>
+          {
+            user?.accountType === ACCOUNT_TYPE.STUDENT && (
+              <>
+              <Route
+                path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+                element={<VideoDetails/>}
+              />
+              </>
+            )
+          }
         </Route>
 
         <Route path="*" element={<Error />} />

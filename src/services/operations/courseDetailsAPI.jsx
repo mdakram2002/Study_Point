@@ -390,14 +390,14 @@ export const markLectureAsComplete = async (data, token) => {
     });
     console.log("MARK_LECTURE_AS_COMPLETE_API API RESPONSE: ", response);
 
-    if (!response.data.message) {
-      throw new Error(response.data.error);
+    if (!response.data.success) {
+      throw new Error(response.data.error || "Lecture completion failed");
     }
     toast.success("Lecture Completed Successfully");
     result = true;
   } catch (error) {
     console.log("MARK_LECTURE_AS_COMPLETE_API API ERROR: ", error);
-    toast.error(error.message);
+    toast.error(error.message || "Something went wrong");
     result = false;
   }
   toast.dismiss(toastId);

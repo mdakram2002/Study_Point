@@ -6,7 +6,7 @@ const { uploadImageToCloudinary } = require("../utils/imageUploader");
 const Section = require("../models/Section");
 const SubSection = require("../models/SubSection");
 const CourseProgress = require("../models/CourseProgress");
-const { convertSecondToDuration } = require("../utils/secToDuration");
+const { convertSecondsToDuration } = require("../utils/secToDuration");
 
 exports.createCourse = async (req, res) => {
     try {
@@ -149,6 +149,7 @@ exports.showAllCourses = async (req, res) => {
 exports.getCoursesDetails = async (req, res) => {
     try {
         const { courseId } = req.body;
+        console.log("COURSE ID FROM BACKEND: ", courseId)
 
         const courseDetails = await Course.findById({ _id: courseId })
             .populate({
@@ -183,7 +184,7 @@ exports.getCoursesDetails = async (req, res) => {
             });
         });
 
-        const totalDuration = convertSecondToDuration(totalDurationInSeconds);
+        const totalDuration = convertSecondsToDuration(totalDurationInSeconds);
 
         return res.status(200).json({
             success: true,
@@ -197,8 +198,7 @@ exports.getCoursesDetails = async (req, res) => {
         console.error(err);
         return res.status(500).json({
             success: false,
-            message: err.message,
-            message: "Something went wrong, Please try again",
+            message: err.message || "Something went wrong, Please try again",
         });
     }
 };
@@ -248,7 +248,7 @@ exports.getFullCourseDetails = async (req, res) => {
             });
         });
 
-        const totalDuration = convertSecondToDuration(totalDurationInSeconds);
+        const totalDuration = convertSecondsToDuration(totalDurationInSeconds);
 
         return res.status(200).json({
             success: true,
