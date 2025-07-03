@@ -38,7 +38,8 @@ exports.updateCourseProgress = async (req, res) => {
         // Save the updated course progress
         await courseProgress.save();
         return res.status(200).json({
-            message: "Course progress updated"
+            success: true,
+            message: "Course Progress Updated Successfully"
         });
 
     } catch (error) {

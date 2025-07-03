@@ -44,7 +44,7 @@ export const VedioDetailsSidebar = ({ setReviewModal }) => {
         <div className="mx-5 flex flex-col items-start justify-between gap-2 gap-y-4 border-b border-richblack-600 py-5 text-lg font-bold text-richblack-25">
           <div className="flex w-full items-center justify-between ">
             <div
-            className="cursor-pointer py-2 p-4 border bg-richblack-800 rounded-md"
+              className="cursor-pointer py-2 p-4 border bg-richblack-800 rounded-md"
               onClick={() => {
                 navigate("/dashboard/enrolled-courses");
               }}
@@ -56,7 +56,7 @@ export const VedioDetailsSidebar = ({ setReviewModal }) => {
               <IconButtonModal
                 text={"Add Review"}
                 customClasses="ml-auto"
-                onClick={() => setReviewModal(true)}
+                onclick={() => setReviewModal(true)}
               />
             </div>
           </div>
@@ -82,16 +82,15 @@ export const VedioDetailsSidebar = ({ setReviewModal }) => {
               <div className="flex flex-row justify-between bg-richblack-600 px-5 py-4">
                 <div className="w-[70%] font-semibold">{course?.sectionName}</div>
                 <MdKeyboardArrowDown
-                  className={`transform transition-transform duration-300 ${
-                    activeStatus === course._id ? "rotate-90" : "rotate-0"
-                  }`}
+                  className={`transform transition-transform duration-300 ${activeStatus === course._id ? "rotate-90" : "rotate-0"
+                    }`}
                 />
               </div>
             </div>
           ))}
         </div>
 
-       {/* SubSection */}
+        {/* SubSection */}
         <div>
           {courseSectionData
             .filter((course) => course._id === activeStatus)
@@ -106,16 +105,17 @@ export const VedioDetailsSidebar = ({ setReviewModal }) => {
                       );
                       setVideoBarActive(topic._id);
                     }}
-                    className={`flex gap-3 p-5 ${
-                      videoBarActive === topic._id
+                    className={`flex gap-3 p-5 ${videoBarActive === topic._id
                         ? "bg-yellow-100 text-richblack-900"
                         : "bg-richblack-900 text-richblack-5"
-                    }`}
+                      }`}
                   >
                     <input
                       type="checkbox"
-                      checked={completedLecture.includes(topic?._id)}
-                      onChange={() => {}}
+                      checked={completedLecture
+                        .map((id) => id.toString())
+                        .includes(topic?._id.toString())}
+                      readOnly
                     />
                     <span>{topic.title}</span>
                   </div>

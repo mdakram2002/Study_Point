@@ -178,24 +178,25 @@ export const VideoDetails = () => {
       ) : (
         <div>
           <Player
+            fluid
             className="!w-full !h-[calc(100vh-100px)] object-cover"
             ref={playRef}
             aspectRatio="16:9"
             onEnded={() => setVideoEnded(true)}
             src={videoData?.videoUrl}
             autoPlay={false}
-            fluid={true}
           >
+
             {videoEnded && (
               <div className="flex justify-center items-center">
                 <div className="absolute left-1/2 z-30 -translate-x-1/2 -translate-y-1/2">
-                <IconButtonModal
-                  disabled={loading}
-                  onclick={handleLectureCompletion}
-                  className="bg-yellow-100 text-richblack-900 hover:scale-90 font-medium md:text-sm px-4 py-2 rounded-md"
-                  text={!loading ? "Mark As Completed" : "Loading..."}
-                />
-              </div>
+                  <IconButtonModal
+                    disabled={loading}
+                    onclick={handleLectureCompletion}
+                    className="bg-yellow-100 text-richblack-900 hover:scale-90 font-medium md:text-sm px-4 py-2 rounded-md"
+                    text={!loading ? "Mark As Completed" : "Loading..."}
+                  />
+                </div>
 
                 <div className="mt-10 flex min-w-[250px] justify-center gap-x-4 text-xl">
                   {!ifFirstVideo() && (
@@ -213,7 +214,7 @@ export const VideoDetails = () => {
                     <MdOutlineReplayCircleFilled
                       onClick={() => {
                         playRef.current.seek(0);
-                        playRef.current.play();
+                        playRef.current.play(); // auto play true, when click on rewatch icon/circle
                         setVideoEnded(false);
                       }}
                       className="text-2xl md:text-5xl bg-richblack-600 rounded-full cursor-pointer hover:scale-90 absolute left-1/2 top-1/2 z-20"
