@@ -6,14 +6,12 @@ import { ACCOUNT_TYPE } from "../../../utils/constants";
 import toast from "react-hot-toast";
 import Copy from "copy-to-clipboard";
 import { FaRegShareSquare } from "react-icons/fa";
-// import { ConfirmationModal } from "../../common/ConfirmationModal";
 
 function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.profile);
   const { token } = useSelector((state) => state.auth);
-  // const [confirmationModal, setConfirmationModal] = useState(null);
 
   const {
     thumbnail: ThumbnailImg,
@@ -32,14 +30,6 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
     if (token) {
       dispatch(addToCart(course));
     }
-    // setConfirmationModal({
-    //   text1: "you are not logged in",
-    //   text2: "Please login to add to cart",
-    //   btnText1: "Login",
-    //   btnText2: "Cancel",
-    //   btn1Handler: () => navigate("/login"),
-    //   btn2Handler: () => setConfirmationModal(null),
-    // });
   };
 
   const handleShare = () => {
@@ -115,8 +105,6 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
           </button>
         }
       </div>
-      {/* Modal */}
-      {/* {confirmationModal && <ConfirmationModal modalData={confirmationModal} />} */}
     </div>
   );
 }
