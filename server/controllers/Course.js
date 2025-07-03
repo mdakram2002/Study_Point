@@ -120,7 +120,7 @@ exports.createCourse = async (req, res) => {
 exports.showAllCourses = async (req, res) => {
     try {
         const allCourse = await Course.find(
-            {},
+            {status: "Published"},
             {
                 courseName: true,
                 price: true,
@@ -410,7 +410,7 @@ exports.deleteCourse = async (req, res) => {
     }
 };
 
-exports.updateCourseProgress = async (req, res) => {
+exports.updatedCourseProgress = async (req, res) => {
     try {
         const { courseId, subSectionId } = req.body;
         const userId = req.user.id;

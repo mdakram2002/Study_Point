@@ -1,3 +1,4 @@
+/** @format */
 
 import { useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
@@ -36,10 +37,15 @@ export const ViewCourses = () => {
 
   return (
     <>
-      <div>
-        <VedioDetailsSidebar setReviewModal={setReviewModal} />
-        <div>
-          <Outlet />
+      <div className="relative flex min-h-[calc(100vh-3.5rem)]">
+        <div className="hidden md:block">
+          <VedioDetailsSidebar setReviewModal={setReviewModal} />
+        </div>
+
+        <div className="h-[calc(100vh-3.5rem)] flex-1 overflow-auto">
+          <div className="mx-6">
+            <Outlet />
+          </div>
         </div>
       </div>
       {reviewModal && <CourseReviewModal setReviewModal={setReviewModal} />}

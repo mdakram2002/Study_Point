@@ -31,10 +31,12 @@ const {
   showAllCourses,
   getCoursesDetails,
   getFullCourseDetails,
-  updateCourseProgress,
+  updatedCourseProgress,
   getInstructorCourses,
 
 } = require("../controllers/Course");
+
+const { updateCourseProgress } = require("../controllers/CourseProgrss");
 
 // Rating Controllers Import
 const {
@@ -70,6 +72,9 @@ router.put("/editCourse", auth, isInstructor, editCourse);
 router.delete("/deleteCourse", deleteCourse);
 router.get("/showAllCourses", showAllCourses);
 router.post("/getCoursesDetails", getCoursesDetails);
+router.post("/updateCourseProgress", auth, isStudent, updatedCourseProgress);
+
+// Course Progress bar
 router.post("/updateCourseProgress", auth, isStudent, updateCourseProgress);
 
 router.post("/getFullCourseDetails", auth, getFullCourseDetails);

@@ -172,73 +172,91 @@ export const VideoDetails = () => {
   };
 
   return (
-    <div className="md:w-[calc(100vw-320px)] w-screen p-3">
-      {!videoData ? (
-        <div>No Data Found</div>
-      ) : (
-        <div>
-          <Player
-            className="!w-full !h-[calc(100vh-100px)] object-cover"
-            ref={playRef}
-            aspectRatio="16:9"
-            onEnded={() => setVideoEnded(true)}
-            src={videoData?.videoUrl}
-            autoPlay={false}
-            fluid={true}
-          >
-            {videoEnded && (
-              <div className="flex justify-center items-center">
-                <div className="absolute left-1/2 z-30 -translate-x-1/2 -translate-y-1/2">
-                <IconButtonModal
-                  disabled={loading}
-                  onclick={handleLectureCompletion}
-                  className="bg-yellow-100 text-richblack-900 hover:scale-90 font-medium md:text-sm px-4 py-2 rounded-md"
-                  text={!loading ? "Mark As Completed" : "Loading..."}
-                />
-              </div>
+    <div>
+      <div className="md:w-[calc(100vw-320px)] w-screen p-3">
+        {!videoData ? (
+          <div className="flex w-full h-full items-center justify-center">
+            No Data Found
+          </div>
+        ) : (
+          <div>
+            <Player
+              className="!w-full !h-[calc(100vh-100px)] object-cover"
+              ref={playRef}
+              aspectRatio="16:9"
+              onEnded={() => setVideoEnded(true)}
+              src={videoData?.videoUrl}
+              // autoPlay={false}
+              // fluid={false}
+              // playsInline
+            >
+              {videoEnded && (
+                <div className="flex justify-center items-center">
 
-                <div className="mt-10 flex min-w-[250px] justify-center gap-x-4 text-xl">
-                  {!ifFirstVideo() && (
-                    <button
-                      className=" z-20 left-0 top-1/2 transform -translate-y-1/2 absolute m-5"
-                      disabled={loading}
-                      onClick={() => goToPreviousVideo()}
-                    >
-                      <BiSolidSkipPreviousCircle />
-                      Prev
-                    </button>
-                  )}
+                    {!completedLecture.includes(subSectionId) && (
+                      <IconButtonModal
+                        disabled={loading}
+                        onclick={() => handleLectureCompletion()}
+                        className="bg-yellow-100 text-richblack-900 absolute top-[20%] hover:scale-90 z-20 font-medium md:text-sm px-4 py-2 rounded-md"
+                        text={!loading ? "Mark As Completed" : "Loading..."}
+                      />
+                    )}
 
-                  {
-                    <MdOutlineReplayCircleFilled
-                      onClick={() => {
-                        playRef.current.seek(0);
-                        playRef.current.play();
+
+                  <IconButtonModal
+                    disabled={loading}
+                    onclick={() => {
+                      if (playRef?.current) {
+                        playRef.current?.seek(0);
                         setVideoEnded(false);
-                      }}
-                      className="text-2xl md:text-5xl bg-richblack-600 rounded-full cursor-pointer hover:scale-90 absolute left-1/2 top-1/2 z-20"
-                    />
-                  }
+                      }
+                    }}
+                    text={"Rewatch"}
+                    customClasses={"text-lg"}
+                  />
 
-                  {!ifLastVideo() && (
-                    <button
-                      className=" z-20 right-4 top-1/2 transform -translate-y-1/2 absolute m-5"
-                      disabled={loading}
-                      onClick={() => goToNextVideo()}
-                    >
-                      <BiSolidSkipNextCircle />
-                      Next
-                    </button>
-                  )}
+                  <div className="text-white">
+                    {!ifFirstVideo() && (
+                      <button
+                        className=" z-20 left-0 top-1/2 transform -translate-y-1/2 absolute m-5"
+                        disabled={loading}
+                        onClick={() => goToPreviousVideo()}
+                      >
+                        <BiSolidSkipPreviousCircle />
+                        Prev
+                      </button>
+                    )}
+
+                    {!ifLastVideo() && (
+                      <button
+                        className=" z-20 right-4 top-1/2 transform -translate-y-1/2 absolute m-5"
+                        disabled={loading}
+                        onClick={() => goToNextVideo()}
+                      >
+                        <BiSolidSkipNextCircle />
+                        Next
+                      </button>
+                    )}
+                    {
+                      <MdOutlineReplayCircleFilled
+                        onClick={() => {
+                          playRef.current.seek(0);
+                          playRef.current.play();
+                          setVideoEnded(false);
+                        }}
+                        className="text-2xl md:text-5xl bg-richblack-600 rounded-full cursor-pointer hover:scale-90 absolute top-1/2 z-20"
+                      />
+                    }
+                  </div>
                 </div>
-              </div>
-            )}
-          </Player>
+              )}
+            </Player>
+          </div>
+        )}
+        <div className="mt-5">
+          <h1 className="text-richblack-100 text-lg">{videoData?.title}</h1>
+          <p className="text-richblack-100 text-lg">{videoData?.description}</p>
         </div>
-      )}
-      <div className="mt-5">
-        <h1 className="text-richblack-100 text-lg">{videoData?.title}</h1>
-        <p className="text-richblack-100 text-lg">{videoData?.description}</p>
       </div>
     </div>
   );

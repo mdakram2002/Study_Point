@@ -40,12 +40,11 @@ export const VedioDetailsSidebar = ({ setReviewModal }) => {
 
   return (
     <>
-      <div className="bg-richblack-800 mt-2">
-        {/* For button and heading  */}
-        <div>
-          {/* for button  */}
-          <div className="flex gap-x-3">
+      <div className="flex h-[calc(100vh-3.5rem)] w-[320px] max-w-[350px] flex-col border-r-[1px] border-r-richblack-700 bg-richblack-800">
+        <div className="mx-5 flex flex-col items-start justify-between gap-2 gap-y-4 border-b border-richblack-600 py-5 text-lg font-bold text-richblack-25">
+          <div className="flex w-full items-center justify-between ">
             <div
+            className="cursor-pointer py-2 p-4 border bg-richblack-800 rounded-md"
               onClick={() => {
                 navigate("/dashboard/enrolled-courses");
               }}
@@ -56,23 +55,23 @@ export const VedioDetailsSidebar = ({ setReviewModal }) => {
             <div>
               <IconButtonModal
                 text={"Add Review"}
+                customClasses="ml-auto"
                 onClick={() => setReviewModal(true)}
               />
             </div>
           </div>
-          {/* for heading */}
-          <div>
+          <div className="flex flex-col">
             <p>{courseEntrieData?.courseName}</p>
-            <p>
+            <p className="text-sm font-semibold text-richblack-500">
               {completedLecture?.length} / {totalNoOfLectures}
             </p>
           </div>
         </div>
 
-        {/* for section and subsection   */}
-        <div>
+        <div className="h-[calc(100vh - 5rem)] overflow-y-auto">
           {courseSectionData.map((course, _id) => (
             <div
+              className="mt-2 cursor-pointer text-sm text-richblack-5"
               key={course._id}
               onClick={() =>
                 setActiveStatus((prev) =>
@@ -80,9 +79,8 @@ export const VedioDetailsSidebar = ({ setReviewModal }) => {
                 )
               }
             >
-              <div className="flex justify-between items-center cursor-pointer">
-                <div>{course?.sectionName}</div>
-
+              <div className="flex flex-row justify-between bg-richblack-600 px-5 py-4">
+                <div className="w-[70%] font-semibold">{course?.sectionName}</div>
                 <MdKeyboardArrowDown
                   className={`transform transition-transform duration-300 ${
                     activeStatus === course._id ? "rotate-90" : "rotate-0"
