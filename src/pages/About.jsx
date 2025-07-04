@@ -11,6 +11,7 @@ import aboutus1 from "../Assets/Image/aboutus1.jpg";
 import aboutus2 from "../Assets/Image/aboutus2.webp";
 import aboutus3 from "../Assets/Image/aboutus3.webp";
 import FoundingStory from "../Assets/Image/FoundingStory.png";
+import { ReviewSlider } from "../components/common/ReviewSlider";
 
 export const About = () => {
   return (
@@ -124,6 +125,14 @@ export const About = () => {
         <LearningGird />
         <ContactForm />
       </section>
+
+      <div className="relative mx-auto my-4 flex w-11/12 max-w-maxContent flex-col items-center justify-between bg-richblack-900 text-white">
+        {/* Reviws from Other Learner */}
+        <h1 className="text-center text-4xl font-semibold">
+          Reviews from other <HighlightText text={"Learners"}/>
+        </h1>
+        <ReviewSlider />
+      </div>
 
       {/* Footer Scetion  */}
       <Footer />

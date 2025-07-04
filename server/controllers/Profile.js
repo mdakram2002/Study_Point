@@ -296,6 +296,12 @@ exports.instructorDashboard = async (req, res) => {
 
             return courseDataWithStats;
         });
+
+        res.status(200).json({
+            success: true,
+            message: "Now You're in Instructor Dashborad",
+            course: courseData
+        })
     } catch (err) {
         console.error(err);
         return res.status(500).json({

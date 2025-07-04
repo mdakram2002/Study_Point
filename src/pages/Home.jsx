@@ -11,6 +11,7 @@ import { ExploreMore } from "../components/core/HomePage/ExploreMore";
 import { LearningLanguageSection } from "../components/core/HomePage/LearningLanguageSection";
 import { TimeLineSection } from "../components/core/HomePage/TimeLineSection";
 import { Instructor } from "../components/core/HomePage/Instructor";
+import { ReviewSlider } from "../components/common/ReviewSlider";
 
 const Home = () => {
   return (
@@ -178,9 +179,10 @@ const Home = () => {
       <div className="relative mx-auto w-11/12 max-w-maxContent flex flex-col items-center justify-between gap-8 bg-richblack-900 text-white ">
         <Instructor />
 
-        <h2 className="text-center text-4xl font-semibold mt-10 mb-10">
+        <h2 className="text-center text-4xl font-semibold mt-10 mb-5">
           Review from other
           <HighlightText text={"learners"} />
+          <ReviewSlider/>
         </h2>
       </div>
 
