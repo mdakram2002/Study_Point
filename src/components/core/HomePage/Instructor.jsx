@@ -1,4 +1,3 @@
-/** @format */
 
 import InstructorImage from "../../../Assets/Image/Instructor.png";
 import React from "react";

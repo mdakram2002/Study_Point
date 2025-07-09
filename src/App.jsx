@@ -29,6 +29,7 @@ import { Contact } from "./pages/Contact";
 import { Error } from "./pages/Error";
 import { Dashboard } from "./pages/Dashboard";
 import { ViewCourses } from "./pages/ViewCourses";
+import { Instructor } from "./components/core/Dashboard/InstructorDashboard/Instructor";
 
 import { ACCOUNT_TYPE } from "./utils/constants";
 import { VideoDetails } from "./components/core/ViewCourse/VideoDetails";
@@ -114,6 +115,7 @@ function App() {
 
           {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
             <>
+              <Route path="/dashboard/instructor" element={<Instructor />} />
               <Route path="/dashboard/add-course" element={<AddCourses />} />
               <Route path="/dashboard/my-courses" element={<MyCourses />} />
               <Route
