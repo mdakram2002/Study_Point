@@ -15,6 +15,11 @@ export const ReviewSlider = () => {
     const [reveiw, setReview] = useState([]);
     const trucateWords = 15;
 
+    // useEffect(() => {
+    //     console.log("PRINTING REVIEW (after setReview):", reveiw);
+    // }, [reveiw]);
+
+
     useEffect(() => {
         const allReveiws = async () => {
             const response = await apiConnector(

@@ -143,7 +143,7 @@ export const CourseDetails = () => {
           </div>
 
           {/* Created Date and Language */}
-          <div className="flex md:flec-col gap-3 items-center text-sm text-richblack-200">
+          <div className="flex md:flec-col gap-3 items-center text-sm text-richblack-200 mb-5">
             <p>Created on:</p>
             <p className="text-white">{formattedDate(createdAt)}</p>
             <span className="text-yellow-50">•</span>
@@ -151,7 +151,7 @@ export const CourseDetails = () => {
             <p>English</p>
           </div>
 
-          <div className="text-richblack-100 space-y-1">
+          <div className="text-richblack-100 space-y-1 ">
             <div className="bg-richblack-800 h-[100px] w-full mt-3 p-8">
               <p className="text-xl font-semibold">What You Will Learn</p>
               <div>{whatYouWillLearn}</div>
@@ -175,21 +175,58 @@ export const CourseDetails = () => {
                     }, 0);
                   }, 0).toFixed(2)
                 } minutes total length
-            </span>
+              </span>
             </div>
 
             <div>
               <button
                 className="text-yellow-50"
-                onClick={()=> setIsActive([])}
+                onClick={() => setIsActive([])}
               >
                 collapse all Sections
               </button>
             </div>
+            <div className="mt-6 space-y-4">
+              {courseContent?.map((section) => (
+                <div
+                  key={section._id}
+                  className="bg-richblack-700 rounded-lg overflow-hidden"
+                >
+                  {/* Section Header */}
+                  <button
+                    onClick={() => handleActive(section._id)}
+                    className="w-full flex justify-between items-center p-4 bg-richblack-800 hover:bg-richblack-900 transition-colors"
+                  >
+                    <span className="text-lg font-medium text-white">{section.sectionName}</span>
+                    <span className="text-white text-xl">
+                      {isActive.includes(section._id) ? "^" : "˅"}
+                    </span>
+                  </button>
 
-
-
-
+                  {/* Section Body */}
+                  {isActive.includes(section._id) && (
+                    <div className="p-4 space-y-3">
+                      {section.subSection?.length > 0 ? (
+                        section.subSection.map((sub) => (
+                          <div
+                            key={sub._id}
+                            className="border border-richblack-600 p-3 rounded bg-richblack-800"
+                          >
+                            <h4 className="text-yellow-50 font-semibold">{sub.title}</h4>
+                            <p className="text-richblack-200 text-sm">{sub.description}</p>
+                            <p className="text-richblack-300 text-xs mt-1">
+                              Duration: {sub.timeDuration} min
+                            </p>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="text-richblack-300 text-sm">No lectures available</p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 

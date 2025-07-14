@@ -336,29 +336,57 @@ exports.editCourse = async (req, res) => {
     }
 };
 exports.getInstructorCourses = async (req, res) => {
-    try {
-        // Get the instructor ID from the authenticated user or request body
-        const instructorId = req.user.id;
+  try {
+    const instructorId = req.user.id;
 
-        // Find all courses belonging to the instructor
-        const instructorCourses = await Course.find({
-            instructor: instructorId,
-        }).sort({ createdAt: -1 });
+    // Fetch courses with courseContent and subSection populated
+    const instructorCourses = await Course.find({
+      instructor: instructorId,
+    })
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
+      .sort({ createdAt: -1 });
 
-        // Return the instructor's courses
-        res.status(200).json({
-            success: true,
-            data: instructorCourses,
+    // Calculate and add timeDuration to each course
+    for (const course of instructorCourses) {
+      let totalDurationInSeconds = 0;
+
+      course.courseContent.forEach((section) => {
+        section.subSection.forEach((sub) => {
+          if (sub.timeDuration) {
+            const duration = parseInt(sub.timeDuration);
+            if (!isNaN(duration)) {
+              totalDurationInSeconds += duration;
+            }
+          }
         });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            success: false,
-            message: "Failed to retrieve instructor courses",
-            error: error.message,
-        });
+      });
+
+      // use a helper like convertSecondsToDuration()
+      const hours = Math.floor(totalDurationInSeconds / 3600);
+      const minutes = Math.floor((totalDurationInSeconds % 3600) / 60);
+      course._doc.timeDuration = `${hours > 0 ? hours + "h " : ""}${minutes}min`;
     }
+
+    res.status(200).json({
+      success: true,
+      data: instructorCourses,
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to retrieve instructor courses",
+      error: error.message,
+    });
+  }
 };
+
 exports.deleteCourse = async (req, res) => {
     try {
         const { courseId } = req.body;

@@ -1,9 +1,15 @@
 
 import React, { useState } from "react";
-import { Chart, registerables } from "chart.js";
-import { Pie } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
+  ArcElement,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { PolarArea } from 'react-chartjs-2';
 
-Chart.register(...registerables);
+ChartJS.register(RadialLinearScale, ArcElement, Tooltip, Legend);
 
 export const InstructorChar = ({ courses }) => {
   const [currChart, setCurrChart] = useState("students");
@@ -92,9 +98,9 @@ export const InstructorChar = ({ courses }) => {
         </div>
       </div>
 
-      <div className="w-full h-[300px] sm:h-[400px] md:h-[450px] lg:h-[500px]">
+      <div className="w-full aspect-[1/1] max-w-[500px] mx-auto">
         {courses.length > 0 ? (
-          <Pie data={chartData} options={options} />
+          <PolarArea data={chartData} options={options} />
         ) : (
           <p className="text-white text-center">No data available to display chart</p>
         )}

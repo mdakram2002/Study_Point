@@ -1,9 +1,8 @@
-import { useSelector } from "react-redux";
 
+import { useSelector } from "react-redux";
 import frameImg from "../../../Assets/Image/frame.png"
 import { LoginForm } from "./LoginForm";
 import { SignupForm } from "./SignupForm";
-// import { HighlightText } from "../HomePage/HighlightText";
 
 export function Template({
   title,

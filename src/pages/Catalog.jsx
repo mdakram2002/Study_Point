@@ -8,7 +8,6 @@ import { categories } from "../services/apis";
 import { getCatalogPageData } from "../services/operations/pageAndComponentData";
 import { Course_Card } from "../components/core/Catalog/Course_Card";
 import { CourseSlider } from "../components/core/Catalog/CourseSlider";
-import { HighlightText } from "../components/core/HomePage/HighlightText";
 
 const Catalog = () => {
   const { catalogName } = useParams();
@@ -19,10 +18,9 @@ const Catalog = () => {
     const getCategories = async () => {
       try {
         const response = await apiConnector("GET", categories.CATEGORIES_API);
-        const category_id = response?.data?.categories?.filter(
+        const category_id = response?.data?.categories?.find(
           (ct) => ct.name.split(" ").join("-").toLowerCase() === catalogName
-        )[0]?._id;
-        // console.log("ROW DATA RESPONSE OF GETCATEGORIES: ", response);
+        )?._id;
         setCategoryId(category_id);
       } catch (err) {
         console.error("Could not fetch Category", err);
@@ -36,15 +34,13 @@ const Catalog = () => {
     const getCategoryDetails = async () => {
       try {
         const response = await getCatalogPageData(categoryId);
-        // console.log("ROW DATA RESPONSE GETCATEGORYDETAILS:", response);
         setCatalogPageData(response);
       } catch (err) {
         console.error("Could not fetch Category Details", err);
-        console.log(err);
       }
     };
 
-    if (categoryId && categoryId !== undefined) {
+    if (categoryId) {
       getCategoryDetails();
     }
   }, [categoryId]);
@@ -53,71 +49,60 @@ const Catalog = () => {
   const differentCategory = catalogPageData?.data?.differentCategory;
   const topSellingCourses = catalogPageData?.data?.topSellingCourses;
 
-  // console.log("SELCECTED CATEGROY: ", selectedCategory);
-  // console.log("DIFFERENT CATEGROY: ", differentCategory);
-  // console.log("TOP SELLING CATEGROY: ", topSellingCourses);
   return (
     <>
-      <div>
-        <div className="box-content bg-richblack-900 px-4 lg:ml-10 md:mt-4">
-          <div className="mx-auto mt-5 flex min-h-[20px] max-w-maxContentTab gap-3 lg:max-w-maxContent">
-            <p className="text-richblack-100 mt-5 text-3xl">{`Home / Catalog / `}</p>
-            <span className="mt-5 text-3xl">
-              {" "}
-              <HighlightText text={selectedCategory?.name} />
-            </span>
-          </div>
-          <p className="text-3xl text-richblack-5 mt-3">
-            {selectedCategory?.name}
-          </p>
-          <p className="max-w-[870px] text-richblack-200">
-            {selectedCategory?.description}
-          </p>
+      {/* Header */}
+      <div className="bg-richblack-900 px-4 py-6 md:px-10 md:py-10 mx-auto w-11/12 max-w-maxContent">
+        <div className="text-sm text-richblack-300">
+          Home / Catalog /{" "}
+          <span className="text-yellow-50">{selectedCategory?.name}</span>
         </div>
 
-        {/* section 1 for Tab  */}
-        <div className="mx-auto box-content w-11/12 max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
-          <div className="section_heading">
-            <div className="text-richblack-5 text-2xl">
-              Courses to get you started
-            </div>
-            <div className="my-2 flex border-b border-b-richblack-600 text-sm">
-              <p className="text-richblack-5 text-2xl">Most Popular Courses</p>
-            </div>
-            <div className="py-4">
-              <CourseSlider Courses={selectedCategory?.courses} />
-            </div>
-          </div>
+        <h1 className="mt-2 text-2xl md:text-3xl font-bold text-richblack-5">
+          {selectedCategory?.name}
+        </h1>
+        <p className="mt-2 max-w-4xl text-richblack-200 text-sm md:text-base">
+          {selectedCategory?.description}
+        </p>
+      </div>
 
-          {/* section 2 for  */}
-          <div className="section_heading mt-10">
-            <div className="text-richblack-5 text-2xl font-semibold">
-              Top Courses in {selectedCategory?.name}{" "}
-            </div>
-            <div className="py-4">
-              <CourseSlider Courses={differentCategory?.courses} />
-            </div>
+      {/* Body */}
+      <div className="mx-auto w-11/12 max-w-maxContentTab lg:max-w-maxContent py-6 mb-5">
+        {/* Section 1: Most Popular Courses */}
+        <section className="mb-10 px-4 md:px-6">
+          <h2 className="text-xl md:text-2xl font-semibold text-white mb-4">
+            Most Popular Courses
+          </h2>
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {selectedCategory?.courses?.map((course, i) => (
+              <Course_Card key={i} course={course} />
+            ))}
           </div>
+        </section>
 
-          {/* section 3 for  */}
-          <div className="section_heading mt-5">
-            <div className="text-2xl font-semibold text-white">Frequently Bought</div>
-            <div className="py-4">
-              <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                {topSellingCourses?.slice(0, 6).map((course, index) => (
-                  <Course_Card
-                    course={course}
-                    key={index}
-                    Height={"h-[350px]"}
-                  />
-                ))}
-              </div>
-            </div>
+        {/* Section 2: Top Courses */}
+        <section className="mb-10 px-4 md:px-6">
+          <h2 className="text-xl md:text-2xl font-semibold text-white mb-4">
+            Top Courses in {selectedCategory?.name}
+          </h2>
+          <CourseSlider Courses={differentCategory?.courses} />
+        </section>
+
+        {/* Section 3: Frequently Bought */}
+        <section className="px-4 md:px-6">
+          <h2 className="text-xl md:text-2xl font-semibold text-white mb-4">
+            Frequently Bought
+          </h2>
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {topSellingCourses?.slice(0, 8).map((course, index) => (
+              <Course_Card key={index} course={course} />
+            ))}
           </div>
-        </div>
+        </section>
       </div>
       <Footer />
     </>
   );
 };
+
 export default Catalog;

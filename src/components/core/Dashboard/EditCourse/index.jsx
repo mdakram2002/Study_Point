@@ -15,7 +15,7 @@ export default function EditCourse() {
 
   useEffect(() => {
     if (!courseId) {
-      console.error("❌ Course ID is missing from URL params.");
+      console.error("Course ID is missing from URL params.");
       return;
     }
     const populateCourseDetails = async () => {

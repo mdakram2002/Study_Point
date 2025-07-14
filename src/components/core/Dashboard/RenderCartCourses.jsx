@@ -39,19 +39,17 @@ export const RenderCartCourses = () => {
               </div>
 
               <div className="flex items-center gap-2">
-                {/* <span>4.8</span> */}
                 <ReactStars
                   count={5}
                   size={24}
-                  value={4.8}
+                  value={course?.ratingAndReview?.length}
                   isHalf={true}
                   edit={false}
-                  activeColor="#FFD700" // gold color
+                  activeColor="#FFD700"
                   emptyIcon={<GiNinjaStar />}
                   fullIcon={<GiNinjaStar />}
                   classNames="custom-star-style"
                 />
-
                 <span>{course?.ratingAndReview?.length || 0} Ratings</span>
               </div>
             </div>

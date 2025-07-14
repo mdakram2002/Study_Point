@@ -77,7 +77,7 @@ export const Navbar = () => {
           <ul className="flex gap-x-6 ring-richblack-25 text-base">
             {NavbarLinks.map((link, index) => (
               <li key={index}>
-                {link.title === "Catalog" ? (
+                {link.title === "Services" ? (
                   <div className={`relative flex items-center gap-2 group ${
                     location.pathname.startsWith("/catalog") ? "text-yellow-25" : "text-richblack-25"
                     } cursor-pointer`}>

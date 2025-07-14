@@ -97,46 +97,6 @@ export const SubSectionModal = ({
     setLoading(false);
   };
 
-
-  // const onSubmit = async (data) => {
-  //   if (view) return;
-
-  //   if (edit) {
-  //     if (!isFormUpdated()) {
-  //       toast.error("No changes made to the form");
-  //     } else {
-  //       // await handleEditSubSection();
-  //       handleEditSubSection();
-  //     }
-  //     return;
-  //   }
-
-  //   if (!modalData || !modalData._id) {
-  //     console.error("SubSection ID is missing:", modalData);
-  //     toast.error("SubSection ID is required.");
-  //     return;
-  //   }
-
-  //   const formData = new FormData();
-  //   formData.append("sectionId", modalData);
-  //   formData.append("title", data.lectureTitle);
-  //   formData.append("description", data.lectureDesc);
-  //   formData.append("video", data.lectureVideo);
-  //   setLoading(true);
-
-  //   const result = await createSubSection(formData, token);
-
-  //   if (result) {
-  //     const updatedCourseContent = course.courseContent.map((section) =>
-  //       section._id === modalData ? result : section
-  //     );
-  //     const updatedCourse = { ...course, courseContent: updatedCourseContent };
-  //     dispatch(setCourse(updatedCourse));
-  //   }
-  //   setModalData(null);
-  //   setLoading(false);
-  // };
-
   const onSubmit = async (data) => {
     console.log(data)
     if (view) return

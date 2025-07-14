@@ -1,5 +1,5 @@
 
-import InstructorImage from "../../../Assets/Image/Instructor.png";
+import InstructorImage from "../../../Assets/Image/Instructor.jpg";
 import React from "react";
 import { HighlightText } from "./HighlightText";
 import { CTAButton } from "./CTAButton";

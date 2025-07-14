@@ -1,4 +1,3 @@
-/** @format */
 
 import React from "react";
 import { FooterLink2 } from "../../data/FooterData";

@@ -17,6 +17,7 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 const PORT = process.env.PORT || 4000;
+const review = require("./controllers/RatingAndReview");
 
 database.connect();
 app.use(express.json());
