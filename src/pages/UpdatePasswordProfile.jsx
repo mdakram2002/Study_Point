@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, Link } from "react-router-dom";
 import { resetPassword } from "../services/operations/authAPI";
 
-const  = () => {
+const UpdatePasswordProfile = () => {
   const [formData, setFormData] = useState({
     password: "",
     confirmPassword: "",
@@ -63,9 +63,9 @@ const  = () => {
                 className="absolute right-3 top-[38px] z-[10] cursor-pointer"
               >
                 {showPassword ? (
-                  <IoMdEyeOff fontSize={20}  />
+                  <IoMdEyeOff fontSize={20} />
                 ) : (
-                  <IoMdEye fontSize={20}  />
+                  <IoMdEye fontSize={20} />
                 )}
               </span>
             </label>
