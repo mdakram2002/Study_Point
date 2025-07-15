@@ -23,7 +23,7 @@ import { About } from "./pages/About";
 import { Signup } from "./pages/Signup";
 import { Login } from "./pages/Login";
 import { ForgotPassword } from "./pages/ForgotPassword";
-import { UpdatePassword } from "./pages/UpdatePassword";
+import UpdatePassword from "./pages/UpdatePassword";
 import { VerifyEmail } from "./pages/VerifyEmail";
 import { Contact } from "./pages/Contact";
 import { Error } from "./pages/Error";
@@ -72,7 +72,7 @@ function App() {
           path="reset-password/:id"
           element={
             <OpenRoute>
-              <UpdatePassword />
+              <UpdatePassword/>
             </OpenRoute>
           }
         />
