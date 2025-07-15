@@ -1,12 +1,12 @@
 
 import { IoMdEyeOff, IoMdEye } from "react-icons/io";
 import { FaLongArrowAltLeft } from "react-icons/fa";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, Link } from "react-router-dom";
 import { resetPassword } from "../services/operations/authAPI";
 
-export const UpdatePassword = () => {
+const  = () => {
   const [formData, setFormData] = useState({
     password: "",
     confirmPassword: "",
@@ -115,3 +115,4 @@ export const UpdatePassword = () => {
     </div>
   );
 };
+export default UpdatePasswordProfile;
