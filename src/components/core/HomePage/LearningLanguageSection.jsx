@@ -1,6 +1,4 @@
-/** @format */
 
-import React from "react";
 import { HighlightText } from "./HighlightText";
 import { CTAButton } from "./CTAButton";
 

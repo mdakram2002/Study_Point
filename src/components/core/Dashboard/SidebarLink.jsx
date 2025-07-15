@@ -7,7 +7,6 @@ import { matchPath, NavLink, useLocation } from "react-router-dom";
 export const SidebarLink = ({ link, iconName }) => {
   const Icon = Icons[iconName];
   const location = useLocation();
-  const dispatch = useDispatch();
 
   const matchRoute = (route) => {
     return matchPath(route, location.pathname);
