@@ -2,7 +2,7 @@
 import React from "react";
 import ChangeDisplayPicture from "./ChangeDisplayPicture";
 import EditProfile from "./EditProfile";
-import UpdatePassword from "./UpdatePassword";
+import UpdatePassword from "./UpdatePasswords";
 import DeleteAccount from "./DeleteAccount";
 
 export default function Settings() {
