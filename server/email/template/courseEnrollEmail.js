@@ -67,7 +67,7 @@ exports.courseEnrollmentEmail = (name, courseName) => {
             <p>Please log in to your learning dashboard to access the course materials and start your learning with us.</p>
             <a class="cta" href="https://studyPoint-edtech-project.vercel.app/dashboard">Go To Dashboard</a>
             <div class="support">If you have any questions or need help, please feel free to reach out to me at
-                <a href="mailto:mdakramdev@gmail.com">mdakramdev@gmail.com</a>. We are here to help you.
+                <a href="mailto:infostudypoint2024@gmail.com">infostudypoint2024@gmail.com</a>. We are here to help you.
             </div>
         </div>
     </div>

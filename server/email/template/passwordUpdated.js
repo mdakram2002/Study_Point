@@ -55,7 +55,7 @@ exports.passwordUpdated = (email, name) => {
                   <p>If you did not request this password change, please contact us immediately to secure your account.</p>
               </div>
               <div class="support">If you have any questions or need help, please feel free to reach out to me at
-                  <a href="mailto:mdakramdev@gmail.com">mdakramdev@gmail.com</a>. We are here to help you.
+                  <a href="mailto:infostudypoint2024@gmail.com">infostudypoint2024@gmail.com</a>. We are here to help you.
               </div>
           </div>
       </body>
