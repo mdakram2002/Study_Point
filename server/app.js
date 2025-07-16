@@ -45,11 +45,11 @@ app.use("/api/v1/contact", contactRoute);
 app.use("/api/v1/course", courseRoute);
 app.use("/api/v1/payment", paymentRoute);
 
-// For Deployement purpose
-app.use(express.static("./build"));
+app.use(express.static(path.join(__dirname, "../build")));
+
 app.get("*", (req, res) => {
-    res.sendFile(path.resove(__dirname, "study_point", "build", "index.html"))
-})
+  res.sendFile(path.join(__dirname, "../build", "index.html"));
+});
 
 app.get("/", (req, res) => {
     return res.json({
