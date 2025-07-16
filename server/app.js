@@ -1,7 +1,7 @@
 
 const express = require("express");
 const app = express();
-
+const path = require("path");
 const userRoute = require("./routes/User");
 const courseRoute = require("./routes/Course");
 const paymentRoute = require("./routes/Payments");
