@@ -36,7 +36,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "node server/app.js",
+    "start": "node server/index.js",
     "build": "react-scripts build",
     "postinstall": "npm run build",
     "client": "react-scripts start",
@@ -68,7 +68,7 @@
     "tailwindcss": "^3.4.17"
   },
   "description": "- The backend development of StudyPoint follows a structured flow, beginning with the installation of all necessary NPM packages, including bcrypt, cookie-parser, dotenv, express, jsonwebtoken, mongoose, nodemailer, nodemon, and otp-generator. Once the required packages are installed,",
-  "main": "app.js",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mdakram2002/Study_Point.git"
