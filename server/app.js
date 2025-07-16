@@ -45,6 +45,11 @@ app.use("/api/v1/contact", contactRoute);
 app.use("/api/v1/course", courseRoute);
 app.use("/api/v1/payment", paymentRoute);
 
+app.use(express.static("./build"));
+app.get("*", (req, res) => {
+    res.sendFile(path.resove(__dirname, "build", "index.html"))
+})
+
 app.get("/", (req, res) => {
     return res.json({
         success: true,
