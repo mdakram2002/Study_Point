@@ -48,7 +48,7 @@ app.use("/api/v1/payment", paymentRoute);
 // For Deployement purpose
 app.use(express.static("./build"));
 app.get("*", (req, res) => {
-    res.sendFile(path.resove(__dirname, "build", "index.html"))
+    res.sendFile(path.resove(__dirname, "study_point", "build", "index.html"))
 })
 
 app.get("/", (req, res) => {
