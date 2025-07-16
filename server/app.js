@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 const corsOptions = {
-    origin: ["http://localhost:3000", "https://study-point-frontend.vercel.app"],
+    origin: ["http://localhost:3000", "https://study-point.azurewebsites.net"],
     credentials: true,
 };
 
@@ -46,7 +46,6 @@ app.use("/api/v1/course", courseRoute);
 app.use("/api/v1/payment", paymentRoute);
 
 app.use(express.static(path.join(__dirname, "../build")));
-
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../build", "index.html"));
 });
