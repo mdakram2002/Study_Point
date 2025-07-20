@@ -10,8 +10,7 @@ const contactRoute = require("./routes/ContactUs");
 
 const database = require("./config/database");
 const cookieParser = require("cookie-parser");
-// const cors = require("cors");
-const helmet = require("helmet");
+const cors = require("cors");
 const { cloudinaryConnect } = require("./config/cloudinary");
 const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv");
@@ -22,14 +21,13 @@ const PORT = process.env.PORT || 4000;
 database.connect();
 app.use(express.json());
 app.use(cookieParser());
-app.use(helmet());
 
-// const corsOptions = {
-//     origin: ["http://localhost:3000", "https://study-point.azurewebsites.net","https://study-point-silk.vercel.app" ],
-//     credentials: true,
-// };
+const corsOptions = {
+    origin: ["http://localhost:3000", "https://study-point.azurewebsites.net","https://study-point-silk.vercel.app" ],
+    credentials: true,
+};
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 app.use(
     fileUpload({

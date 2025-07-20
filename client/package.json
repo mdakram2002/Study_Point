@@ -36,14 +36,15 @@
     "video-react": "^0.16.0",
     "web-vitals": "^2.1.4"
   },
-  "scripts": {
-    "start": "node server/index.js",
-    "build": "react-scripts build",
-    "postinstall": "npm run build",
-    "client": "react-scripts start",
-    "server": "cd server && npm run dev",
-    "dev": "concurrently -n \"client,server\" -c \"bgBlue,bgYellow\" \"npm run client\" \"npm run server\""
-  },
+"scripts": {
+  "start": "node server/index.js",
+  "build": "react-scripts build",
+  "postinstall": "npm run build",
+  "client": "react-scripts start",
+  "server": "cd ../server && npm run dev",
+  "dev": "concurrently -n \"client,server\" -c \"bgBlue,bgYellow\" \"npm run client\" \"npm run server\""
+},
+
   "eslintConfig": {
     "extends": [
       "react-app",
