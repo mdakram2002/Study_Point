@@ -1,0 +1,1 @@
+const API_URL = "https://study-point.azurewebsites.net/api/v1";

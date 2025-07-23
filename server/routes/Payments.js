@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 const {capturePayment, verifySignature, sendPaymentSuccessEmail} = require("../controllers/Payments");
-const {auth, isInstructorm, isStudent, isAdmin} = require("../middlewares/auth");
+const {auth, isStudent} = require("../middlewares/auth");
 
 // Razorpay Key Route - NO auth needed
 router.get("/getKey", (req, res) => {

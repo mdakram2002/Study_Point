@@ -36,15 +36,14 @@
     "video-react": "^0.16.0",
     "web-vitals": "^2.1.4"
   },
-"scripts": {
-  "start": "node server/index.js",
-  "build": "react-scripts build",
-  "postinstall": "npm run build",
-  "client": "react-scripts start",
-  "server": "cd ../server && npm run dev",
-  "dev": "concurrently -n \"client,server\" -c \"bgBlue,bgYellow\" \"npm run client\" \"npm run server\""
-},
-
+  "scripts": {
+    "start": "node server/index.js",
+    "build": "react-scripts build",
+    "postinstall": "npm run build",
+    "client": "react-scripts start",
+    "server": "cd ../server && npm run dev",
+    "dev": "concurrently -n \"client,server\" -c \"bgBlue,bgYellow\" \"npm run client\" \"npm run server\""
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -64,6 +63,7 @@
     ]
   },
   "devDependencies": {
+    "@azure/static-web-apps-cli": "^2.0.6",
     "@babel/preset-env": "^7.26.9",
     "@babel/preset-react": "^7.26.3",
     "babel-loader": "^9.2.1",
