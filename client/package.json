@@ -11,24 +11,19 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.9",
     "chart.js": "^4.4.3",
-    "concurrently": "^9.1.2",
     "copy-to-clipboard": "^3.3.3",
-    "express": "^4.21.2",
-    "helmet": "^8.1.0",
-    "mongodb": "^6.15.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.3.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.3.8",
     "react-hook-form": "^7.54.2",
     "react-hot-toast": "^2.5.2",
-    "react-icon": "^1.0.0",
     "react-icons": "^5.4.0",
     "react-otp-input": "^3.1.1",
     "react-rating-stars-component": "^2.2.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.5",
-    "react-scripts": "^0.0.0",
+    "react-scripts": "5.0.1",
     "react-star-ratings": "^2.3.0",
     "react-super-responsive-table": "^6.0.2",
     "react-type-animation": "^3.2.0",
@@ -57,26 +52,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@azure/static-web-apps-cli": "^2.0.6",
-    "@babel/preset-env": "^7.26.9",
-    "@babel/preset-react": "^7.26.3",
-    "babel-loader": "^9.2.1",
-    "tailwindcss": "^3.4.17"
-  },
-  "description": "- The backend development of StudyPoint follows a structured flow, beginning with the installation of all necessary NPM packages, including bcrypt, cookie-parser, dotenv, express, jsonwebtoken, mongoose, nodemailer, nodemon, and otp-generator. Once the required packages are installed,",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mdakram2002/Study_Point.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/mdakram2002/Study_Point/issues"
-  },
-  "homepage": "."
+  }
 }
