@@ -27,7 +27,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "https://study-point-silk.vercel.app"
+      "https://study-point-self.vercel.app",
     ],
     credentials: true
   })
