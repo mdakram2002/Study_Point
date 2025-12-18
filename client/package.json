@@ -28,7 +28,7 @@
     "react-rating-stars-component": "^2.2.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.5",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "react-star-ratings": "^2.3.0",
     "react-super-responsive-table": "^6.0.2",
     "react-type-animation": "^3.2.0",
@@ -37,12 +37,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "node server/index.js",
-    "build": "react-scripts build",
-    "postinstall": "npm run build",
-    "client": "react-scripts start",
-    "server": "cd ../server && npm run dev",
-    "dev": "concurrently -n \"client,server\" -c \"bgBlue,bgYellow\" \"npm run client\" \"npm run server\""
+    "start": "react-scripts start",
+    "build": "react-scripts build"
   },
   "eslintConfig": {
     "extends": [
@@ -75,7 +71,7 @@
     "type": "git",
     "url": "git+https://github.com/mdakram2002/Study_Point.git"
   },
-  "keywords": [],
+  "keywords": [ ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
