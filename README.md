@@ -6,7 +6,7 @@
 
 + Frontend Overview
 - Built using React.js for the UI and Tailwind CSS for modern styling. Integrated with backend APIs using the Fetch API (built-in browser API), ensuring a smooth and dynamic user experience. Handles authentication, course catalog, payment flow, and profile management from the client side. Deployed using CI/CD pipeline via GitHub Actions to Vercel, ensuring automated testing and seamless delivery of frontend updates. Features responsive design and optimized components for performance and accessibility.
-
+```
 # Project Root
 - ├── client (Frontend)
 - │   ├── build
@@ -136,7 +136,7 @@
 - ├── index.js
 - ├── package-lock.json
 - └── package.json
-
+```
 
 ## FRONTEND ##
 - Built using React.js and Tailwind CSS for UI. Interacts with backend APIs via the Fetch API. Deployed to Vercel via GitHub Actions CI/CD.
