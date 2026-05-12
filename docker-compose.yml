@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:6
+    container_name: studypoint_mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  server:
+    build: ./server
+    container_name: studypoint_server
+    ports:
+      - "4000:4000"
+    env_file:
+      - ./server/.env
+    depends_on:
+      - mongo
+
+  client_dev:
+    build: ./client
+    container_name: studypoint_client_dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    stdin_open: true
+    environment:
+      - REACT_APP_BASE_URL=http://localhost:4000/api/v1
+    depends_on:
+      - server
+
+volumes:
+  mongo_data:
