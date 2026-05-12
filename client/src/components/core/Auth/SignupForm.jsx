@@ -108,7 +108,7 @@ export function SignupForm() {
               style={{
                 boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
               }}
-              className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
+              className="w-full rounded-[0.75rem] bg-richblack-800 p-[14px] text-richblack-5 transition duration-200 ease-out focus:border-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-100/20"
             />
           </label>
           <label>
@@ -125,7 +125,7 @@ export function SignupForm() {
               style={{
                 boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
               }}
-              className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
+              className="w-full rounded-[0.75rem] bg-richblack-800 p-[14px] text-richblack-5 transition duration-200 ease-out focus:border-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-100/20"
             />
           </label>
         </div>
@@ -143,7 +143,7 @@ export function SignupForm() {
             style={{
               boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
             }}
-            className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
+            className="w-full rounded-[0.75rem] bg-richblack-800 p-[14px] text-richblack-5 transition duration-200 ease-out focus:border-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-100/20"
           />
         </label>
         <div className="flex gap-x-4">
@@ -204,7 +204,7 @@ export function SignupForm() {
         </div>
         <button
           type="submit"
-          className="mt-6 rounded-[8px] bg-yellow-50 py-[8px] px-[12px] font-medium text-richblack-900"
+          className="mt-6 rounded-[12px] bg-yellow-50 py-[12px] px-[14px] font-semibold text-richblack-900 transition duration-200 ease-in-out hover:scale-[1.01] hover:bg-yellow-100"
         >
           Create Account
         </button>

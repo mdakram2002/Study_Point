@@ -5,6 +5,13 @@ const { instance } = require("../config/razorpay");
 const Course = require("../models/Course");
 const CourseProgress = require("../models/CourseProgress");
 const User = require("../models/User");
+
+if (!instance) {
+  console.warn(
+    "Razorpay instance is not initialized. Payment routes will return a configuration error."
+  );
+}
+
 const mainSender = require("../utils/mailSender");
 require("dotenv").config();
 const {
@@ -59,6 +66,13 @@ exports.capturePayment = async (req, res) => {
     }
 
     // 3) Create a single Razorpay order for the total amount
+    if (!instance) {
+        return res.status(500).json({
+            success: false,
+            message: "Payment gateway is not configured. Please set Razorpay credentials.",
+        });
+    }
+
     try {
         console.log("Total amount for order:", totalAmount);
         console.log("Order Params:", {
