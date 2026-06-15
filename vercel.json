@@ -1,8 +1,5 @@
 {
-  "buildCommand": "npm run build",
   "outputDirectory": "client/build",
-  "installCommand": "npm install --prefix client",
-  "framework": "create-react-app",
   "env": {
     "DISABLE_ESLINT_PLUGIN": "true"
   },

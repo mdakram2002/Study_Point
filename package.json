@@ -3,11 +3,16 @@
   "version": "1.0.0",
   "description": "- StudyPoint is a full-stack education technology (ed-tech) platform built using the MERN stack, structured with the MVC architecture. It enables students to browse, enroll in, and review online courses, while allowing instructors to create and manage rich course content. The platform supports full user authentication, modular course management, real-time progress tracking, and secure online payments — offering a seamless digital learning experience for both learners and educators.",
   "main": "index.js",
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
     "client": "npm start --prefix client",
+    "client:build": "npm run build --prefix client",
     "server": "npm run dev --prefix server",
     "dev": "concurrently -n \"client,server\" -c \"bgBlue,bgYellow\" \"npm run client\" \"npm run server\"",
-    "build": "npm run build --prefix client"
+    "postinstall": "npm install --prefix client",
+    "build": "npm run client:build"
   },
   "repository": {
     "type": "git",
