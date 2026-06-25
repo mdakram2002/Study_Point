@@ -22,17 +22,20 @@ export const ReviewSlider = () => {
 
     useEffect(() => {
         const allReveiws = async () => {
-            const response = await apiConnector(
-                "GET",
-                reatingAndReviewEndpoints.REVIEWS_DETAILS_API
-            );
-            console.log("LOGGING RESPONSEOF RATING AND REVIEW", response);
+            try {
+                const response = await apiConnector(
+                    "GET",
+                    reatingAndReviewEndpoints.REVIEWS_DETAILS_API
+                );
+                console.log("LOGGING RESPONSE OF RATING AND REVIEW", response);
 
-            const { data } = response;
-            if (data?.success) {
-                setReview(data?.data);
+                const { data } = response;
+                if (data?.success) {
+                    setReview(data?.data);
+                }
+            } catch (error) {
+                console.error("Failed to fetch reviews:", error);
             }
-            console.log("PRINTING REVIEW:", reveiw);
         };
         allReveiws();
     }, []);

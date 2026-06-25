@@ -54,7 +54,7 @@ app.use("/api/v1/payment", paymentRoute);
 app.get("/", (req, res) => {
   return res.json({
     success: true,
-    message: "Backend is running successfully 🚀"
+    message: "Backend is running successfully"
   });
 });
 
