@@ -141,40 +141,40 @@
 ## FRONTEND ##
 - Built using React.js and Tailwind CSS for UI. Interacts with backend APIs via the Fetch API. Deployed to Vercel via GitHub Actions CI/CD.
 
-+ 🔒 Authentication (Client-Side Handling)
++ Authentication (Client-Side Handling)
 - Manages user input for signup/login forms. Sends credentials to the backend for verification. Stores and manages JWT tokens (e.g., in local storage or context) for session persistence. Redirects users based on authentication status using OpenRoute and PrivateRoute. Handles profile dropdown display (ProfileDro.jsx).
 
-+ 🎓 Course Management (Client-Side Rendering & Interaction)
++ Course Management (Client-Side Rendering & Interaction)
 - Renders course listings (Catalog components). Facilitates course creation forms for instructors (data input). Displays course details (CourseDetails.jsx). Handles user interactions like course enrollment.
 
-+ 🔁 Password Reset (Client-Side Forms & Flow)
++ Password Reset (Client-Side Forms & Flow)
 - Presents "Forgot Password" form (ForgotPasswo.jsx) to capture email. Handles OTP input and verification (VerifyEmail.jsx). Provides "Update Password" form (UpdatePassw.jsx) for new password submission.
 
-+ 🗂️ Category Management (Client-Side Display)
++ Category Management (Client-Side Display)
 - Displays available categories. Filters and renders courses based on selected categories (Catalog.jsx). Presents detailed category pages (Category Page Details are consumed and rendered here).
 
-+ 💳 Payment Integration (Client-Side Payment Flow)
++ Payment Integration (Client-Side Payment Flow)
 - Initiates payment flow by sending course and user data to the backend. Integrates with Razorpay's frontend SDK for secure payment collection. Confirms payment status and updates UI.
 
-+ 📚 Sections and SubSections (Client-Side Content Display & Interaction)
++ Sections and SubSections (Client-Side Content Display & Interaction)
 - Renders course sections and subsections (ViewCourses.jsx, CourseDetails.jsx). Handles UI for creating, updating, and deleting sections/subsections by sending data to backend. Displays video content and lecture details.
 
-+ 👤 Profile Management (Client-Side UI & Data Display)
++ Profile Management (Client-Side UI & Data Display)
 - Provides user interface for viewing and editing profile details (Dashboard.jsx). Sends updated profile data to the backend. Displays user-specific information.
 
-+ ⭐ Rating & Review System (Client-Side Input & Display)
++ Rating & Review System (Client-Side Input & Display)
 - Offers forms for users to submit ratings and reviews. Displays average ratings and all reviews for courses. Validates user eligibility for reviews (e.g., enrolled status).
 
-+ 📬 Contact Us Feature (Client-Side Form Submission)
++ Contact Us Feature (Client-Side Form Submission)
 - Presents a contact form (ContactUsForm.jsx). Captures user input (name, email, message). Submits query data to the backend API. Provides feedback to the user upon successful submission.
 
-+ 📦 Utilities (Frontend Helpers)
++ Utilities (Frontend Helpers)
 - apiConnector.jsx: Manages base API URLs and common request configurations.
 - apis.jsx: Defines API endpoints for easy access.
 - studentFeatur.jsx: Contains functions for student-specific operations (e.g., course enrollment, payment initiation).
 - api.js: General-purpose utility for making Fetch API calls.
 
-+ 📧 State Management (Redux Slices)
++ State Management (Redux Slices)
 - authSlice.jsx: Manages authentication state (user login status, token).
 - cartSlice.jsx: Handles shopping cart state (items, total).
 - courseSlice.jsx: Manages course-related data (listings, selected course).
@@ -183,26 +183,26 @@
 
 
 ### BACKEND ###
-+ 🔒 Authentication (Auth Controller)
++ Authentication (Auth Controller)
 - Handles signup, login, and token generation. Uses JWT for authentication and sets secure HTTP-only cookies. Passwords are encrypted using bcrypt. Fetches data from the request body, validates user data (checks if already registered), verifies passwords for existing users, generates JWT tokens, creates authentication cookies, and sends a response back to the client.
 
-+ 🎓 Course Management (Course Controller)
++ Course Management (Course Controller)
 - Allows instructors to create and manage courses. Validates course data, uploads thumbnails to Cloudinary, and updates relevant schemas. Ensures each course is linked to instructors and categories. Processes the request body to extract necessary details, including the course thumbnail. Course data is validated to ensure no fields are left empty. Images are uploaded to Cloudinary for optimized storage. A new course entry is then created in the database, added to the instructor’s user schema, and the Category schema is updated accordingly. Finally, a response is sent back confirming the successful creation of the course.
 
-+ 🔁 Password Reset
++ Password Reset
 - ResetPassword Controller: The system first retrieves the email address from the request body and checks whether a user exists for that email. If the user is found, an email verification process is initiated. A token is generated and stored in the user’s record along with an expiration time. A reset URL is created and sent to the user's email, informing them that their password reset request has been successfully processed.
 
 - ResetPasswordToken Controller: Responsible for verifying and processing the password reset request. It fetches the data from the request body, validates it, and retrieves the user details from the database using the provided token. The token's expiration time is checked, after which the new password is hashed and updated in the database. Finally, a response is sent to confirm the password change.
 
-+ 🗂️ Category Management
++ Category Management
 - Create Category: Data is fetched from the request body, validated, and stored in the database as a new entry. Once completed, a response is sent to the instructor confirming the successful creation of the category.
 - Show All Categories: Retrieves all categories from the database, including their names and descriptions, and returns them in the response.
 - Category Page Details: Fetches details of a specific category, including its associated courses, other available categories, and the top-selling courses based on enrollments.
 
-+ 💳 Payment Integration
++ Payment Integration
 - Integrated Razorpay for handling course payments. Enrollments are validated and recorded after successful payment. Sends enrollment confirmation email using Nodemailer. This project is a backend service for managing course payments and student enrollments using Razorpay for payment processing. It allows users to enroll in courses by making secure payments and ensures that each transaction is properly validated. The system uses MongoDB to store course and user details, while Nodemailer handles email notifications for enrollment confirmations.
 
-+ 📚 Sections and SubSections
++ Sections and SubSections
 - Create Section: Fetches data from the request body, validates sectionName and courseId, creates a section, updates the course with the new section's object ID, and populates Section and SubSection using the populate function. Returns a response indicating successful section creation.
 - Update Section: Takes input data from the request body, validates the data, updates the section data using findByIdAndUpdate from the database, and returns a response that the section is updated successfully.
 - Delete Section: Takes sectionId from the request body, validates it, fetches and deletes the section from the database using findByIdAndDelete, and returns a response that the section is deleted.
@@ -212,28 +212,28 @@
 - Update SubSection: Takes input data from the request body, validates the sectionId, updates the SubSection data using findByIdAndUpdate from the database, and returns a response that the SubSection is updated successfully.
 - Delete SubSection: Takes sectionId from the request body, validates the sectionId, deletes the SubSection using findByIdAndDelete from the database, and returns a response that the SubSection is deleted successfully.
 
-+ 👤 Profile Management
++ Profile Management
 - CRUD operations for user profiles. Fetches and updates details using userId. Handles getting user data, validating it, finding the profile in the database using userId, and updating, deleting, and getting all details of the user.
 
-+ ⭐ Rating & Review System
++ Rating & Review System
 - Only enrolled users can rate and review courses. Prevents duplicate reviews and updates course with rating references.
 - Create Rating and Review: Retrieves rating, review, and courseId from the request body and validates them. Ensures that the user is enrolled in the course and has not already reviewed it. Creates a new rating and review entry, updates the course by adding the review’s Object ID, and returns a response indicating that the rating and review were created successfully.
 - Get Average Rating: Retrieves courseId from the request parameters and validates it. Uses aggregation to calculate the average rating of the course. If ratings exist, returns the calculated average; otherwise, returns a response indicating that no ratings are available.
 
 - Get All Ratings and Reviews: Fetches all rating and review entries from the database, sorts them in descending order of rating, and populates user and course details. Returns the retrieved reviews along with a success response.
 
-+ 📬 Contact Us Feature
++ Contact Us Feature
 - Captures user queries (name, email, message, etc.). Sends confirmation to user and notification to StudyPoint admin. Data stored for tracking and analytics. Retrieves the user's first name, last name, email, contact number, message, and userId (if registered) from the request body and validates them. Stores the query in the database for tracking. Sends a confirmation email to the user acknowledging the receipt of their query and notifies the StudyPoint admin about the new inquiry. Returns a response indicating that the query has been submitted successfully.
 
-+ 🛡️ Middleware
++ Middleware
 - Pre-save Hook: Triggers after an OTP is submitted, ensuring that the OTP is processed and sent via email before being saved in the database.
 
-+ 📦 Utilities
++ Utilities
 - mailSender: Sends OTP and notifications using the Nodemailer package.
 - validation: Ensures all email addresses, usernames, and other input fields are properly verified for accuracy. If any fields contain invalid data, the system returns a response prompting the user to provide correct details.
 - imageUploader: Integrates with Cloudinary for managing the uploading of images, including thumbnails, videos, and lecture content, ensuring optimized performance and storage.
 
-+ 📧 Email Templates, CourseEnrollEmail
++ Email Templates, CourseEnrollEmail
 - Functionality: This function generates an HTML email template to confirm course enrollment. It takes name (student’s name) and courseName as parameters and returns a structured email message.
 - Structure: The email includes a StudyPoint logo, a confirmation message, and a personalized greeting for the student. It also highlights the enrolled course and provides a call-to-action button linking to the user's dashboard.
 - Styling: The email is styled for a clean and professional appearance, using CSS to format the text, layout, and call-to-action button. The design ensures responsiveness and a good user experience.
@@ -251,7 +251,7 @@
 - Styling: Designed with a clean and professional layout, using CSS for readability and responsiveness. The highlighted email field ensures clarity for the user.
 - Security & Support: It warns users to contact support immediately if they did not initiate the password update. A support section with a contact email is included for assistance, ensuring users can secure their accounts if needed.
 
-+ 🔄 Deployment (CI/CD)
++ Deployment (CI/CD)
 - CI/CD Pipeline: Configured via GitHub Actions for automatic build and deploy.
 - Deployment: Frontend deployed to Vercel and connected with backend hosted vercel.
 - Ensures zero-downtime deployment and quick delivery of updates.
