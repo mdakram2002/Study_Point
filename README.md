@@ -1,323 +1,709 @@
-## StudyPoint Education Platform
-- StudyPoint is a full-stack education technology (ed-tech) platform built using the MERN stack, structured with the MVC architecture. It enables students to browse, enroll in, and review online courses, while allowing instructors to create and manage rich course content. The platform supports full user authentication, modular course management, real-time progress tracking, and secure online payments — offering a seamless digital learning experience for both learners and educators.
+# StudyPoint Education Platform
 
-+ Backend Overview
-- The backend is structured using Node.js, Express, and MongoDB, following MVC principles with well-defined routes, controllers, models, middleware, and utilities.
+StudyPoint is a full-stack education technology (EdTech) platform built using the MERN stack and structured around the MVC architecture. It enables students to browse, enroll in, and review online courses, while allowing instructors to create and manage rich course content.
 
-+ Frontend Overview
-- Built using React.js for the UI and Tailwind CSS for modern styling. Integrated with backend APIs using the Fetch API (built-in browser API), ensuring a smooth and dynamic user experience. Handles authentication, course catalog, payment flow, and profile management from the client side. Deployed using CI/CD pipeline via GitHub Actions to Vercel, ensuring automated testing and seamless delivery of frontend updates. Features responsive design and optimized components for performance and accessibility.
-```
-# Project Root
-- ├── client (Frontend)
-- │   ├── build
-- │   ├── node_modules
-- │   ├── public
-- │   ├── src
-- │   │   ├── Assets
-- │   │   ├── components
-- │   │   │   ├── common
-- │   │   │   │   ├── Confirmation.jsx
-- │   │   │   │   ├── Footer.jsx
-- │   │   │   │   ├── IconButton.jsx
-- │   │   │   │   ├── Navbar.jsx
-- │   │   │   │   ├── RatingStars.jsx
-- │   │   │   │   ├── ReviewSlider.jsx
-- │   │   │   │   └── Tab.jsx
-- │   │   │   ├── ContactPage
-- │   │   │   │   ├── ContactData.jsx
-- │   │   │   │   ├── ContactFor.jsx
-- │   │   │   │   └── ContactUsForm.jsx
-- │   │   │   └── core
-- │   │   │       ├── AboutPage
-- │   │   │       │   ├── ContactFor.jsx
-- │   │   │       │   ├── LearningGi.jsx
-- │   │   │       │   ├── Quote.jsx
-- │   │   │       │   └── StatsComp.jsx
-- │   │   │       ├── Auth
-- │   │   │       │   ├── LoginForm.jsx
-- │   │   │       │   ├── OpenRoute.jsx
-- │   │   │       │   ├── PrivateRoute.jsx
-- │   │   │       │   └── ProfileDro.jsx
-- │   │   │       ├── Catalog
-- │   │   │       ├── Course
-- │   │   │       ├── Dashboard
-- │   │   │       ├── HomePage
-- │   │   │       └── ViewCourses
-- │   │   ├── data
-- │   │   ├── hooks
-- │   │   ├── pages
-- │   │   │   ├── About.jsx
-- │   │   │   ├── Catalog.jsx
-- │   │   │   ├── Contact.jsx
-- │   │   │   ├── CourseDetails.jsx
-- │   │   │   ├── Dashboard.jsx
-- │   │   │   ├── Error.jsx
-- │   │   │   ├── ForgotPasswo.jsx
-- │   │   │   ├── Home.jsx
-- │   │   │   ├── Login.jsx
-- │   │   │   ├── Signup.jsx
-- │   │   │   ├── UpdatePassw.jsx
-- │   │   │   ├── VerifyEmail.jsx
-- │   │   │   └── ViewCourses.jsx
-- │   │   ├── reducer
-- │   │   │   └── Index.jsx
-- │   │   ├── services
-- │   │   │   ├── operations
-- │   │   │   │   ├── apiConnector.jsx
-- │   │   │   │   ├── apis.jsx
-- │   │   │   │   └── studentFeatur.jsx
-- │   │   │   └── slices
-- │   │   │       ├── authSlice.jsx
-- │   │   │       ├── cartSlice.jsx
-- │   │   │       ├── courseSlice.jsx
-- │   │   │       ├── profileSlice.jsx
-- │   │   │       └── viewCourseSli.jsx
-- │   │   ├── utils
-- │   │   │   └── api.js
-- │   │   ├── App.css
-- │   │   ├── App.jsx
-- │   │   ├── index.css
-- │   │   └── index.jsx
-- │   ├── .env
-- │   ├── .gitignore
-- │   ├── package-lock.json
-- │   ├── package.json
-- │   ├── README.md
-- │   ├── tailwind.config.js
-- │   ├── web.config
-- │   └── webpack.config.js
-- └── server (Backend)
-- ├── config
-- │   ├── cloudinary.js
-- │   ├── database.js
-- │   └── razorpay.js
-- ├── controllers
-- │   ├── files
-- │   ├── Auth.js
-- │   ├── Category.js
-- │   ├── ContactUs.js
-- │   ├── Course.js
-- │   ├── CourseProgrss.js
-- │   ├── Payments.js
-- │   ├── Profile.js
-- │   ├── RatingAndRevi.js
-- │   ├── ResetPassword.js
-- │   ├── Section.js
-- │   └── SubSection.js
-- ├── email\templates
-- │   ├── courseEnrollEmail.js
-- │   ├── emailVerification.js
-- │   ├── passwordUpdate.js
-- │   └── PaymentSuccess.js
-- ├── middlewares
-- │   └── auth.js
-- ├── models
-- │   ├── category.js
-- │   ├── ContactUs.js
-- │   ├── Course.js
-- │   ├── CourseProgres.js
-- │   ├── OTP.js
-- │   ├── Profile.js
-- │   └── User.js
-- ├── node_modules
-- ├── routes
-- │   ├── ContactUs.js
-- │   ├── Course.js
-- │   ├── Payments.js
-- │   ├── Profile.js
-- │   └── User.js
-- ├── utils
-- │   ├── imageUploader.js
-- │   ├── mailSender.js
-- │   ├── SecToDuration.js
-- │   └── validation.js
-- ├── .env
-- ├── .gitignore
-- ├── index.js
-- ├── package-lock.json
-- └── package.json
+The platform includes user authentication, course management, progress tracking, password reset, ratings and reviews, contact management, media uploads, email notifications, and secure online payments through Razorpay.
+
+## Tech Stack
+
+### Frontend
+- React.js
+- Tailwind CSS
+- Redux Toolkit
+- Fetch API
+- React Router
+- Responsive UI
+
+### Backend
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT authentication
+- bcrypt
+- Nodemailer
+- MVC architecture
+
+### Integrations
+- Razorpay — payment processing
+- Cloudinary — image/video storage
+- MongoDB Atlas — database
+- GitHub Actions — CI/CD
+- Vercel — frontend deployment
+- Docker — backend containerization
+- Azure Container Instances (ACI) — container deployment
+
+---
+
+# Architecture
+
+```text
+                         StudyPoint
+                             |
+             +---------------+---------------+
+             |                               |
+        React Frontend                 Node/Express API
+             |                               |
+          Vercel                       Docker Container
+                                             |
+                                      Azure Container
+                                         Instances
+                                             |
+                    +------------------------+-------------------+
+                    |                        |                   |
+                MongoDB                  Cloudinary          Razorpay
+                Atlas                  Media Storage         Payments
+                    |
+                User/Course/
+                Progress Data
 ```
 
-## FRONTEND ##
-- Built using React.js and Tailwind CSS for UI. Interacts with backend APIs via the Fetch API. Deployed to Vercel via GitHub Actions CI/CD.
+---
 
-+ Authentication (Client-Side Handling)
-- Manages user input for signup/login forms. Sends credentials to the backend for verification. Stores and manages JWT tokens (e.g., in local storage or context) for session persistence. Redirects users based on authentication status using OpenRoute and PrivateRoute. Handles profile dropdown display (ProfileDro.jsx).
+# Deployment
 
-+ Course Management (Client-Side Rendering & Interaction)
-- Renders course listings (Catalog components). Facilitates course creation forms for instructors (data input). Displays course details (CourseDetails.jsx). Handles user interactions like course enrollment.
+## Frontend Deployment
 
-+ Password Reset (Client-Side Forms & Flow)
-- Presents "Forgot Password" form (ForgotPasswo.jsx) to capture email. Handles OTP input and verification (VerifyEmail.jsx). Provides "Update Password" form (UpdatePassw.jsx) for new password submission.
+The React frontend is deployed to Vercel and connected to the GitHub repository.
 
-+ Category Management (Client-Side Display)
-- Displays available categories. Filters and renders courses based on selected categories (Catalog.jsx). Presents detailed category pages (Category Page Details are consumed and rendered here).
+The frontend communicates with the backend through REST APIs using the Fetch API.
 
-+ Payment Integration (Client-Side Payment Flow)
-- Initiates payment flow by sending course and user data to the backend. Integrates with Razorpay's frontend SDK for secure payment collection. Confirms payment status and updates UI.
+GitHub Actions can be used to automate the frontend build and deployment workflow.
 
-+ Sections and SubSections (Client-Side Content Display & Interaction)
-- Renders course sections and subsections (ViewCourses.jsx, CourseDetails.jsx). Handles UI for creating, updating, and deleting sections/subsections by sending data to backend. Displays video content and lecture details.
+```text
+GitHub Repository
+       |
+       v
+GitHub Actions
+       |
+       v
+Frontend Build
+       |
+       v
+Vercel
+```
 
-+ Profile Management (Client-Side UI & Data Display)
-- Provides user interface for viewing and editing profile details (Dashboard.jsx). Sends updated profile data to the backend. Displays user-specific information.
+## Backend Deployment with Docker on Azure
 
-+ Rating & Review System (Client-Side Input & Display)
-- Offers forms for users to submit ratings and reviews. Displays average ratings and all reviews for courses. Validates user eligibility for reviews (e.g., enrolled status).
+The backend is containerized using Docker and deployed to **Azure Container Instances (ACI)**.
 
-+ Contact Us Feature (Client-Side Form Submission)
-- Presents a contact form (ContactUsForm.jsx). Captures user input (name, email, message). Submits query data to the backend API. Provides feedback to the user upon successful submission.
+### Dockerfile
 
-+ Utilities (Frontend Helpers)
-- apiConnector.jsx: Manages base API URLs and common request configurations.
-- apis.jsx: Defines API endpoints for easy access.
-- studentFeatur.jsx: Contains functions for student-specific operations (e.g., course enrollment, payment initiation).
-- api.js: General-purpose utility for making Fetch API calls.
+The backend uses a lightweight Node.js Alpine image:
 
-+ State Management (Redux Slices)
-- authSlice.jsx: Manages authentication state (user login status, token).
-- cartSlice.jsx: Handles shopping cart state (items, total).
-- courseSlice.jsx: Manages course-related data (listings, selected course).
-- profileSlice.jsx: Stores and updates user profile information.
-- viewCourseSli.jsx: Manages state related to viewing specific course content (progress, active section/subsection).
+```dockerfile
+FROM node:18-alpine
 
+WORKDIR /app
 
-### BACKEND ###
-+ Authentication (Auth Controller)
-- Handles signup, login, and token generation. Uses JWT for authentication and sets secure HTTP-only cookies. Passwords are encrypted using bcrypt. Fetches data from the request body, validates user data (checks if already registered), verifies passwords for existing users, generates JWT tokens, creates authentication cookies, and sends a response back to the client.
+COPY package*.json ./
 
-+ Course Management (Course Controller)
-- Allows instructors to create and manage courses. Validates course data, uploads thumbnails to Cloudinary, and updates relevant schemas. Ensures each course is linked to instructors and categories. Processes the request body to extract necessary details, including the course thumbnail. Course data is validated to ensure no fields are left empty. Images are uploaded to Cloudinary for optimized storage. A new course entry is then created in the database, added to the instructor’s user schema, and the Category schema is updated accordingly. Finally, a response is sent back confirming the successful creation of the course.
+RUN npm ci --omit=dev
 
-+ Password Reset
-- ResetPassword Controller: The system first retrieves the email address from the request body and checks whether a user exists for that email. If the user is found, an email verification process is initiated. A token is generated and stored in the user’s record along with an expiration time. A reset URL is created and sent to the user's email, informing them that their password reset request has been successfully processed.
+COPY . .
 
-- ResetPasswordToken Controller: Responsible for verifying and processing the password reset request. It fetches the data from the request body, validates it, and retrieves the user details from the database using the provided token. The token's expiration time is checked, after which the new password is hashed and updated in the database. Finally, a response is sent to confirm the password change.
+EXPOSE 4000
 
-+ Category Management
-- Create Category: Data is fetched from the request body, validated, and stored in the database as a new entry. Once completed, a response is sent to the instructor confirming the successful creation of the category.
-- Show All Categories: Retrieves all categories from the database, including their names and descriptions, and returns them in the response.
-- Category Page Details: Fetches details of a specific category, including its associated courses, other available categories, and the top-selling courses based on enrollments.
+CMD ["node", "index.js"]
+```
 
-+ Payment Integration
-- Integrated Razorpay for handling course payments. Enrollments are validated and recorded after successful payment. Sends enrollment confirmation email using Nodemailer. This project is a backend service for managing course payments and student enrollments using Razorpay for payment processing. It allows users to enroll in courses by making secure payments and ensures that each transaction is properly validated. The system uses MongoDB to store course and user details, while Nodemailer handles email notifications for enrollment confirmations.
+The application listens on the port supplied through the `PORT` environment variable and binds to `0.0.0.0` so that it can receive requests from outside the container.
 
-+ Sections and SubSections
-- Create Section: Fetches data from the request body, validates sectionName and courseId, creates a section, updates the course with the new section's object ID, and populates Section and SubSection using the populate function. Returns a response indicating successful section creation.
-- Update Section: Takes input data from the request body, validates the data, updates the section data using findByIdAndUpdate from the database, and returns a response that the section is updated successfully.
-- Delete Section: Takes sectionId from the request body, validates it, fetches and deletes the section from the database using findByIdAndDelete, and returns a response that the section is deleted.
+### Docker Image
 
-+ SubSection Controller
-- Create SubSection: Fetches data from the request body, validates sectionId, title, timeDuration, description, and videoFile, uploads the video to Cloudinary, creates a new SubSection, updates the corresponding Section by adding the SubSection ID, populates the Section with subSections, and returns a response that the SubSection is created successfully.
-- Update SubSection: Takes input data from the request body, validates the sectionId, updates the SubSection data using findByIdAndUpdate from the database, and returns a response that the SubSection is updated successfully.
-- Delete SubSection: Takes sectionId from the request body, validates the sectionId, deletes the SubSection using findByIdAndDelete from the database, and returns a response that the SubSection is deleted successfully.
+The backend Docker image is tagged as:
 
-+ Profile Management
-- CRUD operations for user profiles. Fetches and updates details using userId. Handles getting user data, validating it, finding the profile in the database using userId, and updating, deleting, and getting all details of the user.
+```text
+mdakram2002/study_point:1
+```
 
-+ Rating & Review System
-- Only enrolled users can rate and review courses. Prevents duplicate reviews and updates course with rating references.
-- Create Rating and Review: Retrieves rating, review, and courseId from the request body and validates them. Ensures that the user is enrolled in the course and has not already reviewed it. Creates a new rating and review entry, updates the course by adding the review’s Object ID, and returns a response indicating that the rating and review were created successfully.
-- Get Average Rating: Retrieves courseId from the request parameters and validates it. Uses aggregation to calculate the average rating of the course. If ratings exist, returns the calculated average; otherwise, returns a response indicating that no ratings are available.
+The image can be built locally with:
 
-- Get All Ratings and Reviews: Fetches all rating and review entries from the database, sorts them in descending order of rating, and populates user and course details. Returns the retrieved reviews along with a success response.
-
-+ Contact Us Feature
-- Captures user queries (name, email, message, etc.). Sends confirmation to user and notification to StudyPoint admin. Data stored for tracking and analytics. Retrieves the user's first name, last name, email, contact number, message, and userId (if registered) from the request body and validates them. Stores the query in the database for tracking. Sends a confirmation email to the user acknowledging the receipt of their query and notifies the StudyPoint admin about the new inquiry. Returns a response indicating that the query has been submitted successfully.
-
-+ Middleware
-- Pre-save Hook: Triggers after an OTP is submitted, ensuring that the OTP is processed and sent via email before being saved in the database.
-
-+ Utilities
-- mailSender: Sends OTP and notifications using the Nodemailer package.
-- validation: Ensures all email addresses, usernames, and other input fields are properly verified for accuracy. If any fields contain invalid data, the system returns a response prompting the user to provide correct details.
-- imageUploader: Integrates with Cloudinary for managing the uploading of images, including thumbnails, videos, and lecture content, ensuring optimized performance and storage.
-
-+ Email Templates, CourseEnrollEmail
-- Functionality: This function generates an HTML email template to confirm course enrollment. It takes name (student’s name) and courseName as parameters and returns a structured email message.
-- Structure: The email includes a StudyPoint logo, a confirmation message, and a personalized greeting for the student. It also highlights the enrolled course and provides a call-to-action button linking to the user's dashboard.
-- Styling: The email is styled for a clean and professional appearance, using CSS to format the text, layout, and call-to-action button. The design ensures responsiveness and a good user experience.
-- Support Information: The email contains a support section with a contact email for any queries, ensuring students can seek assistance if needed.
-
-+ EmailVerification
-- Functionality: This function generates an HTML email template for OTP verification. It takes an otp parameter and returns a formatted email to help users verify their accounts during registration or authentication.
-- Structure: The email includes the StudyPoint logo, a personalized greeting, and a confirmation message. It highlights the OTP prominently and provides instructions on its usage and validity period (5 minutes).
-- Styling: The email is designed with a clean and professional layout, using CSS for readability and responsiveness. The OTP is displayed in bold to ensure visibility.
-- Security & Support: It advises users to ignore the message if they did not request an OTP. A support section with a contact email is included for assistance, ensuring users can reach out for help if needed.
-
-+ PasswordUpdate
-- Functionality: This function generates an HTML email template to notify users that their password has been successfully updated. It takes email and name as parameters and returns a formatted email.
-- Structure: The email includes the StudyPoint logo, a confirmation message, and a personalized greeting. It displays the user's email associated with the password change and provides a security warning in case the update was unauthorized.
-- Styling: Designed with a clean and professional layout, using CSS for readability and responsiveness. The highlighted email field ensures clarity for the user.
-- Security & Support: It warns users to contact support immediately if they did not initiate the password update. A support section with a contact email is included for assistance, ensuring users can secure their accounts if needed.
-
-+ Deployment (CI/CD)
-- CI/CD Pipeline: Configured via GitHub Actions for automatic build and deploy.
-- Deployment: Frontend deployed to Vercel and connected with backend hosted vercel.
-- Ensures zero-downtime deployment and quick delivery of updates.
-
-+ Prerequisites
-- Node.js (LTS version recommended)
-- npm (Node Package Manager) or Yarn
-- MongoDB instance (local or cloud-hosted)
-- Cloudinary account (for image/video uploads)
-- Razorpay account (for payment integration)
-
-# Setup Steps
-Clone the Repository:
-
-Bash
-
-git clone https://github.com/mdakram2002/study_point
-cd StudyPoint
-Backend Setup:
-
-Navigate to the server directory:
-
-Bash
-
+```bash
 cd server
-Install backend dependencies:
+docker build -t mdakram2002/study_point:1 .
+```
 
-Bash
+It can then be pushed to Docker Hub:
 
+```bash
+docker push mdakram2002/study_point:1
+```
+
+### Local Docker Testing
+
+For local testing, environment variables are supplied through the `.env` file:
+
+```bash
+docker run -p 4000:4000 --env-file .env mdakram2002/study_point:1
+```
+
+If the container is configured to listen on port 80, the host-to-container mapping can be:
+
+```bash
+docker run -p 4000:80 --env-file .env mdakram2002/study_point:1
+```
+
+The important rule is:
+
+```text
+-p <host-port>:<container-port>
+```
+
+The container port must match the port on which the Node.js application is actually listening.
+
+### Azure Container Instances Deployment
+
+The Dockerized backend was deployed to Azure using **Azure Container Instances (ACI)**.
+
+Deployment configuration:
+
+- Azure service: Azure Container Instances
+- Region: Central India
+- OS: Linux
+- SKU: Standard
+- Networking: Public
+- Public DNS label: `studypoint`
+- Container port: `80`
+- Container image: `mdakram2002/study_point:1`
+
+The Azure deployment created a publicly accessible container endpoint using the configured DNS label.
+
+```text
+Docker Image
+     |
+     v
+Docker Hub
+     |
+     v
+Azure Container Instances
+     |
+     v
+Public DNS + Port 80
+     |
+     v
+Node.js / Express Backend
+```
+
+This deployment allows the backend to run as a Docker container in Azure without managing the underlying server infrastructure.
+
+> Note: Azure Container Instances (ACI) is different from Azure App Service/Web App for Containers. This project backend is currently deployed using **Azure Container Instances**.
+
+---
+
+# Backend Overview
+
+The backend is structured using Node.js and Express.js following MVC principles.
+
+```text
+server/
+├── config/
+├── controllers/
+├── email/
+├── middlewares/
+├── models/
+├── routes/
+├── utils/
+├── .dockerignore
+├── Dockerfile
+├── index.js
+├── package.json
+└── package-lock.json
+```
+
+The backend provides RESTful APIs for authentication, courses, categories, profiles, payments, sections, subsections, ratings/reviews, password reset, and contact management.
+
+---
+
+# Frontend Overview
+
+The frontend is built using React.js and Tailwind CSS.
+
+It communicates with backend REST APIs using the Fetch API and manages application state using Redux Toolkit.
+
+The frontend handles:
+
+- Authentication
+- Course catalog
+- Course details
+- Course enrollment
+- Payment flow
+- Student dashboard
+- Instructor course management
+- Password reset
+- Ratings and reviews
+- Profile management
+- Contact form
+- Course sections and subsections
+- Video/lecture content
+
+---
+
+# Frontend Structure
+
+```text
+client/
+├── public/
+├── src/
+│   ├── Assets/
+│   ├── components/
+│   │   ├── common/
+│   │   ├── ContactPage/
+│   │   └── core/
+│   │       ├── AboutPage/
+│   │       ├── Auth/
+│   │       ├── Catalog/
+│   │       ├── Course/
+│   │       ├── Dashboard/
+│   │       ├── HomePage/
+│   │       └── ViewCourses/
+│   ├── data/
+│   ├── hooks/
+│   ├── pages/
+│   ├── reducer/
+│   ├── services/
+│   │   ├── operations/
+│   │   └── slices/
+│   ├── utils/
+│   ├── App.jsx
+│   ├── App.css
+│   ├── index.css
+│   └── index.jsx
+├── package.json
+├── package-lock.json
+├── tailwind.config.js
+└── webpack.config.js
+```
+
+`node_modules`, build artifacts, and `.env` files are intentionally omitted from the repository structure because they should not be committed to Git.
+
+---
+
+# Core Features
+
+## Authentication
+
+- User signup and login
+- JWT-based authentication
+- Secure authentication cookies
+- Password hashing using bcrypt
+- Protected routes
+- Role-based access control
+- Email verification using OTP
+
+## Course Management
+
+Instructors can:
+
+- Create courses
+- Update courses
+- Delete courses
+- Upload course thumbnails
+- Create sections and subsections
+- Upload lecture/video content
+- Manage course content
+
+Students can:
+
+- Browse courses
+- View course details
+- Enroll in courses
+- Track course progress
+- Access course lectures
+- Rate and review courses
+
+## Password Reset
+
+The password reset flow includes:
+
+1. User submits their email.
+2. The backend verifies the account.
+3. A reset token is generated.
+4. The reset link is sent through email.
+5. The token and expiration are validated.
+6. The new password is securely hashed and stored.
+
+## Category Management
+
+The backend provides APIs to:
+
+- Create categories
+- Retrieve all categories
+- Retrieve category details
+- Retrieve courses associated with categories
+- Retrieve popular/top-selling courses
+
+## Payment Integration
+
+Razorpay is integrated for course payments.
+
+The payment flow:
+
+```text
+Student
+   |
+   v
+Select Course
+   |
+   v
+Create Payment
+   |
+   v
+Razorpay
+   |
+   v
+Verify Payment
+   |
+   v
+Create Enrollment
+   |
+   v
+Send Confirmation Email
+```
+
+Payment and enrollment data is handled by the backend.
+
+## Sections and Subsections
+
+### Sections
+- Create section
+- Update section
+- Delete section
+- Associate sections with courses
+
+### Subsections
+- Create subsection
+- Upload video content
+- Update subsection
+- Delete subsection
+- Associate subsections with sections
+
+## Profile Management
+
+Provides CRUD functionality for user profiles, including retrieving and updating user information.
+
+## Rating and Review System
+
+- Only enrolled students can review courses.
+- Duplicate reviews are prevented.
+- Course rating references are updated after a review.
+- Average course ratings are calculated using MongoDB aggregation.
+- Reviews can be retrieved with user and course information.
+
+## Contact Us
+
+The contact system:
+
+- Captures user queries
+- Stores contact information in MongoDB
+- Sends confirmation emails to users
+- Notifies the StudyPoint administrator
+- Maintains queries for tracking
+
+---
+
+# Backend Structure
+
+```text
+server/
+├── config/
+│   ├── cloudinary.js
+│   ├── database.js
+│   └── razorpay.js
+├── controllers/
+│   ├── files/
+│   ├── Auth.js
+│   ├── Category.js
+│   ├── ContactUs.js
+│   ├── Course.js
+│   ├── CourseProgrss.js
+│   ├── Payments.js
+│   ├── Profile.js
+│   ├── RatingAndRevi.js
+│   ├── ResetPassword.js
+│   ├── Section.js
+│   └── SubSection.js
+├── email/
+│   └── templates/
+│       ├── courseEnrollEmail.js
+│       ├── emailVerification.js
+│       ├── passwordUpdate.js
+│       └── PaymentSuccess.js
+├── middlewares/
+│   └── auth.js
+├── models/
+│   ├── category.js
+│   ├── ContactUs.js
+│   ├── Course.js
+│   ├── CourseProgres.js
+│   ├── OTP.js
+│   ├── Profile.js
+│   └── User.js
+├── routes/
+│   ├── ContactUs.js
+│   ├── Course.js
+│   ├── Payments.js
+│   ├── Profile.js
+│   └── User.js
+├── utils/
+│   ├── imageUploader.js
+│   ├── mailSender.js
+│   ├── SecToDuration.js
+│   └── validation.js
+├── .dockerignore
+├── Dockerfile
+├── index.js
+├── package.json
+└── package-lock.json
+```
+
+---
+
+# Email System
+
+StudyPoint uses Nodemailer for transactional emails.
+
+Email templates include:
+
+### Course Enrollment
+Sends an enrollment confirmation email containing the student's name and enrolled course.
+
+### Email Verification
+Sends an OTP for account verification.
+
+### Password Update
+Notifies users when their password has been successfully updated.
+
+### Payment Success
+Sends payment/enrollment confirmation after successful course payment.
+
+---
+
+# Utilities
+
+### `mailSender`
+Handles email delivery through Nodemailer.
+
+### `validation`
+Validates emails, usernames, and other user-provided data.
+
+### `imageUploader`
+Handles image and video uploads through Cloudinary.
+
+---
+
+# Environment Variables
+
+Environment variables are required for database access, authentication, email, media uploads, and payment processing.
+
+Example:
+
+```env
+# Example values only — do NOT use these in production
+PORT=4000
+
+# Database
+MONGO_URI=mongodb+srv://example_user:EXAMPLE_PASSWORD@cluster0.example.mongodb.net/studypoint
+
+# Authentication
+JWT_SECRET=example_jwt_secret_do_not_use_in_production
+
+# Cloudinary
+CLOUDINARY_CLOUD_NAME=example_cloud_name
+CLOUDINARY_API_KEY=123456789012345
+CLOUDINARY_API_SECRET=EXAMPLE_CLOUDINARY_SECRET
+
+# Razorpay
+RAZORPAY_KEY_ID=rzp_test_EXAMPLE123456
+RAZORPAY_SECRET=EXAMPLE_RAZORPAY_SECRET
+
+# Email
+MAIL_HOST=smtp.example.com
+MAIL_USER=example@example.com
+MAIL_PASS=EXAMPLE_EMAIL_APP_PASSWORD
+```
+
+**The values above are fake examples only. Never commit real private keys, IDs, secrets, passwords, API credentials, database credentials, or `.env` files to GitHub or Docker images.**
+
+For Azure deployment, configure the required environment variables through the container/deployment configuration rather than hard-coding secrets in the application.
+
+---
+
+# Prerequisites
+
+- Node.js LTS
+- npm
+- Git
+- Docker Desktop
+- MongoDB instance / MongoDB Atlas
+- Cloudinary account
+- Razorpay account
+- Email/Nodemailer configuration
+- Azure account (for Azure deployment)
+- Docker Hub account (for publishing the Docker image)
+
+---
+
+# Local Setup
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/mdakram2002/Study_Point.git
+cd Study_Point
+```
+
+## 2. Backend Setup
+
+```bash
+cd server
 npm install
-# OR
-yarn install
-Create a .env file in the server directory and add your environment variables (e.g., MongoDB URI, JWT secret, Cloudinary credentials, Razorpay keys, Nodemailer configuration). Refer to your backend code for required variables.
+```
 
-Start the backend server:
+Create:
 
-Bash
+```text
+server/.env
+```
 
+and add the required environment variables.
+
+Start the backend:
+
+```bash
 npm start
-# OR if you have nodemon installed globally for development:
-nodemon index.js
-The backend will typically run on http://localhost:4000 (or your configured port).
+```
 
-Frontend Setup:
+For development:
 
-Open a new terminal and navigate to the client directory:
-
-Bash
-
-cd ../client
-Install frontend dependencies:
-
-Bash
-
-npm install
-# OR
-yarn install
-Create a .env file in the client directory and add any necessary frontend environment variables (e.g., REACT_APP_BASE_URL pointing to your backend API).
-
-Start the frontend development server:
-
-Bash
-
-npm start
-# OR
+```bash
 npm run dev
-The frontend application will usually open in your browser at http://localhost:3000.
+```
 
+The backend normally runs on:
+
+```text
+http://localhost:4000
+```
+
+depending on the configured `PORT`.
+
+## 3. Frontend Setup
+
+Open another terminal:
+
+```bash
+cd client
+npm install
+```
+
+Configure the frontend environment variable for the backend API.
+
+Start the frontend:
+
+```bash
+npm start
+```
+
+or:
+
+```bash
+npm run dev
+```
+
+The frontend normally runs on:
+
+```text
+http://localhost:3000
+```
+
+depending on the development configuration.
+
+---
+
+# Docker Setup
+
+From the project root:
+
+```bash
+cd server
+```
+
+Build the Docker image:
+
+```bash
+docker build -t mdakram2002/study_point:1 .
+```
+
+Run the container:
+
+```bash
+docker run -p 4000:4000 --env-file .env mdakram2002/study_point:1
+```
+
+Verify the running container:
+
+```bash
+docker ps
+```
+
+---
+
+# CI/CD
+
+The project can use GitHub Actions to automate deployment workflows.
+
+A typical workflow is:
+
+```text
+Developer
+    |
+    v
+Git Push
+    |
+    v
+GitHub
+    |
+    v
+GitHub Actions
+    |
+    +----------------------+
+    |                      |
+    v                      v
+Frontend Build         Docker Build
+    |                      |
+    v                      v
+  Vercel               Docker Hub
+                           |
+                           v
+                    Azure Container
+                       Instances
+```
+
+This reduces manual deployment steps and makes application updates easier to deliver consistently.
+
+---
+
+# Project Goals
+
+StudyPoint demonstrates practical experience in:
+
+- Full-stack web development
+- REST API development
+- MVC architecture
+- Authentication and authorization
+- Database-driven applications
+- Payment gateway integration
+- Cloud media storage
+- Email automation
+- Docker containerization
+- Cloud deployment on Azure
+- CI/CD with GitHub Actions
+- Frontend deployment with Vercel
+
+---
+
+# Repository
+
+GitHub: https://github.com/mdakram2002/Study_Point
 
