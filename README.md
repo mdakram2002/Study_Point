@@ -651,15 +651,73 @@ docker ps
 
 # CI/CD
 
-The project can use GitHub Actions to automate deployment workflows.
+The project uses GitHub Actions to automate deployment workflows.
 
-A typical workflow is:
+## GitHub Actions Workflows
+
+### Frontend CI Workflow (`.github/workflows/frontend-ci.yml`)
+
+Triggers on push/PR to main branch for client changes:
+- Runs on Ubuntu latest with Node.js 18
+- Installs dependencies with `npm ci`
+- Builds React application with `npm run build`
+- Uploads build artifacts
+
+The frontend is deployed to Vercel via Git integration, which triggers automatically on push to main.
+
+### Backend CI/CD Workflow (`.github/workflows/backend-ci-cd.yml`)
+
+Triggers on push/PR to main branch for server changes:
+
+**CI Job:**
+- Runs on Ubuntu latest with Node.js 18
+- Installs dependencies with `npm ci --omit=dev`
+- Runs lint and tests (if configured)
+
+**Build and Deploy Job (main branch only):**
+- Builds Docker image from `server/` directory
+- Tags image with Git commit SHA and `latest`
+- Pushes to Docker Hub
+- Logs into Azure using service principal
+- Updates existing Azure Container Instance with new Docker image
+- Verifies deployment
+
+## Required GitHub Secrets
+
+Configure these in **Settings → Secrets and variables → Actions**:
+
+**Docker Hub:**
+- `DOCKER_USERNAME` - Your Docker Hub username
+- `DOCKER_PASSWORD` - Docker Hub password or access token
+- `DOCKER_IMAGE_NAME` - (Optional) Full image name, e.g., `yourusername/study_point`
+
+**Azure Container Instances:**
+- `AZURE_CREDENTIALS` - Azure service principal credentials in JSON format
+- `AZURE_RESOURCE_GROUP` - (Optional) Azure resource group name, defaults to `study_point`
+- `AZURE_CONTAINER_GROUP` - (Optional) Azure Container Instance name, defaults to `studypoint`
+
+## Azure Service Principal Setup
+
+To create the service principal for GitHub Actions:
+
+```bash
+az login
+az ad sp create-for-rbac \
+  --name "github-actions-studypoint" \
+  --role Contributor \
+  --scopes /subscriptions/{your-subscription-id}/resourceGroups/study_point \
+  --json-auth
+```
+
+Copy the JSON output and add it as the `AZURE_CREDENTIALS` secret in GitHub.
+
+## Deployment Flow
 
 ```text
 Developer
     |
     v
-Git Push
+Git Push to main
     |
     v
 GitHub
@@ -670,14 +728,16 @@ GitHub Actions
     +----------------------+
     |                      |
     v                      v
-Frontend Build         Docker Build
+Frontend CI             Backend CI/CD
     |                      |
     v                      v
-  Vercel               Docker Hub
-                           |
-                           v
-                    Azure Container
-                       Instances
+  Vercel               Docker Build
+(Git integration)           |
+                            v
+                      Docker Hub
+                            |
+                            v
+                  Azure Container Instances
 ```
 
 This reduces manual deployment steps and makes application updates easier to deliver consistently.
