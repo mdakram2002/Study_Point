@@ -124,6 +124,7 @@ jobs:
             --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
             --name ${{ env.AZURE_CONTAINER_GROUP }} \
             --image ${{ steps.image-tag.outputs.full_image }} \
+            --os-type Linux \
             --restart-policy Always \
             --cpu 1 \
             --memory 1 \
