@@ -105,10 +105,24 @@ jobs:
           # Update the existing Azure Container Instance with the new Docker image
           echo "Updating Azure Container Instance: ${{ env.AZURE_CONTAINER_GROUP }}"
           
-          az container update \
+          # Get current container configuration
+          CURRENT_CONFIG=$(az container show \
             --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
             --name ${{ env.AZURE_CONTAINER_GROUP }} \
-            --image ${{ steps.image-tag.outputs.full_image }}
+            --query "{ports:containers[0].ports, env:containers[0].environmentVariables, cpu:containers[0].resources.requests.cpu, memory:containers[0].resources.requests.memoryInGB}" \
+            --output json)
+          
+          echo "Current configuration retrieved"
+          
+          # Update container with new image (recreate with same configuration)
+          az container create \
+            --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+            --name ${{ env.AZURE_CONTAINER_GROUP }} \
+            --image ${{ steps.image-tag.outputs.full_image }} \
+            --restart-policy Always \
+            --cpu 1 \
+            --memory 1 \
+            --ports 80
           
           echo "Container instance updated successfully"
           
