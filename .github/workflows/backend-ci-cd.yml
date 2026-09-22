@@ -128,7 +128,9 @@ jobs:
             --restart-policy Always \
             --cpu 1 \
             --memory 1 \
-            --ports 80
+            --ports 80 \
+            --registry-username ${{ secrets.DOCKER_USERNAME }} \
+            --registry-password ${{ secrets.DOCKER_PASSWORD }}
           
           echo "Container instance created successfully"
           
