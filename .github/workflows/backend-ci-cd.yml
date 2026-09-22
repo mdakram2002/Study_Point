@@ -15,10 +15,10 @@ on:
       - '.github/workflows/backend-ci-cd.yml'
 
 env:
-  DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_IMAGE_NAME || 'your-dockerhub-username/study_point' }}
+  DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_IMAGE_NAME }}
   DOCKER_REGISTRY: docker.io
-  AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP || 'study_point' }}
-  AZURE_CONTAINER_GROUP: ${{ secrets.AZURE_CONTAINER_GROUP || 'studypoint' }}
+  AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+  AZURE_CONTAINER_GROUP: ${{ secrets.AZURE_CONTAINER_GROUP }}
 
 jobs:
   ci:
@@ -68,32 +68,32 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Extract metadata for Docker
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.DOCKER_IMAGE_NAME }}
-          tags: |
-            type=sha,prefix={{branch}}-
-            type=raw,value=latest,enable={{is_default_branch}}
+      - name: Set image tag
+        id: image-tag
+        run: |
+          # Generate deterministic tag from GitHub SHA
+          IMAGE_TAG="main-${GITHUB_SHA::7}"
+          echo "tag=${IMAGE_TAG}" >> $GITHUB_OUTPUT
+          FULL_IMAGE="${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_NAME }}:${IMAGE_TAG}"
+          echo "full_image=${FULL_IMAGE}" >> $GITHUB_OUTPUT
+          echo "Building and pushing image: ${FULL_IMAGE}"
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: ./server
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: |
+            ${{ steps.image-tag.outputs.full_image }}
+            ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_NAME }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Set image tag
-        id: image-tag
+      - name: Verify Docker image exists
         run: |
-          # Use the SHA tag for deployment
-          IMAGE_TAG=$(echo "${{ steps.meta.outputs.tags }}" | grep -o 'main-[a-f0-9]\+' | head -1 || echo "latest")
-          echo "tag=${IMAGE_TAG}" >> $GITHUB_OUTPUT
-          echo "full_image=${{ env.DOCKER_IMAGE_NAME }}:${IMAGE_TAG}" >> $GITHUB_OUTPUT
+          echo "Verifying Docker image exists: ${{ steps.image-tag.outputs.full_image }}"
+          docker pull "${{ steps.image-tag.outputs.full_image }}"
+          echo "Image verified successfully"
 
       - name: Azure Login
         uses: azure/login@v2
@@ -129,6 +129,7 @@ jobs:
             --cpu 1 \
             --memory 1 \
             --ports 80 \
+            --registry-login-server ${{ env.DOCKER_REGISTRY }} \
             --registry-username ${{ secrets.DOCKER_USERNAME }} \
             --registry-password ${{ secrets.DOCKER_PASSWORD }}
           
