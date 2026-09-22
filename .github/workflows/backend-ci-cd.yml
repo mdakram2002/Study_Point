@@ -105,16 +105,21 @@ jobs:
           # Update the existing Azure Container Instance with the new Docker image
           echo "Updating Azure Container Instance: ${{ env.AZURE_CONTAINER_GROUP }}"
           
-          # Get current container configuration
-          CURRENT_CONFIG=$(az container show \
-            --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
-            --name ${{ env.AZURE_CONTAINER_GROUP }} \
-            --query "{ports:containers[0].ports, env:containers[0].environmentVariables, cpu:containers[0].resources.requests.cpu, memory:containers[0].resources.requests.memoryInGB}" \
-            --output json)
+          # Delete existing container if it exists
+          echo "Checking if container exists..."
+          if az container show --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --name ${{ env.AZURE_CONTAINER_GROUP }} >/dev/null 2>&1; then
+            echo "Deleting existing container..."
+            az container delete \
+              --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+              --name ${{ env.AZURE_CONTAINER_GROUP }} \
+              --yes
+            echo "Existing container deleted"
+          else
+            echo "No existing container found"
+          fi
           
-          echo "Current configuration retrieved"
-          
-          # Update container with new image (recreate with same configuration)
+          # Create new container with the updated image
+          echo "Creating new container with image: ${{ steps.image-tag.outputs.full_image }}"
           az container create \
             --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
             --name ${{ env.AZURE_CONTAINER_GROUP }} \
@@ -124,7 +129,7 @@ jobs:
             --memory 1 \
             --ports 80
           
-          echo "Container instance updated successfully"
+          echo "Container instance created successfully"
           
           # Verify the container is running
           echo "Checking container status..."
